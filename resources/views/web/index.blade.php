@@ -2,8 +2,7 @@
 
 @section('content')
     <main class="px-3">
-        <h1 class="mt-2">Please select your language</h1>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-4 mt-3">
                 <a href="#">
                     <div class="card">
