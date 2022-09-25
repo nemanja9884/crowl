@@ -16,25 +16,15 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body class="d-flex h-100 text-center text-white bg-dark">
+<body class="d-flex h-100 text-center bg-dark">
 
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="mb-auto">
-        <div>
-            <h3 class="float-md-start mb-0">Cover</h3>
-            <nav class="nav nav-masthead justify-content-center float-md-end">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Contact</a>
-            </nav>
-        </div>
-    </header>
+    @include('web.layouts.header')
 
     @yield('content')
 
-    <footer class="mt-auto text-white-50">
-       Copyright © {{\Carbon\Carbon::now()->year}} {{ config('app.name', 'Laravel') }}
-    </footer>
+    @include('web.layouts.footer')
 </div>
+@yield('javascript')
 </body>
 </html>

@@ -21,3 +21,5 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('language/{lang}', [App\Http\Controllers\HomeController::class, 'languageIndex'])->name('languageIndex');
+Route::get('game', [App\Http\Controllers\HomeController::class, 'startGame'])->name('startGame');

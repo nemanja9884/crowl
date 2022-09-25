@@ -1,0 +1,338 @@
+.cover-container {
+    background: url("../images/Background.png") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.logo {
+    width: 131px;
+    height: 131px;
+    margin-top: 89px;
+}
+
+.leftLogo {
+    width: 112px;
+    height: 63px;
+}
+
+.logo-sign-in {
+    width: 131px;
+    height: 131px;
+    margin-top: 50px;
+}
+
+.welcome {
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 43px;
+    /* identical to box height */
+    margin-top: 98px;
+    letter-spacing: -0.03em;
+    color: #FFFFFF;
+}
+
+.welcome-sign-in {
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 32px;
+    line-height: 43px;
+    /* identical to box height */
+    margin-top: 40px;
+    letter-spacing: -0.03em;
+    color: #FFFFFF;
+}
+
+.intro {
+    margin-top: 10px;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    color: #FFFFFF;
+}
+
+.intro-sign-in {
+    margin-top: 10px;
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    color: #FFFFFF;
+}
+
+.sign-in-btn {
+    margin-top: 65px;
+    width: 280px;
+    height: 50px;
+    color: #37abd6;
+}
+
+.home-footer-text {
+    margin-top: 100px;
+    color: white;
+}
+
+.home-footer-text-sign-in {
+    margin-top: 30px;
+    color: white;
+}
+
+.get-card {
+    color: white;
+    text-decoration: none;
+}
+
+.sign-in-text {
+    width: 250px;
+    margin: 0 auto;
+}
+
+.card-sign-in {
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 50px;
+    border-radius: 50px 50px 0 0;
+}
+
+
+.bottom-border {
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: #39add7;
+    width: 70%;
+    margin: 0 auto;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+.bottom-border-cr-acc {
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: #39add7;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+.bottom-border-cr-acc-low-opacity {
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: #39add7;
+    width: 100%;
+    margin: 0 auto;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+.bottom-border-cr-acc-low-opacity::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    opacity: 0.5; /* Firefox */
+}
+
+.bottom-border-cr-acc-short {
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: #39add7;
+    margin: 0 auto;
+    padding-left: 15px;
+    font-size: 15px;
+    width: 90%;
+}
+
+.bottom-border {
+    outline: 0;
+    border-width: 0 0 1px;
+    border-color: #39add7;
+    margin: 0 auto;
+    padding-left: 15px;
+    font-size: 15px;
+    width: 100%;
+}
+
+.bottom-border::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    opacity: 0.5; /* Firefox */
+}
+
+.bottom-border-cr-acc-short::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    opacity: 0.5; /* Firefox */
+}
+
+/*.bottom-border:focus {
+    border-color: green
+}*/
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #39add7;
+    opacity: 1; /* Firefox */
+}
+
+.blue-color {
+    color: #39add7;
+}
+
+.black-color {
+    color: black;
+}
+
+.second-blue {
+    color: #2A88BD;
+}
+
+.dark-blue-color {
+    color: #064663;
+}
+
+.silver {
+    color: #a4b2c1;
+    opacity: 0.5;
+}
+
+.blueButton {
+    background-color: #064663;
+    color: white;
+    width: 84%;
+    height: 50px;
+}
+
+.saveBtn {
+    background-color: #064663;
+    color: white;
+    width: 99px;
+    height: 40px;
+}
+
+.white-color {
+    color: white;
+}
+
+.row-scale {
+    max-width: 360px;
+    margin: 0 auto;
+}
+
+.profilePhoto {
+
+}
+
+.iconRow {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 118px;
+    height: 118px;
+}
+
+.addPhotoIcon {
+    width: 42px;
+    height: 42px;
+    position: absolute;
+    bottom: -6px;
+    right: -6px;
+}
+
+.addPhotoIcon2 {
+    position: absolute;
+    margin-left: 10px;
+}
+
+.gray-color {
+    color: #948686;
+}
+
+.customFont {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.user-info-text {
+    margin-top: 100px;
+    text-align: left;
+}
+
+.cont-info-text {
+    text-align: left;
+}
+
+.remove-text-decoration {
+    text-decoration: none !important;
+}
+
+.create-an-account-text {
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 29px;
+    letter-spacing: -0.03em;
+    color: #FFFFFF;
+}
+
+.user-info {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.unsetMargins {
+    margin-left: unset;
+    margin-right: unset;
+}
+
+.card-sign-in {
+    text-align: left;
+}
+
+.create-acc-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.addNumber {
+    margin-top: 12px;
+    margin-bottom: unset;
+}
+
+.publish-profile {
+    font-weight: 600;
+    font-size: 18px;
+}
+
+@media (max-width: 775px) {
+    .logo {
+        margin-top: 70px;
+    }
+
+    .welcome {
+        margin-top: 50px;
+    }
+
+    .sign-in-btn {
+        margin-top: 40px;
+    }
+
+    .px-3 {
+        padding: unset !important;
+    }
+
+    .card-sign-in {
+        width: 100%;
+    }
+
+    main {
+        height: 100%;
+    }
+
+    .positionBottom {
+        position: absolute;
+        bottom: 0;
+    }
+}
