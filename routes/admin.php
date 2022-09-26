@@ -18,3 +18,9 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
+Route::get('file-manager', function () {
+    return view('admin.file-manager.index');
+});
+Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
+
+

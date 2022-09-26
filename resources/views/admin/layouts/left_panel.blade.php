@@ -18,19 +18,21 @@
                         <a href="{{route('admin.index')}}"> <i class="menu-icon fa fa-dashboard"></i>Kontrolna tabla </a>
                         <a href="{{route('index')}}"> <i class="menu-icon fa fa-sitemap"></i>Web mesto </a>
                     </li>
-                    <h3 class="menu-title">Administratorski Alati</h3><!-- /.menu-title -->
+                    <h3 class="menu-title">Admin tools</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Komponente</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Components</a>
                         <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Članci</a></li>
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Dodaj članak</a></li>
-                            <li><i class="fa fa-folder"></i><a href="#">Proizvodi</a></li>
-                            <li><i class="fa fa-folder"></i><a href="#">Dodaj proizvod</a></li>
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Kategorije</a></li>
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Boje</a></li>
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Veličine</a></li>
-                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Tagovi</a></li>
-                            <li><i class="fa fa-money"></i><a href="#">Kuponi</a></li>
+                            <li><i class="fa fa-language"></i><a href="{{route('admin.languages.index')}}">Languages</a></li>
+
+{{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Članci</a></li>--}}
+{{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Dodaj članak</a></li>--}}
+{{--                            <li><i class="fa fa-folder"></i><a href="#">Proizvodi</a></li>--}}
+{{--                            <li><i class="fa fa-folder"></i><a href="#">Dodaj proizvod</a></li>--}}
+{{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Kategorije</a></li>--}}
+{{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Boje</a></li>--}}
+{{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Veličine</a></li>--}}
+{{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Tagovi</a></li>--}}
+{{--                            <li><i class="fa fa-money"></i><a href="#">Kuponi</a></li>--}}
                             <!--
 
                             <li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
@@ -45,7 +47,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/file-manager"> <i class="menu-icon fa fa-files-o"></i>Datoteke</a>
+                        <a href="/admin/file-manager"> <i class="menu-icon fa fa-files-o"></i>File manager</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Interakcija korisnika</a>

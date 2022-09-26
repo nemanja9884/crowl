@@ -111,7 +111,7 @@
 
 
 <script>
-    var route_prefix = "/filemanager";
+    var route_prefix = "/laravel-filemanager";
 </script>
 
 
