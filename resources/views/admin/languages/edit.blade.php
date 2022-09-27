@@ -1,72 +1,63 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Izmena kategorije</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Language update</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body1">
-    <form action="{{ route('categories.update', $category->id) }}" method="post"
+    <form action="{{ route('admin.languages.update', $language->id) }}" method="post"
           enctype="multipart/form-data" class="form-horizontal">
         @csrf
         @method('PUT')
         <div class="col form-group">
-            <label for="text-input" class="form-control-label">Ime kategorije</label>
+            <label for="name" class="form-control-label">Language name</label>
             <input type="text" id="name" name="name"
-                   placeholder="Ime kategorije" class="form-control" value="{{$category->name}}">
+                   placeholder="Language name" class="form-control" value="{{$language->name}}">
         </div>
+
         <div class="col form-group">
-            <label for="parent_id" class=" form-control-label">Nadkategorija</label>
-            <select name="parent_id" id="parent_id" class="form-control">
-                @if($category->parent_id == null)
-                    <option value="0" selected>Izaberite nadkategoriju</option>
-                @else
-                    <option value="0" selected>Izaberite nadkategoriju</option>
-                @endif
-                @foreach($parentCat as $cat)
-                    <option value="{{$cat->id}}" @if($category->parent_id == $cat->id) selected @endif>{{$cat->name}} @if(isset($cat->parent)) <b>({{$cat->parent->name}})</b> @endif</option>
-                @endforeach
-            </select>
+            <label for="textarea-input" class="form-control-label">Content</label>
+            <textarea name="content" id="textarea-input" rows="3"
+                      placeholder="content..."
+                      class="form-control">{{$language->content}}</textarea>
+            {{--                            <div class="col col-md-3"></div>--}}
+            {{--                            <div class="col-12 col-md-9"></div>--}}
         </div>
+
         <div class="col form-group">
-            <label for="type" class=" form-control-label">Tip kategorije</label>
-            <select name="type" id="type" class="form-control">
-                <option value="{{$category->type}}" selected>{{$category->type}}</option>
-                <option value="Članci">Članci</option>
-                <option value="Proizvodi">Proizvodi</option>
-            </select>
-        </div>
-        <div class="col form-group">
-            <label for="status" class=" form-control-label">Status</label>
+            <label for="status" class="form-control-label">Status</label>
             <select name="status" id="status" class="form-control">
-                <option value="1" @if($category->status == 1) selected @endif>Objavljeno</option>
-                <option value="2" @if($category->status == 2) selected @endif>U pripremi</option>
+                <option value="1" @if($language->status == 1) selected @endif>Published</option>
+                <option value="0" @if($language->status == 0) selected @endif>Draft</option>
             </select>
         </div>
+
         <div class="col form-group">
-            <label for="sort" class="form-control-label">Sortiranje</label>
+            <label for="sort" class="form-control-label">Sort</label>
             <input type="number" id="sort" name="sort"
-                   placeholder="Sortiranje" class="form-control" value="{{$category->sort}}">
+                   placeholder="Sort" class="form-control" value="{{$language->sort}}">
         </div>
+
         <div class="col-md-12 text-center form-group" style="margin: 0 auto;">
-            <div class="col col-md-12"><label for="file-input" class=" form-control-label">Dodajte izdvojenu
-                    sliku</label></div>
+            <div class="col col-md-12"><label for="file-input" class=" form-control-label">Add image for
+                    language</label></div>
             <div class="col-12 col-md-12">
                 <div class="input-group" style="margin: 0 auto;">
                                     <span class="input-group-btn" style="margin: 0 auto;">
-                                        <a id="lfm3" data-input="thumbnail3" data-preview="holder3"
+                                        <a id="lfm4" data-input="thumbnail4" data-preview="holder4"
                                            class="btn btn-primary text-white col-md-12" style="margin: 0 auto;">
-                                            <i class="fa fa-picture-o"></i> Izaberite sliku
+                                            <i class="fa fa-picture-o"></i> Choose photo
                                         </a>
                                     </span>
-                    <input id="thumbnail3" name="image" class="form-control" type="text"
+                    <input id="thumbnail4" name="image" class="form-control" type="text"
                            style="display: none;">
                 </div>
-                <div id="holder3" style="margin-top:15px;max-height:100px;"></div>
+                <div id="holder4" style="margin-top:15px;max-height:100px;"></div>
             </div>
         </div>
-        @if($category->featured_image != null)
+        @if($language->image)
             <div class="col-md-12 text-center" style="margin: 0 auto;">
-                <img src="{{$category->featured_image}}" class="img-thumbnail" alt="..."
+                <img src="{{$language->image}}" class="img-thumbnail" alt="..."
                      style="width: 200px; height: 200px; object-fit: cover; margin: 0 auto;">
             </div>
         @endif

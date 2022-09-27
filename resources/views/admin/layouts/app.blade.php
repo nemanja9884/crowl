@@ -77,6 +77,11 @@
             margin: 10px;
         }
 
+        .popover {
+            top: auto;
+            left: auto;
+        }
+
     </style>
 </head>
 <body>
@@ -89,35 +94,19 @@
 <script src="{{asset('vendors/popper.js/dist/umd/popper.min.js')}}"></script>
 <script src="{{asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
-
 <script src="{{ asset('js/lightbox.min.js') }}"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script src="{{asset('plugins/tinymce/tinymce.min.js?v=2')}}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+@yield('javascript')
 <script>
     lightbox.option({
         'resizeDuration': 200,
         'wrapAround': true
     })
-</script>
 
-
-
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-<style>
-    .popover {
-        top: auto;
-        left: auto;
-    }
-</style>
-
-
-<script>
-    var route_prefix = "/laravel-filemanager";
-</script>
-
-
-<!-- TinyMCE init -->
-<script src="{{asset('plugins/tinymce/tinymce.min.js?v=2')}}"></script>
-<script>
     var editor_config = {
         path_absolute: "/",
         selector: "#textarea-input, #textarea-input1, #textarea-input2, #textarea-input10, #textarea-input11, #textarea-input12, #textarea-input14",
@@ -166,18 +155,10 @@
 
     tinymce.init(editor_config);
 
-</script>
-
-<script>
     <?php echo \File::get(base_path('vendor/unisharp/laravel-filemanager/public/js/stand-alone-button.js')); ?>
 
-</script>
-<script>
-    //$('#lfm').filemanager('image', {prefix: route_prefix});
-    // $('#lfm').filemanager('file', {prefix: route_prefix});
-</script>
+    var route_prefix = "/laravel-filemanager";
 
-<script>
     var lfm = function(id, type, options) {
         let button = document.getElementById(id);
 
@@ -217,6 +198,5 @@
     lfm('lfm2', 'file', {prefix: route_prefix});
     lfm('lfm', 'file', {prefix: route_prefix});
     lfm('lfm3', 'file', {prefix: route_prefix});
-
 
 </script>

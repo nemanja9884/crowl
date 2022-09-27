@@ -73,26 +73,41 @@ class LanguageController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        return view('admin.languages.edit', ['language' => Language::find($id)]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, array(
+            'name' => 'required|max:255',
+            'status' => 'required',
+            'sort' => 'required',
+        ));
+
+        $language = Language::find($id);
+        $language->update([
+            'name' => $request->input('name'),
+            'content' => $request->input('content'),
+            'image' => $request->input('image') ?? $language->image,
+            'status' => $request->input('status'),
+            'sort' => $request->input('sort')
+        ]);
+
+        Session::flash('message', 'Successfully updated language ' . $language->name);
+        Session::flash('alert-class', 'success');
+
+        return redirect()->route('admin.languages.index');
     }
 
     /**

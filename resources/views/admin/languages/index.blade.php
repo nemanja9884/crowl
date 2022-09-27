@@ -35,12 +35,12 @@
                         </div>
 
                         <div class="col form-group">
-                            <label for="textarea-input" class=" form-control-label">Content</label>
-                            <textarea name="intro" id="textarea-input" rows="3"
+                            <label for="textarea-input" class="form-control-label">Content</label>
+                            <textarea name="content" id="textarea-input" rows="3"
                                       placeholder="content..."
                                       class="form-control"></textarea>
-{{--                            <div class="col col-md-3"></div>--}}
-{{--                            <div class="col-12 col-md-9"></div>--}}
+                            {{--                            <div class="col col-md-3"></div>--}}
+                            {{--                            <div class="col-12 col-md-9"></div>--}}
                         </div>
 
                         <div class="col form-group">
@@ -113,7 +113,8 @@
                                         <label for="category-{{$language->id}}"></label>
                                     </td>
                                     <td>{{$language->name}}</td>
-                                    <td><img class="img-fluid" src="{{$language->image}}" style="max-width: 50px;" /></td>
+                                    <td><img class="img-fluid" src="{{$language->image}}" style="max-width: 50px;"/>
+                                    </td>
                                     <td>
                                         @if($language->status == 0)
                                             <span class="badge badge-secondary">Draft</span>
@@ -167,7 +168,7 @@
         <div class="modal-dialog">
             <div class="modal-content modal2cont">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Izmena kategorije</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Language update</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -179,39 +180,42 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
-            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+@endsection
+@section('javascript')
     <script>
         window.onload = function () {
-            $(".delete").click(function () {
-                let id = $(this).data("id");
-                let url = '{{ route("admin.languages.destroy", ":id") }}';
-                url = url.replace(':id', id);
-                $(".modal-footer").html('<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Odustani</button><form class="d-inline pull-right" action="' + url + '" method="POST">\n' +
-                    '                                        @csrf\n' +
-                    '                                        @method("DELETE")\n' +
-                    '                                        <button type="submit" class="btn btn-outline-danger">\n' +
-                    '                                            Obriši\n' +
-                    '                                        </button>\n' +
-                    '                                    </form>')
-            });
-
-            $(".edit").click(function () {
-                let id = $(this).data("id");
-                let url = '{{ route("admin.languages.edit", ":id") }}';
-                url = url.replace(':id', id);
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function (data) {
-                        $(".modal2cont").html(data);
-                        lfm('lfm3', 'file', {prefix: route_prefix});
-                    },
-                    error: function () {
-                        alert('Some error occurred, please try again.');
-                    }
+            $(document).ready(function () {
+                $(".delete").click(function () {
+                    let id = $(this).data("id");
+                    let url = '{{ route("admin.languages.destroy", ":id") }}';
+                    url = url.replace(':id', id);
+                    $(".modal-footer").html('<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Odustani</button><form class="d-inline pull-right" action="' + url + '" method="POST">\n' +
+                        '                                        @csrf\n' +
+                        '                                        @method("DELETE")\n' +
+                        '                                        <button type="submit" class="btn btn-outline-danger">\n' +
+                        '                                            Obriši\n' +
+                        '                                        </button>\n' +
+                        '                                    </form>')
                 });
 
+                $(".edit").click(function () {
+                    let id = $(this).data("id");
+                    let url = '{{ route("admin.languages.edit", ":id") }}';
+                    url = url.replace(':id', id);
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data) {
+                            $(".modal2cont").html(data);
+                            lfm('lfm4', 'file', {prefix: route_prefix});
+                            tinymce.remove('#textarea-input');
+                            tinymce.init(editor_config);
+                        },
+                        error: function () {
+                            alert('Some error occurred, please try again.');
+                        }
+                    });
+                });
             });
         }
     </script>
