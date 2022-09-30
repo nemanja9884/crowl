@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
@@ -37,6 +38,7 @@ class LanguageController extends Controller
     {
         $this->validate($request, array(
             'name' => 'required|max:255',
+            'lang_code' => 'required',
             'image' => 'required',
             'status' => 'required',
             'sort' => 'required',
@@ -44,6 +46,7 @@ class LanguageController extends Controller
 
         $language = Language::create([
             'name' => $request->input('name'),
+            'lang_code' => $request->input('lang_code'),
             'content' => $request->input('content'),
             'image' => $request->input('image'),
             'status' => $request->input('status'),
@@ -91,13 +94,15 @@ class LanguageController extends Controller
     {
         $this->validate($request, array(
             'name' => 'required|max:255',
+            'lang_code' => 'required',
             'status' => 'required',
-            'sort' => 'required',
+            'sort' => 'required'
         ));
 
         $language = Language::find($id);
         $language->update([
             'name' => $request->input('name'),
+            'lang_code' => $request->input('lang_code'),
             'content' => $request->input('content'),
             'image' => $request->input('image') ?? $language->image,
             'status' => $request->input('status'),
@@ -106,18 +111,18 @@ class LanguageController extends Controller
 
         Session::flash('message', 'Successfully updated language ' . $language->name);
         Session::flash('alert-class', 'success');
-
         return redirect()->route('admin.languages.index');
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Language $language
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Language $language)
     {
-        //
+        $language->delete();
+        Session::flash('message', 'Successfully delete language ' . $language->name);
+        Session::flash('alert-class', 'success');
+        return redirect()->route('admin.languages.index');
     }
 }

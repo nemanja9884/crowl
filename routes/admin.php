@@ -22,5 +22,6 @@ Route::get('file-manager', function () {
     return view('admin.file-manager.index');
 });
 Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
+Route::resource('translations', App\Http\Controllers\Admin\TranslationController::class);
 
 

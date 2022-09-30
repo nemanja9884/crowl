@@ -16,6 +16,12 @@
         </div>
 
         <div class="col form-group">
+            <label for="lang_code" class="form-control-label">Language code</label>
+            <input type="text" id="lang_code" name="lang_code"
+                   placeholder="Language code" class="form-control" value="{{$language->lang_code}}">
+        </div>
+
+        <div class="col form-group">
             <label for="textarea-input" class="form-control-label">Content</label>
             <textarea name="content" id="textarea-input" rows="3"
                       placeholder="content..."
@@ -58,16 +64,16 @@
         @if($language->image)
             <div class="col-md-12 text-center" style="margin: 0 auto;">
                 <img src="{{$language->image}}" class="img-thumbnail" alt="..."
-                     style="width: 200px; height: 200px; object-fit: cover; margin: 0 auto;">
+                     style="width: 200px; margin: 0 auto;">
             </div>
         @endif
         <div class="card-footer col-12 text-center">
             <div class="modal-footer1">
                 <button type="submit" class="btn btn-primary btn-sm">
-                    <i class="fa fa-dot-circle-o"></i> Sačuvaj
+                    <i class="fa fa-dot-circle-o"></i> Save
                 </button>
                 <button type="reset" class="btn btn-danger btn-sm" data-dismiss="modal">
-                    <i class="fa fa-ban"></i> Izađi
+                    <i class="fa fa-ban"></i> Close
                 </button>
             </div>
         </div>

@@ -15,8 +15,8 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="{{route('admin.index')}}"> <i class="menu-icon fa fa-dashboard"></i>Kontrolna tabla </a>
-                        <a href="{{route('index')}}"> <i class="menu-icon fa fa-sitemap"></i>Web mesto </a>
+                        <a href="{{route('admin.index')}}"> <i class="menu-icon fa fa-dashboard"></i>Admin dashboard </a>
+                        <a href="{{route('index')}}"> <i class="menu-icon fa fa-sitemap"></i>Website </a>
                     </li>
                     <h3 class="menu-title">Admin tools</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">
@@ -49,17 +49,17 @@
                     <li>
                         <a href="/admin/file-manager"> <i class="menu-icon fa fa-files-o"></i>File manager</a>
                     </li>
-                    <li class="menu-item-has-children dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Interakcija korisnika</a>
-                        <ul class="sub-menu children dropdown-menu">
-                            <li><i class="fa fa-money"></i><a href="#">Transakcije</a></li>
-                            <li><i class="fa fa-user"></i><a href="#">Korisnici</a></li>
-                            <li><i class="fa fa-user"></i><a href="#">Pretplatnici</a></li>
-                        </ul>
-                    </li>
-                    <h3 class="menu-title">Podešavanja</h3><!-- /.menu-title -->
+{{--                    <li class="menu-item-has-children dropdown">--}}
+{{--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Interakcija korisnika</a>--}}
+{{--                        <ul class="sub-menu children dropdown-menu">--}}
+{{--                            <li><i class="fa fa-money"></i><a href="#">Transakcije</a></li>--}}
+{{--                            <li><i class="fa fa-user"></i><a href="#">Korisnici</a></li>--}}
+{{--                            <li><i class="fa fa-user"></i><a href="#">Pretplatnici</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
+                    <h3 class="menu-title">Settings</h3><!-- /.menu-title -->
                     <li>
-                        <a href="#"> <i class="menu-icon fa fa-cogs"></i>Podešavanja strana</a>
+                        <a href="{{route('admin.translations.index')}}"> <i class="menu-icon fa fa-language"></i>Translations</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
