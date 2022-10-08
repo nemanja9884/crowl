@@ -36,9 +36,4 @@ class HomeController extends Controller
     {
         return view('web.index_language', ['language' => Language::find($id)]);
     }
-
-    public function startGame(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        return view('web.game');
-    }
 }

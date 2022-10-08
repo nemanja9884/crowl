@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('negative_answers')->default(0)->index();
             $table->integer('total_answers')->default(0)->index();
             $table->decimal('word_reliability')->default(0)->index();
-            $table->bigInteger('external_id');
+            $table->bigInteger('external_id')->nullable();
             $table->timestamps();
         });
     }

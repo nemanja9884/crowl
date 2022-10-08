@@ -18,9 +18,9 @@ return new class extends Migration
             $table->integer('language_id');
             $table->bigInteger('sentence_id')->index();
             $table->integer('user_id')->nullable();
-            $table->string('ip_adress')->nullable();
-            $table->enum('positive_answer', [0, 1])->default(0);
-            $table->enum('negative_answer', [0, 1])->default(0);
+            $table->string('ip_address')->nullable();
+            $table->boolean('positive_answer')->default(0);
+            $table->boolean('negative_answer')->default(0);
             $table->string('negative_reasons')->nullable();
             $table->string('sentence_bad_part')->nullable();
             $table->timestamps();
