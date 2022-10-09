@@ -71,6 +71,7 @@ class GameController extends Controller
 
     public function answerLevel1(Request $request, $code, $level): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|null
     {
+        toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         if (isset($request->noneOfThem)) {
             $request->noneOfThem = explode(',', $request->noneOfThem);
@@ -104,6 +105,7 @@ class GameController extends Controller
 
     public function answerLevel2(Request $request, $code, $level)
     {
+        toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         $answer = Answer::find($request->input('answerId'));
@@ -141,6 +143,7 @@ class GameController extends Controller
 
     public function answerLevel3(Request $request, $code, $level)
     {
+        toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         $answer = Answer::find($request->input('answerId'));

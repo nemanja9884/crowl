@@ -52,6 +52,7 @@
                     let problematicWords = $('#problematicWords');
                     problematicWords.val(str);
                     if(problematicWords.val() === "") {
+                        e.preventDefault();
                         alert('Please select problematic words, then press button "choose"');
                     } else {
                         $("#gameForm").submit();
