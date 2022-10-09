@@ -9,7 +9,7 @@
             <div class="card-body text-left">
                 <h5 class="card-title">Game intro</h5>
                 <p class="card-text">You can choose between 3 levels of game. 1,2 or 3 level, or you can take 1 + 2 or 2
-                     3. Good luck!</p>
+                     3 or 1 + 2 + 3. Good luck!</p>
                 <form action="{{route('startGame', $language->lang_code)}}" method="POST">
                     @csrf
                     @method('POST')
@@ -42,6 +42,12 @@
                         <input class="form-check-input" type="radio" name="level" id="gameLevel" value="2+3">
                         <label class="form-check-label" for="gameLevel">
                             2 + 3
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1+2+3">
+                        <label class="form-check-label" for="gameLevel">
+                            1 + 2 + 3
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Start Game!</button>

@@ -25,6 +25,8 @@ Route::get('language/{id}/{code}', [App\Http\Controllers\HomeController::class, 
 Route::get('{code}/gameIntro', [App\Http\Controllers\GameController::class, 'gameIntro'])->name('gameIntro');
 Route::post('{code}/startGame', [App\Http\Controllers\GameController::class, 'startGame'])->name('startGame');
 Route::post('{code}/answer-level-1/{level}', [App\Http\Controllers\GameController::class, 'answerLevel1'])->name('answerLevel1');
+Route::post('{code}/answer-level-2/{level}', [App\Http\Controllers\GameController::class, 'answerLevel2'])->name('answerLevel2');
+Route::post('{code}/answer-level-3/{level}', [App\Http\Controllers\GameController::class, 'answerLevel3'])->name('answerLevel3');
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['admin']], function () {

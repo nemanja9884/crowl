@@ -25,8 +25,8 @@
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Choose</button>
-                    <button type="submit" name="noneOfThem" value="[{{$firstSentence->id}}, {{$secondSentence->id}}]" class="btn btn-primary mt-3">None of them</button>
-                    <button type="submit" name="bothOfThem" value="bothOfThem" class="btn btn-primary mt-3">Both of them</button>
+                    <button type="submit" name="noneOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn btn-primary mt-3">None of them</button>
+                    <button type="submit" name="bothOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn btn-primary mt-3">Both of them</button>
                 </form>
             </div>
         </div>
