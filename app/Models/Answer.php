@@ -16,6 +16,7 @@ class Answer extends Model
     public static function store($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
     {
         $user = Auth::guard('web')->user();
+        // Check if user has answered once on this
         return Answer::create([
             'language_id' => $langId,
             'sentence_id' => $sentenceId,
