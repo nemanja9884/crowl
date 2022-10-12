@@ -26,60 +26,70 @@ class GameController extends Controller
     {
         $language = Language::where('lang_code', $code)->first();
         $user = Auth::guard('web')->user();
-        $firstSentence = $this->sentence('first', $user, $language->id, $level, 'ASC');
-        if ($firstSentence) {
-            $secondSentence = $this->sentence('second', $user, $language->id, $level, 'DESC', $firstSentence->id);
-        }
 
         switch ($level) {
             case '1':
             case '1+2':
             case '1+2+3':
+                $firstSentence = $this->gameData($user, $language->id, $level, 'ASC', 'first');
+                if ($firstSentence) {
+                    $secondSentence = $this->gameData($user, $language->id, $level, 'DESC', $firstSentence->id, 'second');
+                }
+
                 return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence ?? null, 'secondSentence' => $secondSentence ?? null]);
             case '2':
             case '2+3':
-                break;
             case '3':
-
-                break;
+                $answers = $this->gameData($user, $language->id, $level);
+                return $this->level($level == 3 ? 3 : 2, $language, $level, $answers[0]->sentence_id, $answers->pluck('id')->toArray(), $answers[0]->id);
         }
     }
 
-    public function sentence($sentence, $user, $langId, $level, $sort = 'ASC', $firstSentenceId = null)
+    public function level($bladeNumber, $language, $level, $sentenceAnswer, $answersIds, $answerId)
     {
-        $sentenceDb = Sentence::where('language_id', $langId);
+        $sentence = Sentence::find($sentenceAnswer);
+        return view('web.game-level' . $bladeNumber, ['language' => $language, 'level' => $level, 'sentence' => $sentence, 'answersIds' => $answersIds, 'answerId' => $answerId]);
+    }
 
-        if ($sentence == 'second') {
-            $sentenceDb->where('id', '!=', $firstSentenceId);
-        }
-
-        if ($user) {
-            $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            });
-        } else {
-            $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
-                $q->where('ip_address', request()->ip());
-            });
-        }
-
+    public function gameData($user, $langId, $level, $sort = 'ASC', $firstSentenceId = null, $sentenceNum = null)
+    {
         switch ($level) {
+            case '1':
+            case '1+2':
+            case '1+2+3':
+                $sentenceDb = Sentence::where('language_id', $langId);
+
+                if ($sentenceNum == 'second') {
+                    $sentenceDb->where('id', '!=', $firstSentenceId);
+                }
+
+                if ($user) {
+                    $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
+                        $q->where('user_id', $user->id);
+                    });
+                } else {
+                    $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
+                        $q->where('ip_address', request()->ip());
+                    });
+                }
+
+                return $sentenceDb->orderBy('word_reliability', $sort)->limit(100)->get()->random();
             case '2':
             case '2+3':
-                $sentenceDb->where(function ($q) {
+                return Answer::where(function ($q) {
                     $q->where('positive_answer', 1);
                     $q->orWhere('negative_answer', 1);
-                });
-
-                $sentenceDb->where('negative_reasons', null)->where('sentence_bad_part', null);
-                break;
+                })
+                    ->where('negative_reasons', null)
+                    ->where('sentence_bad_part', null)
+                    ->limit(2)->get();
             case '3';
-                $sentenceDb->where('negative_reasons', '!=', null)->where('sentence_bad_part', null);
-                break;
+                return Answer::where('negative_reasons', '!=', null)
+                    ->where('sentence_bad_part', null)
+                    ->limit(2)->get();
         }
-
-        return $sentenceDb->orderBy('word_reliability', $sort)->limit(100)->get()->random();
     }
+
 
     public function answerLevel1(Request $request, $code, $level): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|null
     {
@@ -102,7 +112,7 @@ class GameController extends Controller
             if ($level == '1') {
                 return $this->game($code, $level);
             } else {
-                return $this->level2($language, $level, $request->bothOfThem[0], $answersIds, $answersIds[0]);
+                return $this->level(2, $language, $level, $request->bothOfThem[0], $answersIds, $answersIds[0]);
             }
         } else {
             $answer = Answer::store($language->id, $request->input('answer'), 1, 0);
@@ -110,7 +120,7 @@ class GameController extends Controller
             if ($level == '1') {
                 return $this->game($code, $level);
             } else {
-                return $this->level2($language, $level, $request->input('answer'), $answer->id, $answer->id);
+                return $this->level(2, $language, $level, $request->input('answer'), $answer->id, $answer->id);
             }
         }
     }
@@ -130,27 +140,21 @@ class GameController extends Controller
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
         if (is_array($answersIds) && $answersIds[0] == $request->input('answerId')) {
             $sentenceAnswer = Answer::find($answersIds[1]);
-            return $this->level2($language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
+            return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } else {
             if ($level == '2' || $level == '1+2') {
                 return $this->game($code, $level);
             } elseif ($level == '2+3' || $level == '1+2+3') {
                 if (is_array($answersIds)) {
                     $sentenceAnswer = Answer::find($answersIds[0]);
-                    return $this->level3($language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[0]);
+                    return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[0]);
                 } else {
                     $sentenceAnswer = Answer::find($answersIds);
-                    return $this->level3($language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds);
+                    return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds);
                 }
 
             }
         }
-    }
-
-    public function level2($language, $level, $sentenceAnswer, $answersIds, $answerId): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        $sentence = Sentence::find($sentenceAnswer);
-        return view('web.game-level2', ['language' => $language, 'level' => $level, 'sentence' => $sentence, 'answersIds' => $answersIds, 'answerId' => $answerId]);
     }
 
     public function answerLevel3(Request $request, $code, $level)
@@ -165,17 +169,11 @@ class GameController extends Controller
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
         if (is_array($answersIds) && $answersIds[0] == $request->input('answerId')) {
             $sentenceAnswer = Answer::find($answersIds[1]);
-            return $this->level3($language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
+            return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } else {
             // If user answered on every question in level 3, let im play again level that he choose
             return $this->game($code, $level);
         }
-    }
-
-    public function level3($language, $level, $sentenceAnswer, $answersIds, $answerId): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
-    {
-        $sentence = Sentence::find($sentenceAnswer);
-        return view('web.game-level3', ['language' => $language, 'level' => $level, 'sentence' => $sentence, 'answersIds' => $answersIds, 'answerId' => $answerId]);
     }
 }
 

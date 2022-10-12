@@ -16,14 +16,26 @@ class Answer extends Model
     public static function store($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
     {
         $user = Auth::guard('web')->user();
-        // Check if user has answered once on this
-        return Answer::create([
-            'language_id' => $langId,
-            'sentence_id' => $sentenceId,
-            'user_id' => $user?->id,
-            'ip_address' => Request()->ip(),
-            'positive_answer' => $positiveAnswer,
-            'negative_answer' => $negativeAnswer,
-        ]);
+        $answer = Answer::where(['sentence_id' => $sentenceId, 'language_id' => $langId]);
+        if($user) {
+            $answer->where('user_id', $user->id);
+        } else {
+            $answer->where('ip_address', Request()->ip());
+        }
+
+        $answer = $answer->first();
+        if(!$answer) {
+            return Answer::create([
+                'language_id' => $langId,
+                'sentence_id' => $sentenceId,
+                'user_id' => $user?->id,
+                'ip_address' => Request()->ip(),
+                'positive_answer' => $positiveAnswer,
+                'negative_answer' => $negativeAnswer,
+            ]);
+        } else {
+            return $answer;
+        }
+
     }
 }
