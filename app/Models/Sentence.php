@@ -15,4 +15,9 @@ class Sentence extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    public function scopeFinished($query, $value)
+    {
+        return $query->where('finished', $value);
+    }
 }

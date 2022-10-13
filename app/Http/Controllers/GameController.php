@@ -7,7 +7,6 @@ use App\Models\Language;
 use App\Models\Sentence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Lang;
 
 class GameController extends Controller
 {
@@ -36,11 +35,18 @@ class GameController extends Controller
                     $secondSentence = $this->gameData($user, $language->id, $level, 'DESC', $firstSentence->id, 'second');
                 }
 
-                return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence ?? null, 'secondSentence' => $secondSentence ?? null]);
+                if (!$firstSentence || !$secondSentence) {
+                    return redirect()->route('noGames');
+                }
+
+                return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence ?? null, 'secondSentence' => $secondSentence]);
             case '2':
             case '2+3':
             case '3':
                 $answers = $this->gameData($user, $language->id, $level);
+                if(count($answers) < 1) {
+                    return redirect()->route('noGames');
+                }
                 return $this->level($level == 3 ? 3 : 2, $language, $level, $answers[0]->sentence_id, $answers->pluck('id')->toArray(), $answers[0]->id);
         }
     }
@@ -57,7 +63,7 @@ class GameController extends Controller
             case '1':
             case '1+2':
             case '1+2+3':
-                $sentenceDb = Sentence::where('language_id', $langId);
+                $sentenceDb = Sentence::where('language_id', $langId)->finished('0');
 
                 if ($sentenceNum == 'second') {
                     $sentenceDb->where('id', '!=', $firstSentenceId);
@@ -73,7 +79,12 @@ class GameController extends Controller
                     });
                 }
 
-                return $sentenceDb->orderBy('word_reliability', $sort)->limit(100)->get()->random();
+                $sentenceDb = $sentenceDb->orderBy('word_reliability', $sort)->limit(100)->get();
+                if (count($sentenceDb) > 0) {
+                    return $sentenceDb->random();
+                } else {
+                    return false;
+                }
             case '2':
             case '2+3':
                 return Answer::where(function ($q) {
@@ -90,8 +101,7 @@ class GameController extends Controller
         }
     }
 
-
-    public function answerLevel1(Request $request, $code, $level): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|null
+    public function answerLevel1(Request $request, $code, $level)
     {
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();

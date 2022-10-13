@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Answer extends Model
 {
@@ -17,15 +17,15 @@ class Answer extends Model
     {
         $user = Auth::guard('web')->user();
         $answer = Answer::where(['sentence_id' => $sentenceId, 'language_id' => $langId]);
-        if($user) {
+        if ($user) {
             $answer->where('user_id', $user->id);
         } else {
             $answer->where('ip_address', Request()->ip());
         }
 
         $answer = $answer->first();
-        if(!$answer) {
-            return Answer::create([
+        if (!$answer) {
+            $answer = Answer::create([
                 'language_id' => $langId,
                 'sentence_id' => $sentenceId,
                 'user_id' => $user?->id,
@@ -33,9 +33,23 @@ class Answer extends Model
                 'positive_answer' => $positiveAnswer,
                 'negative_answer' => $negativeAnswer,
             ]);
+
+            self::checkSentenceDiff($sentenceId);
+
+            return $answer;
         } else {
             return $answer;
         }
 
+    }
+
+    public static function checkSentenceDiff($sentenceId)
+    {
+        $positiveAnswers = DB::select(DB::raw("SELECT sum(positive_answer) as positive_answer from answers where sentence_id = $sentenceId"));
+        $negativeAnswers = DB::select(DB::raw("SELECT sum(negative_answer) as negative_answer from answers where sentence_id = $sentenceId"));
+        $answersDiff = abs($positiveAnswers[0]->positive_answer - $negativeAnswers[0]->negative_answer);
+        if($answersDiff >= 3) {
+            Sentence::where('id', $sentenceId)->update(['finished' => 1]);
+        }
     }
 }

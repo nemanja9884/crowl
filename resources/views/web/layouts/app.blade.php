@@ -25,7 +25,7 @@
 
     @include('web.layouts.footer')
 </div>
-@toastr_render
+
 @yield('javascript')
 </body>
 </html>

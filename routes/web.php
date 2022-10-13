@@ -19,7 +19,7 @@ Route::get('/welcome', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+Route::get('home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('language/{id}/{code}', [App\Http\Controllers\HomeController::class, 'languageIndex'])->name('languageIndex');
 Route::get('{code}/gameIntro', [App\Http\Controllers\GameController::class, 'gameIntro'])->name('gameIntro');
@@ -27,6 +27,9 @@ Route::post('{code}/startGame', [App\Http\Controllers\GameController::class, 'st
 Route::post('{code}/answer-level-1/{level}', [App\Http\Controllers\GameController::class, 'answerLevel1'])->name('answerLevel1');
 Route::post('{code}/answer-level-2/{level}', [App\Http\Controllers\GameController::class, 'answerLevel2'])->name('answerLevel2');
 Route::post('{code}/answer-level-3/{level}', [App\Http\Controllers\GameController::class, 'answerLevel3'])->name('answerLevel3');
+Route::get('no-games', function () {
+    return view('web.no-games');
+})->name('noGames');
 
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['admin']], function () {
