@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\AnswerDetail;
 use App\Models\Language;
 use App\Models\Sentence;
 use Illuminate\Http\Request;
@@ -51,10 +52,21 @@ class GameController extends Controller
         }
     }
 
-    public function level($bladeNumber, $language, $level, $sentenceAnswer, $answersIds, $answerId)
+    public function level($bladeNumber, $language, $level, $sentenceAnswer, $answersIds, $answerId, $reasonArrayKey = null)
     {
         $sentence = Sentence::find($sentenceAnswer);
-        return view('web.game-level' . $bladeNumber, ['language' => $language, 'level' => $level, 'sentence' => $sentence, 'answersIds' => $answersIds, 'answerId' => $answerId]);
+        $data = ['language' => $language, 'level' => $level, 'sentence' => $sentence, 'answersIds' => $answersIds, 'answerId' => $answerId];
+        if($bladeNumber == 3) {
+            $reasons = AnswerDetail::where('answer_id', $answerId)->pluck('id')->toArray();
+            $data['reasons'] = $reasons;
+            if($reasonArrayKey) {
+                $data['reasonId'] = $reasonArrayKey;
+            } else {
+                $data['reasonId'] = $reasons[0];
+            }
+        }
+
+        return view('web.game-level' . $bladeNumber, $data);
     }
 
     public function gameData($user, $langId, $level, $sort = 'ASC', $firstSentenceId = null, $sentenceNum = null)
@@ -143,9 +155,9 @@ class GameController extends Controller
         $answer = Answer::find($request->input('answerId'));
 
         $reasons = $request->input('answer');
-        $reasons = implode(',', $reasons);
-        $answer->negative_reasons = $reasons;
-        $answer->save();
+        foreach ($reasons as $reason) {
+            AnswerDetail::store($language->id, $answer->id, $reason);
+        }
 
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
         if (is_array($answersIds) && $answersIds[0] == $request->input('answerId')) {
@@ -172,18 +184,33 @@ class GameController extends Controller
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
-        $answer = Answer::find($request->input('answerId'));
+
+        $answer = AnswerDetail::find($request->input('reasonId'));
         $answer->sentence_bad_part = $request->input('problematicWords');
         $answer->save();
 
+        $reasons = $request->input('reasons');
+        $lastElement = end($reasons);
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
-        if (is_array($answersIds) && $answersIds[0] == $request->input('answerId')) {
-            $sentenceAnswer = Answer::find($answersIds[1]);
-            return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
-        } else {
-            // If user answered on every question in level 3, let im play again level that he choose
-            return $this->game($code, $level);
+        return $this->level3Reasons($reasons, $lastElement, $language, $level, $answersIds, $request, $code);
+    }
+
+    public function level3Reasons($reasons, $lastElement, $language, $level, $answersIds, $request, $code)
+    {
+        foreach($reasons as $key => $value) {
+            if($value == $lastElement) {
+                if(is_array($answersIds) && $answersIds[1] == $request->input('answerId')) {
+                    return $this->game($code, $level);
+                }
+                $sentenceAnswer = Answer::find(is_array($answersIds) ? $answersIds[1] : $answersIds);
+                return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, is_array($answersIds) ? $answersIds[1] : $answersIds);
+            } elseif($value == $request->input('reasonId')) {
+                $sentenceAnswer = Answer::find($request->input('answerId'));
+                return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $request->input('answerId'), $reasons[$key + 1]);
+            }
         }
+
+        return null;
     }
 }
 

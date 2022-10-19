@@ -14,6 +14,7 @@
                     <label>Why not this one?</label>
                     <p id="selectable-sentence">{{$sentence->sentence}}</p>
                     <input type="hidden" name="answerId" value="{{$answerId}}"/>
+                    <input type="hidden" name="reasonId" value="{{$reasonId}}"/>
                     @if(is_array($answersIds))
                         @foreach($answersIds as $item)
                             <input type="hidden" name="answersIds[]" value="{{$item}}"/>
@@ -21,6 +22,9 @@
                     @else
                         <input type="hidden" name="answersIds" value="{{$answersIds}}"/>
                     @endif
+                    @foreach($reasons as $reason)
+                        <input type="hidden" name="reasons[]" value="{{$reason}}"/>
+                    @endforeach
                     <input type="hidden" name="problematicWords" id="problematicWords" />
                     <button id="submit" class="btn btn-primary mt-3">Choose</button>
                     <button id="removeBtn" class="btn btn-primary mt-3">Remove markers</button>

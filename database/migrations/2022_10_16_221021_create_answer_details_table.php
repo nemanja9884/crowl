@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('answers', function (Blueprint $table) {
+        Schema::create('answer_details', function (Blueprint $table) {
             $table->id();
             $table->integer('language_id');
-            $table->bigInteger('sentence_id')->index();
-            $table->integer('user_id')->nullable();
-            $table->string('ip_address')->nullable();
-            $table->boolean('positive_answer')->default(0);
-            $table->boolean('negative_answer')->default(0);
+            $table->bigInteger('answer_id')->index();
+            $table->string('reason')->nullable();
+            $table->string('sentence_bad_part')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('answer_details');
     }
 };
