@@ -13,6 +13,11 @@ class Answer extends Model
 
     protected $fillable = ['id', 'language_id', 'sentence_id', 'user_id', 'ip_address', 'positive_answer', 'negative_answer', 'created_at', 'updated_at'];
 
+    public function answersDetails(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AnswerDetail::class);
+    }
+
     public static function store($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
     {
         $user = Auth::guard('web')->user();

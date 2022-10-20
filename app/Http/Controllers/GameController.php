@@ -43,12 +43,23 @@ class GameController extends Controller
                 return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence ?? null, 'secondSentence' => $secondSentence]);
             case '2':
             case '2+3':
-            case '3':
                 $answers = $this->gameData($user, $language->id, $level);
-                if(count($answers) < 1) {
+                if (count($answers) < 1) {
                     return redirect()->route('noGames');
                 }
                 return $this->level($level == 3 ? 3 : 2, $language, $level, $answers[0]->sentence_id, $answers->pluck('id')->toArray(), $answers[0]->id);
+            case '3':
+                $answers = $this->gameData($user, $language->id, $level);
+                if (count($answers) < 1) {
+                    return redirect()->route('noGames');
+                } elseif (count($answers) == 1) {
+                    $answers = $answers[0];
+                    $sentenceAnswer = Answer::find($answers);
+                } else {
+                    $sentenceAnswer = Answer::find($answers[0]);
+                }
+
+                return $this->level($level == 3 ? 3 : 2, $language, $level, $sentenceAnswer->sentence_id, $answers, is_array($answers) ? $answers[0] : $answers);
         }
     }
 
@@ -56,10 +67,10 @@ class GameController extends Controller
     {
         $sentence = Sentence::find($sentenceAnswer);
         $data = ['language' => $language, 'level' => $level, 'sentence' => $sentence, 'answersIds' => $answersIds, 'answerId' => $answerId];
-        if($bladeNumber == 3) {
-            $reasons = AnswerDetail::where('answer_id', $answerId)->pluck('id')->toArray();
+        if ($bladeNumber == 3) {
+            $reasons = AnswerDetail::where('answer_id', $answerId)->whereNull('sentence_bad_part')->pluck('id')->toArray();
             $data['reasons'] = $reasons;
-            if($reasonArrayKey) {
+            if ($reasonArrayKey) {
                 $data['reasonId'] = $reasonArrayKey;
             } else {
                 $data['reasonId'] = $reasons[0];
@@ -102,14 +113,11 @@ class GameController extends Controller
                 return Answer::where(function ($q) {
                     $q->where('positive_answer', 1);
                     $q->orWhere('negative_answer', 1);
-                })
-                    ->where('negative_reasons', null)
-                    ->where('sentence_bad_part', null)
-                    ->limit(2)->get();
+                })->whereDoesntHave('answersDetails')->limit(2)->get();
             case '3';
-                return Answer::where('negative_reasons', '!=', null)
-                    ->where('sentence_bad_part', null)
-                    ->limit(2)->get();
+                return Answer::whereHas('answersDetails', function ($q) use ($user) {
+                    $q->whereNull('sentence_bad_part');
+                })->limit(2)->pluck('id')->toArray();
         }
     }
 
@@ -197,14 +205,15 @@ class GameController extends Controller
 
     public function level3Reasons($reasons, $lastElement, $language, $level, $answersIds, $request, $code)
     {
-        foreach($reasons as $key => $value) {
-            if($value == $lastElement) {
-                if(is_array($answersIds) && $answersIds[1] == $request->input('answerId')) {
+        foreach ($reasons as $key => $value) {
+            if ($value == $lastElement) {
+                if ((is_array($answersIds) && $answersIds[1] == $request->input('answerId')) || !is_array($answersIds)) {
                     return $this->game($code, $level);
                 }
+
                 $sentenceAnswer = Answer::find(is_array($answersIds) ? $answersIds[1] : $answersIds);
                 return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, is_array($answersIds) ? $answersIds[1] : $answersIds);
-            } elseif($value == $request->input('reasonId')) {
+            } elseif ($value == $request->input('reasonId')) {
                 $sentenceAnswer = Answer::find($request->input('answerId'));
                 return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $request->input('answerId'), $reasons[$key + 1]);
             }
