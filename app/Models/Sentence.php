@@ -16,6 +16,11 @@ class Sentence extends Model
         return $this->hasMany(Answer::class);
     }
 
+    public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id', 'id');
+    }
+
     public function scopeFinished($query, $value)
     {
         return $query->where('finished', $value);

@@ -23,5 +23,5 @@ Route::get('file-manager', function () {
 });
 Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
 Route::resource('translations', App\Http\Controllers\Admin\TranslationController::class);
-
-
+Route::resource('sentences', App\Http\Controllers\Admin\SentenceController::class);
+Route::post('sentences/import', [App\Http\Controllers\Admin\SentenceController::class, 'import'])->name('sentences.import');
