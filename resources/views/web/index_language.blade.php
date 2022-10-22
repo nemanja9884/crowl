@@ -7,9 +7,13 @@
 
         {!! $language->content !!}
 
-        <a href="{{route('login')}}" type="button" class="btn btn-primary">Login</a>
-        <a href="{{route('register')}}" type="button" class="btn btn-success">Register</a>
-        <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary">Continue as guest</a>
-
+        @guest
+            <a href="{{route('login')}}" type="button" class="btn btn-primary">Login</a>
+            <a href="{{route('register')}}" type="button" class="btn btn-success">Register</a>
+            <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary">Continue as
+                guest</a>
+        @else
+            <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-primary">Start game</a>
+        @endguest
     </main>
 @endsection

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('sentences', function (Blueprint $table) {
             $table->id();
             $table->integer('language_id');
-            $table->string('sentence')->index();
+            $table->longText('sentence');
             $table->integer('positive_answers')->default(0)->index();
             $table->integer('negative_answers')->default(0)->index();
             $table->integer('total_answers')->default(0)->index();

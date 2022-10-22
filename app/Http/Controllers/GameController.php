@@ -75,6 +75,7 @@ class GameController extends Controller
             } else {
                 $data['reasonId'] = $reasons[0];
             }
+            $data['answerDetail'] = AnswerDetail::find($data['reasonId']);
         }
 
         return view('web.game-level' . $bladeNumber, $data);
@@ -125,24 +126,24 @@ class GameController extends Controller
     {
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
-        if (isset($request->noneOfThem)) {
-            $request->noneOfThem = explode(',', $request->noneOfThem);
-            foreach ($request->noneOfThem as $none) {
-                Answer::store($language->id, $none, 0, 1);
+        if (isset($request->bothOfThem)) {
+            $request->bothOfThem = explode(',', $request->bothOfThem);
+            foreach ($request->bothOfThem as $both) {
+                Answer::store($language->id, $both, 1, 0);
             }
             return $this->game($code, $level);
-        } elseif (isset($request->bothOfThem)) {
-            $request->bothOfThem = explode(',', $request->bothOfThem);
+        } elseif (isset($request->noneOfThem)) {
+            $request->noneOfThem = explode(',', $request->noneOfThem);
             $answersIds = [];
-            foreach ($request->bothOfThem as $both) {
-                $answer = Answer::store($language->id, $both, 1, 0);
+            foreach ($request->noneOfThem as $none) {
+                $answer = Answer::store($language->id, $none, 0, 1);
                 $answersIds [] = $answer->id;
             }
 
             if ($level == '1') {
                 return $this->game($code, $level);
             } else {
-                return $this->level(2, $language, $level, $request->bothOfThem[0], $answersIds, $answersIds[0]);
+                return $this->level(2, $language, $level, $request->noneOfThem[0], $answersIds, $answersIds[0]);
             }
         } else {
             $answer = Answer::store($language->id, $request->input('answer'), 1, 0);

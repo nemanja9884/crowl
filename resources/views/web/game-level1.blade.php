@@ -4,21 +4,22 @@
     <main class="px-3">
         <div class="card color-black">
             <div class="card-header">
-                Question
+                LEVEL 1
+                <a href="{{route('gameIntro', $language->lang_code)}}" class="btn btn-secondary float-right">Level choose</a>
             </div>
             <div class="card-body">
                 <form action="{{route('answerLevel1', ['code' => $language->lang_code, 'level' => $level])}}" method="POST">
                     @csrf
                     @method('POST')
-                    <label>Which sentence would you choose for teaching English?</label>
-                    <div class="form-check">
+                    <h4>Which sentence would you choose for teaching English?</h4>
+                    <div class="form-check sentence">
                         <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$firstSentence->id}}">
                         <label class="form-check-label" for="answer">
                             {{$firstSentence->sentence}}
                         </label>
                     </div>
 
-                    <div class="form-check">
+                    <div class="form-check sentence">
                         <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$secondSentence->id}}">
                         <label class="form-check-label" for="answer">
                             {{$secondSentence->sentence}}

@@ -73,3 +73,21 @@ html {
 li {
     margin-right: 10px;
 }
+
+.f-size-16 {
+    font-size: 16px !important;
+}
+
+.sentence {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .sentence {
+        font-size: 20px;
+    }
+}
+
+.float-right {
+    float: right !important;
+}

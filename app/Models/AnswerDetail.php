@@ -12,19 +12,13 @@ class AnswerDetail extends Model
 
     public static function store($langId, $answerId, $reason)
     {
-//        $user = Auth::guard('web')->user();
-//        $answer = Answer::where(['sentence_id' => $sentenceId, 'language_id' => $langId]);
-//        if ($user) {
-//            $answer->where('user_id', $user->id);
-//        } else {
-//            $answer->where('ip_address', Request()->ip());
-//        }
-//
-//        $answer = $answer->first();
-        return AnswerDetail::create([
-            'language_id' => $langId,
-            'answer_id' => $answerId,
-            'reason' => $reason,
-        ]);
+        $answerDetail = AnswerDetail::where(['answer_id' => $answerId, 'language_id' => $langId, 'reason' => $reason])->first();
+        if(!$answerDetail) {
+            return AnswerDetail::create([
+                'language_id' => $langId,
+                'answer_id' => $answerId,
+                'reason' => $reason,
+            ]);
+        }
     }
 }

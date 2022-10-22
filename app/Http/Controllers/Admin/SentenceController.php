@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\SentencesImport;
 use App\Models\Language;
 use App\Models\Sentence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SentenceController extends Controller
 {
@@ -127,20 +129,12 @@ class SentenceController extends Controller
 //        ));
 
         $file = $request->file('file');
-        $file->move('storage/app', $file->getClientOriginalName());
+//        $file->move('storage/sentences', $file->getClientOriginalName());
+        $import = new SentencesImport();
+        Excel::import($import, $request->file('file'));
 
-//        Storage::disk('local')->put('sentences/sentences_' . time() . '.csv', file_get_contents($file));
-
-        //save temporarily to storage
-//        $path = $file->storeAs(storage_path('app/taki/') . 'sentences_', time() . '.csv');
-
-//        $csv = array_map('str_getcsv', file(storage_path('app/' . $path)));
-
-
-
-
-        //success message and redirect
-       // $request->session()->flash('success', 'Data was saved successfully');
+        Session::flash('message', 'Successfully imported sentences');
+        Session::flash('alert-class', 'success');
         return redirect()->route('admin.sentences.index');
     }
 }

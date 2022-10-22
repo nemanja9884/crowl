@@ -4,15 +4,16 @@
     <main class="px-3">
         <div class="card color-black">
             <div class="card-header">
-                Featured
+                LEVEL 3
+                <a href="{{route('gameIntro', $language->lang_code)}}" class="btn btn-secondary float-right">Level choose</a>
             </div>
             <div class="card-body">
                 <form id="gameForm" action="{{route('answerLevel3', ['code' => $language->lang_code, 'level' => $level])}}"
                       method="POST">
                     @csrf
                     @method('POST')
-                    <label>Why not this one?</label>
-                    <p id="selectable-sentence">{{$sentence->sentence}}</p>
+                    <h4>Tap or click where the problem is ({{$answerDetail->reason}})</h4>
+                    <p id="selectable-sentence" class="sentence">{{$sentence->sentence}}</p>
                     <input type="hidden" name="answerId" value="{{$answerId}}"/>
                     <input type="hidden" name="reasonId" value="{{$reasonId}}"/>
                     @if(is_array($answersIds))
