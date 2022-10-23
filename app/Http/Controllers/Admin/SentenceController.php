@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Imports\SentencesImport;
+use App\Jobs\SentenceImport;
 use App\Models\Language;
 use App\Models\Sentence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 
 class SentenceController extends Controller
 {
@@ -124,16 +122,16 @@ class SentenceController extends Controller
 
     public function import(Request $request)
     {
-//        $this->validate($request, array(
-//            'file' => 'required|mimes:csv',
-//        ));
+        $this->validate($request, array(
+            'file' => 'required',
+            'language_id' => 'required'
+        ));
 
         $file = $request->file('file');
-//        $file->move('storage/sentences', $file->getClientOriginalName());
-        $import = new SentencesImport();
-        Excel::import($import, $request->file('file'));
+        $file->move('sentences', $file->getClientOriginalName());
+        SentenceImport::dispatch($file->getClientOriginalName(), $request->input('language_id'))->onConnection('database');
 
-        Session::flash('message', 'Successfully imported sentences');
+        Session::flash('message', 'Your sentences will be imported soon, please be patient. Refresh page after a while to check if your sentences have been imported');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.sentences.index');
     }

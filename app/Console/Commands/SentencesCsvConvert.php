@@ -13,7 +13,7 @@ class SentencesCsvConvert extends Command
      *
      * @var string
      */
-    protected $signature = 'sentences:convert';
+    protected $signature = 'sentences:convert {file}';
 
     /**
      * The console command description.
@@ -29,7 +29,8 @@ class SentencesCsvConvert extends Command
      */
     public function handle()
     {
+        $file = $this->argument('file');
         $import = new SentencesImport();
-        Excel::import($import, file(public_path('storage/sentences/11036sentences-Pt_GDEX.csv')));
+        Excel::import($import, public_path('sentences/' . $file));
     }
 }

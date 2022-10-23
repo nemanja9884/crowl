@@ -33,6 +33,15 @@
                                 <input type="file" name="file" id="file" accept=".csv" />
                             </div>
                             <div class="form-group">
+                                <label for="language_id" class="form-control-label">Language</label>
+                                <select name="language_id" id="language_id" class="form-control" required>
+                                    <option value="0" selected>Choose language</option>
+                                    @foreach($languages as $language)
+                                        <option value="{{$language->id}}">{{$language->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-lg btn-success">Import</button>
                             </div>
                         </form>
