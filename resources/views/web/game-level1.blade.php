@@ -15,14 +15,14 @@
                     <div class="form-check sentence">
                         <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$firstSentence->id}}">
                         <label class="form-check-label" for="answer">
-                            {{$firstSentence->sentence}}
+                            {{$firstSentence->sentence}} ({{$firstSentence->word_reliability}})
                         </label>
                     </div>
 
                     <div class="form-check sentence">
                         <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$secondSentence->id}}">
                         <label class="form-check-label" for="answer">
-                            {{$secondSentence->sentence}}
+                            {{$secondSentence->sentence}} ({{$secondSentence->word_reliability}})
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Choose</button>

@@ -40,7 +40,7 @@ class GameController extends Controller
                     return redirect()->route('noGames');
                 }
 
-                return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence ?? null, 'secondSentence' => $secondSentence]);
+                return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence, 'secondSentence' => $secondSentence]);
             case '2':
             case '2+3':
                 $answers = $this->gameData($user, $language->id, $level);
@@ -103,7 +103,7 @@ class GameController extends Controller
                     });
                 }
 
-                $sentenceDb = $sentenceDb->orderBy('word_reliability', $sort)->limit(100)->get();
+                $sentenceDb = $this->gdexFn($sentenceDb);
                 if (count($sentenceDb) > 0) {
                     return $sentenceDb->random();
                 } else {
@@ -120,6 +120,18 @@ class GameController extends Controller
                     $q->whereNull('sentence_bad_part');
                 })->limit(2)->pluck('id')->toArray();
         }
+    }
+
+    public function gdexFn($sentenceDb)
+    {
+        $random = rand(1, 2);
+        if($random == 1) {
+            $sort = 'ASC';
+        } else {
+            $sort = 'DESC';
+        }
+
+        return $sentenceDb->orderBy('word_reliability', $sort)->limit(100)->get();
     }
 
     public function answerLevel1(Request $request, $code, $level)
