@@ -66,9 +66,9 @@
                         </div>
 
                         <div class="col form-group">
-                            <label for="word_reliability" class="form-control-label">Godex score</label>
+                            <label for="word_reliability" class="form-control-label">Gdex score</label>
                             <input type="number" id="word_reliability" name="word_reliability"
-                                   placeholder="Godex score" class="form-control" step="any" required>
+                                   placeholder="Gdex score" class="form-control" step="any" required>
                         </div>
 
                         <div class="card-footer col-12 text-center">
@@ -93,7 +93,7 @@
                             <tr>
                                 <th scope="col">Sentence</th>
                                 <th scope="col">Language</th>
-                                <th scope="col">Godex score</th>
+                                <th scope="col">Gdex score</th>
                                 <th scope="col">Positive answers</th>
                                 <th scope="col">Negative answers</th>
                                 <th scope="col">Finished</th>
