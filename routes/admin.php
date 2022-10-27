@@ -25,3 +25,5 @@ Route::resource('languages', App\Http\Controllers\Admin\LanguageController::clas
 Route::resource('translations', App\Http\Controllers\Admin\TranslationController::class);
 Route::resource('sentences', App\Http\Controllers\Admin\SentenceController::class);
 Route::post('sentences/import', [App\Http\Controllers\Admin\SentenceController::class, 'import'])->name('sentences.import');
+Route::get('answers', [App\Http\Controllers\Admin\AnswersController::class, 'index'])->name('answers.index');
+Route::get('answersDetails/{id}', [App\Http\Controllers\Admin\AnswersController::class, 'answerDetails'])->name('answers.details');

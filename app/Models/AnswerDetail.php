@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class AnswerDetail extends Model
 {
     use HasFactory;
+
     protected $fillable = ['id', 'language_id', 'answer_id', 'reason', 'sentence_bad_part', 'created_at', 'updated_at'];
+
+    public function answer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Answer::class, 'answer_id', 'id');
+    }
 
     public static function store($langId, $answerId, $reason)
     {

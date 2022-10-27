@@ -24,6 +24,7 @@
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-language"></i><a href="{{route('admin.languages.index')}}">Languages</a></li>
                             <li><i class="fa fa-file-word-o"></i><a href="{{route('admin.sentences.index')}}">Sentences</a></li>
+                            <li><i class="fa fa-save"></i><a href="{{route('admin.answers.index')}}">Answers</a></li>
 {{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Članci</a></li>--}}
 {{--                            <li><i class="fa fa-puzzle-piece"></i><a href="#">Dodaj članak</a></li>--}}
 {{--                            <li><i class="fa fa-folder"></i><a href="#">Proizvodi</a></li>--}}

@@ -18,6 +18,21 @@ class Answer extends Model
         return $this->hasMany(AnswerDetail::class);
     }
 
+    public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id', 'id');
+    }
+
+    public function sentence(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Sentence::class, 'sentence_id', 'id');
+    }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public static function store($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
     {
         $user = Auth::guard('web')->user();
