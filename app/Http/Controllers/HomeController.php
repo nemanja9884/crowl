@@ -34,6 +34,8 @@ class HomeController extends Controller
 
     public function languageIndex($id, $code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('web.index_language', ['language' => Language::find($id)]);
+        $language = Language::find($id);
+        app()->setLocale($language->lang_code);
+        return view('web.index_language', ['language' => $language]);
     }
 }

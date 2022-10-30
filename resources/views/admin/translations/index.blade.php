@@ -80,10 +80,10 @@
                                         <input class="styled-checkbox" id="category-{{$translation->id}}" type="checkbox">
                                         <label for="category-{{$translation->id}}"></label>
                                     </td>
-                                    <td>{{$translation->english_word}}</td>
+                                    <td>{{$translation->key}}</td>
                                     <td>{{$translation->translation}}</td>
-                                    <td>{{$translation->language->name}}</td>
-                                    <td class="d-none d-md-table-cell">{{$translation->created_at->format('d M Y H:i')}}</td>
+                                    <td>{{$translation->language}}</td>
+                                    <td class="d-none d-md-table-cell">{{\Carbon\Carbon::parse($translation->created_at)->format('d M Y H:i')}}</td>
                                     <td style="min-width: 110px;">
                                         <div class="float-right">
                                             <button class="btn btn-outline-primary btn-sm edit" data-toggle="modal"

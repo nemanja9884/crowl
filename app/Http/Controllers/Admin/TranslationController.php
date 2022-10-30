@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Fragment;
 use App\Models\Language;
 use App\Models\Translation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class TranslationController extends Controller
@@ -15,7 +17,18 @@ class TranslationController extends Controller
      */
     public function index()
     {
-        $translations = Translation::paginate(50);
+        $translations = DB::table('fragments')->paginate(50);
+        $translations->getCollection()->transform(function ($item) {
+            if (!is_array($item->text)) {
+                $item->text = json_decode($item->text, true);
+            }
+            $lang = Language::where('lang_code', array_keys($item->text)[0])->first();
+            $item->language = $lang->name;
+            $item->translation = array_values($item->text)[0];
+            $item->key = str_replace('home.', '', $item->key);
+            return $item;
+        });
+
         $languages = Language::get();
         return view('admin.translations.index', ['translations' => $translations, 'languages' => $languages]);
     }
@@ -42,15 +55,15 @@ class TranslationController extends Controller
         ));
 
         $languages = Language::get();
+
+        $fragment = new Fragment();
+        $fragment->key = 'home.' . $request->input('english_word');
         foreach ($languages as $language) {
-            if($request->input('language' . $language->id)) {
-                Translation::create([
-                    'english_word' => $request->input('english_word'),
-                    'translation' => $request->input('language' . $language->id),
-                    'language_id' => $language->id
-                ]);
+            if ($request->input('language' . $language->id)) {
+                $fragment->setTranslation('text', $language->lang_code, $request->input('language' . $language->id));
             }
         }
+        $fragment->save();
 
         Session::flash('message', 'Successfully made new translations');
         Session::flash('alert-class', 'success');
@@ -74,7 +87,10 @@ class TranslationController extends Controller
      */
     public function edit($id)
     {
-        return view('admin.translations.edit', ['translation' => Translation::find($id), 'languages' => Language::all()]);
+        $fragment = DB::table('fragments')->where('id', $id)->first();
+        $fragment->text = json_decode($fragment->text, true);
+        $fragment->key = str_replace('home.', '', $fragment->key);
+        return view('admin.translations.edit', ['translation' => $fragment, 'languages' => Language::all()]);
     }
 
     /**
@@ -91,14 +107,13 @@ class TranslationController extends Controller
             'translation' => 'required'
         ));
 
-        $translation = Translation::find($id);
-        $translation->update([
-            'english_word' => $request->input('english_word'),
-            'language_id' => $request->input('language'),
-            'translation' => $request->input('translation')
-        ]);
+        $language = Language::find($request->input('language'));
+        $fragment = Fragment::find($id);
+        $fragment->key = 'home.' . $request->input('english_word');
+        $fragment->setTranslation('text', $language->lang_code, $request->input('translation'));
+        $fragment->save();
 
-        Session::flash('message', 'Successfully updated translation for english word' . $translation->english_word);
+        Session::flash('message', 'Successfully updated translation');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.translations.index');
     }
@@ -107,10 +122,10 @@ class TranslationController extends Controller
      * @param Translation $translation
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Translation $translation)
+    public function destroy(Fragment $fragment)
     {
-        $translation->delete();
-        Session::flash('message', 'Successfully delete translation  ' . $translation->translation);
+        $fragment->delete();
+        Session::flash('message', 'Successfully delete translation');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.translations.index');
     }

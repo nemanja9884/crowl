@@ -12,14 +12,14 @@
         <div class="col form-group">
             <label for="english_word" class="form-control-label">English word</label>
             <input type="text" id="english_word" name="english_word"
-                   placeholder="English word" class="form-control" value="{{$translation->english_word}}">
+                   placeholder="English word" class="form-control" value="{{$translation->key}}">
         </div>
 
         <div class="col form-group">
             <label for="language" class="form-control-label">Language</label>
             <select name="language" id="language" class="form-control">
                 @foreach($languages as $language)
-                    <option value="{{$language->id}}" @if($language->id == $translation->language_id) selected @endif>
+                    <option value="{{$language->id}}" @if($language->lang_code == array_keys($translation->text)[0]) selected @endif>
                         {{$language->name}}</option>
                 @endforeach
             </select>
@@ -28,7 +28,7 @@
         <div class="col form-group">
             <label for="translation" class="form-control-label">Translation</label>
             <input type="text" id="translation" name="translation"
-                   placeholder="Translation" class="form-control" value="{{$translation->translation}}">
+                   placeholder="Translation" class="form-control" value="{{array_values($translation->text)[0]}}">
         </div>
 
         <div class="card-footer col-12 text-center">

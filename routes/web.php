@@ -35,3 +35,8 @@ Route::get('no-games', function () {
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['admin']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+Route::get('/test', function () {
+    app()->setLocale('sl');
+    return trans('home.greeting');
+});
