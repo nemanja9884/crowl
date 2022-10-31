@@ -103,14 +103,16 @@ class TranslationController extends Controller
     {
         $this->validate($request, array(
             'english_word' => 'required|max:255',
-            'language' => 'required',
-            'translation' => 'required'
         ));
 
-        $language = Language::find($request->input('language'));
+        $languages = Language::get();
         $fragment = Fragment::find($id);
         $fragment->key = 'home.' . $request->input('english_word');
-        $fragment->setTranslation('text', $language->lang_code, $request->input('translation'));
+        foreach ($languages as $language) {
+            if ($request->input('language' . $language->id)) {
+                $fragment->setTranslation('text', $language->lang_code, $request->input('language' . $language->id));
+            }
+        }
         $fragment->save();
 
         Session::flash('message', 'Successfully updated translation');
@@ -122,9 +124,9 @@ class TranslationController extends Controller
      * @param Translation $translation
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Fragment $fragment)
+    public function destroy($id)
     {
-        $fragment->delete();
+        Fragment::find($id)->delete();
         Session::flash('message', 'Successfully delete translation');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.translations.index');

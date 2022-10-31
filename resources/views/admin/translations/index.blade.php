@@ -36,7 +36,8 @@
 
                         @foreach($languages as $language)
                             <div class="col form-group">
-                                <label for="language{{$language->id}}" class="form-control-label">{{$language->name}} translation</label>
+                                <label for="language{{$language->id}}" class="form-control-label">{{$language->name}}
+                                    translation</label>
                                 <input type="text" id="language{{$language->id}}" name="language{{$language->id}}"
                                        placeholder="{{$language->name}} translation" class="form-control">
                             </div>
@@ -66,9 +67,10 @@
                                     <input class="styled-checkbox" id="selectAll" type="checkbox">
                                     <label for="selectAll"></label>
                                 </th>
-                                <th scope="col">English name</th>
-                                <th scope="col">Translation</th>
-                                <th scope="col">Language</th>
+                                <th scope="col">Key</th>
+                                @foreach($languages as $language)
+                                    <th scope="col">{{$language->name}}</th>
+                                @endforeach
                                 <th scope="col" class="d-none d-md-table-cell">Created</th>
                                 <th scope="col" style="text-align: right">Action</th>
                             </tr>
@@ -77,12 +79,20 @@
                             @foreach ($translations as $translation)
                                 <tr>
                                     <td class="d-none d-md-table-cell">
-                                        <input class="styled-checkbox" id="category-{{$translation->id}}" type="checkbox">
+                                        <input class="styled-checkbox" id="category-{{$translation->id}}"
+                                               type="checkbox">
                                         <label for="category-{{$translation->id}}"></label>
                                     </td>
                                     <td>{{$translation->key}}</td>
-                                    <td>{{$translation->translation}}</td>
-                                    <td>{{$translation->language}}</td>
+                                    @foreach($languages as $language)
+                                        <td>
+                                            @foreach($translation->text as $key => $value)
+                                                @if($key == $language->lang_code)
+                                                    {{$value}}
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    @endforeach
                                     <td class="d-none d-md-table-cell">{{\Carbon\Carbon::parse($translation->created_at)->format('d M Y H:i')}}</td>
                                     <td style="min-width: 110px;">
                                         <div class="float-right">
@@ -111,7 +121,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this translation?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this
+                        translation?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

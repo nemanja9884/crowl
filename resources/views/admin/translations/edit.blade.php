@@ -15,21 +15,14 @@
                    placeholder="English word" class="form-control" value="{{$translation->key}}">
         </div>
 
-        <div class="col form-group">
-            <label for="language" class="form-control-label">Language</label>
-            <select name="language" id="language" class="form-control">
-                @foreach($languages as $language)
-                    <option value="{{$language->id}}" @if($language->lang_code == array_keys($translation->text)[0]) selected @endif>
-                        {{$language->name}}</option>
-                @endforeach
-            </select>
-        </div>
-
-        <div class="col form-group">
-            <label for="translation" class="form-control-label">Translation</label>
-            <input type="text" id="translation" name="translation"
-                   placeholder="Translation" class="form-control" value="{{array_values($translation->text)[0]}}">
-        </div>
+        @foreach($languages as $language)
+            <div class="col form-group">
+                <label for="language{{$language->id}}" class="form-control-label">{{$language->name}}
+                    translation</label>
+                <input type="text" id="language{{$language->id}}" name="language{{$language->id}}"
+                       placeholder="{{$language->name}} translation" class="form-control" value="{{$translation->text[$language->lang_code]}}">
+            </div>
+        @endforeach
 
         <div class="card-footer col-12 text-center">
             <div class="modal-footer1">
