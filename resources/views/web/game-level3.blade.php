@@ -4,15 +4,15 @@
     <main class="px-3">
         <div class="card color-black">
             <div class="card-header">
-                LEVEL 3
-                <a href="{{route('gameIntro', $language->lang_code)}}" class="btn btn-secondary float-right">Level choose</a>
+                {{trans('home.LEVEL 3')}}
+                <a href="{{route('gameIntro', $language->lang_code)}}" class="btn btn-secondary float-right">{{trans('home.Level choose')}}</a>
             </div>
             <div class="card-body">
                 <form id="gameForm" action="{{route('answerLevel3', ['code' => $language->lang_code, 'level' => $level])}}"
                       method="POST">
                     @csrf
                     @method('POST')
-                    <h4>Tap or click where the problem is ({{$answerDetail->reason}})</h4>
+                    <h4>{{trans('home.Tap or click where the problem is')}} ({{$answerDetail->reason}})</h4>
                     <p id="selectable-sentence" class="sentence">{{$sentence->sentence}}</p>
                     <input type="hidden" name="answerId" value="{{$answerId}}"/>
                     <input type="hidden" name="reasonId" value="{{$reasonId}}"/>
@@ -27,8 +27,8 @@
                         <input type="hidden" name="reasons[]" value="{{$reason}}"/>
                     @endforeach
                     <input type="hidden" name="problematicWords" id="problematicWords" />
-                    <button id="submit" class="btn btn-primary mt-3">Choose</button>
-                    <button id="removeBtn" class="btn btn-primary mt-3">Remove markers</button>
+                    <button id="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
+                    <button id="removeBtn" class="btn btn-primary mt-3">{{trans('home.Remove markers')}}</button>
                 </form>
             </div>
         </div>

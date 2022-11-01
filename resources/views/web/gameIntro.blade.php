@@ -49,7 +49,7 @@
                             1 + 2 + 3
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">Start Game!</button>
+                    <button type="submit" class="btn btn-primary mt-3">{{trans('home.Start Game!')}}</button>
                 </form>
 
             </div>
