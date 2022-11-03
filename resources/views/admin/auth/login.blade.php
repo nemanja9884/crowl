@@ -46,7 +46,6 @@
 
                             </div>
                             <button type="submit" class="btn btn-success btn-flat m-b-30 mt-3">Uloguj se</button>
-                            <p>Nemate nalog? <a style="color: red;" href="{{route('admin.register')}}">Registrujte se!</a> </p>
                         </form>
                     </div>
                 </div>

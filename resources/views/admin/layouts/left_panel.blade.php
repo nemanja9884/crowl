@@ -50,14 +50,13 @@
                     <li>
                         <a href="/admin/file-manager"> <i class="menu-icon fa fa-files-o"></i>File manager</a>
                     </li>
-{{--                    <li class="menu-item-has-children dropdown">--}}
-{{--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Interakcija korisnika</a>--}}
-{{--                        <ul class="sub-menu children dropdown-menu">--}}
-{{--                            <li><i class="fa fa-money"></i><a href="#">Transakcije</a></li>--}}
-{{--                            <li><i class="fa fa-user"></i><a href="#">Korisnici</a></li>--}}
-{{--                            <li><i class="fa fa-user"></i><a href="#">Pretplatnici</a></li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>User Interaction</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-user"></i><a href="{{route('admin.users.index')}}">Users</a></li>
+                            <li><i class="fa fa-user-plus"></i><a href="{{route('admin.users.create')}}">Add new user</a></li>
+                        </ul>
+                    </li>
                     <h3 class="menu-title">Settings</h3><!-- /.menu-title -->
                     <li>
                         <a href="{{route('admin.translations.index')}}"> <i class="menu-icon fa fa-language"></i>Translations</a>

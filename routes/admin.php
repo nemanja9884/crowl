@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
+Route::get('/register', function () {
+    abort(403);
+});
+
+
 Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::get('/', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('index');
     Route::get('file-manager', function () {
@@ -25,6 +30,7 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
     Route::resource('translations', App\Http\Controllers\Admin\TranslationController::class);
     Route::resource('sentences', App\Http\Controllers\Admin\SentenceController::class);
+    Route::resource('users', App\Http\Controllers\Admin\UsersController::class);
     Route::post('sentences/import', [App\Http\Controllers\Admin\SentenceController::class, 'import'])->name('sentences.import');
     Route::get('answers', [App\Http\Controllers\Admin\AnswersController::class, 'index'])->name('answers.index');
     Route::get('answersDetails/{id}', [App\Http\Controllers\Admin\AnswersController::class, 'answerDetails'])->name('answers.details');
