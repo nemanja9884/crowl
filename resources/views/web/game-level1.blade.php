@@ -11,16 +11,18 @@
                 <form action="{{route('answerLevel1', ['code' => $language->lang_code, 'level' => $level])}}" method="POST">
                     @csrf
                     @method('POST')
+                    <input type="hidden" name="firstSentenceId" value="{{$firstSentence->id}}"/>
+                    <input type="hidden" name="secondSentenceId" value="{{$secondSentence->id}}"/>
                     <h4>{{trans('home.Which sentence would you choose for teaching English?')}}</h4>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$firstSentence->id}}">
+                        <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$secondSentence->id}}">
                         <label class="form-check-label" for="answer">
                             {{$firstSentence->sentence}} ({{$firstSentence->word_reliability}})
                         </label>
                     </div>
 
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$secondSentence->id}}">
+                        <input class="form-check-input" type="radio" name="answer" id="answer" value="{{$firstSentence->id}}">
                         <label class="form-check-label" for="answer">
                             {{$secondSentence->sentence}} ({{$secondSentence->word_reliability}})
                         </label>

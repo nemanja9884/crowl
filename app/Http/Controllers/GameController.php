@@ -8,6 +8,7 @@ use App\Models\Language;
 use App\Models\Sentence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class GameController extends Controller
 {
@@ -112,8 +113,7 @@ class GameController extends Controller
             case '2':
             case '2+3':
                 return Answer::where(function ($q) {
-                    $q->where('positive_answer', 1);
-                    $q->orWhere('negative_answer', 1);
+                    $q->where('negative_answer', 1);
                 })->whereDoesntHave('answersDetails')->limit(2)->get();
             case '3';
                 return Answer::whereHas('answersDetails', function ($q) use ($user) {
@@ -158,7 +158,13 @@ class GameController extends Controller
                 return $this->level(2, $language, $level, $request->noneOfThem[0], $answersIds, $answersIds[0]);
             }
         } else {
-            $answer = Answer::store($language->id, $request->input('answer'), 1, 0);
+            $answer = Answer::store($language->id, $request->input('answer'), 0, 1);
+            if($request->input('firstSentenceId') == $request->input('answer')) {
+                $positiveAnswer = $request->input('secondSentenceId');
+            } else {
+                $positiveAnswer = $request->input('firstSentenceId');
+            }
+            Answer::store($language->id, $positiveAnswer, 1, 0);
 
             if ($level == '1') {
                 return $this->game($code, $level);
@@ -168,20 +174,37 @@ class GameController extends Controller
         }
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function answerLevel2(Request $request, $code, $level)
     {
+        if(!$request->input('answer')) {
+            return redirect()->route('index');
+        }
+
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         $answer = Answer::find($request->input('answerId'));
 
         $reasons = $request->input('answer');
-        foreach ($reasons as $reason) {
-            AnswerDetail::store($language->id, $answer->id, $reason);
+
+
+
+        if(in_array('fine', $reasons)) {
+//            dd($reasons);
+            $answer->positive_answer = 1;
+            $answer->negative_answer = 0;
+            $answer->save();
+        } else {
+            foreach ($reasons as $reason) {
+                AnswerDetail::store($language->id, $answer->id, $reason);
+            }
         }
 
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
-        if (is_array($answersIds) && $answersIds[0] == $request->input('answerId')) {
+        if (is_array($answersIds) && count($answersIds) > 1 && $answersIds[0] == $request->input('answerId')) {
             $sentenceAnswer = Answer::find($answersIds[1]);
             return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } else {

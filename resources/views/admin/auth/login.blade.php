@@ -11,7 +11,7 @@
                         <form class="mt-3" method="POST" action="{{ route('admin.login') }}">
                             @csrf
                             <div class="form-group">
-                                <label>Email adresa</label>
+                                <label>Email</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                        placeholder="Email" name="email" value="{{ old('email') }}" required
                                        autocomplete="email" autofocus>
@@ -22,7 +22,7 @@
                                 @enderror
                             </div>
                             <div class="form-group mt-3">
-                                <label>Lozinka</label>
+                                <label>Password</label>
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror" name="password"
                                        required
@@ -36,16 +36,16 @@
                             <div class="checkbox mt-3">
                                 <label>
                                     <input type="checkbox" name="remember"
-                                           id="remember" {{ old('remember') ? 'checked' : '' }}> Zapamti me
+                                           id="remember" {{ old('remember') ? 'checked' : '' }}> Remember me
                                 </label>
                                 @if (Route::has('admin.password.request'))
                                     <label class="pull-right">
-                                        <a href="{{ route('admin.password.request') }}">Zaboravljena lozinka?</a>
+                                        <a href="{{ route('admin.password.request') }}">Forgot password?</a>
                                     </label>
                                 @endif
 
                             </div>
-                            <button type="submit" class="btn btn-success btn-flat m-b-30 mt-3">Uloguj se</button>
+                            <button type="submit" class="btn btn-success btn-flat m-b-30 mt-3">Login</button>
                         </form>
                     </div>
                 </div>

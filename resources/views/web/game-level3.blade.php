@@ -58,6 +58,7 @@
                     problematicWords.val(str);
                     if(problematicWords.val() === "") {
                         e.preventDefault();
+                        // toastr.error('Please select problematic words, then press button "choose"');
                         alert('Please select problematic words, then press button "choose"');
                     } else {
                         $("#gameForm").submit();
