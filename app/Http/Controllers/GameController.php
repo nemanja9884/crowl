@@ -114,7 +114,7 @@ class GameController extends Controller
             case '2+3':
                 return Answer::where(function ($q) {
                     $q->where('negative_answer', 1);
-                })->whereDoesntHave('answersDetails')->limit(2)->get();
+                })->whereDoesntHave('answersDetails')->limit(1)->get();
             case '3';
                 return Answer::whereHas('answersDetails', function ($q) use ($user) {
                     $q->whereNull('sentence_bad_part');
@@ -193,7 +193,6 @@ class GameController extends Controller
 
 
         if(in_array('fine', $reasons)) {
-//            dd($reasons);
             $answer->positive_answer = 1;
             $answer->negative_answer = 0;
             $answer->save();
@@ -228,10 +227,17 @@ class GameController extends Controller
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
-
-        $answer = AnswerDetail::find($request->input('reasonId'));
-        $answer->sentence_bad_part = $request->input('problematicWords');
-        $answer->save();
+        $answerId = $request->input('answerId');
+        if($request->input('fine')) {
+            $answer = Answer::find($answerId);
+            $answer->positive_answer = 1;
+            $answer->negative_answer = 0;
+            $answer->save();
+        } else {
+            $answerDetail = AnswerDetail::find($request->input('reasonId'));
+            $answerDetail->sentence_bad_part = $request->input('problematicWords');
+            $answerDetail->save();
+        }
 
         $reasons = $request->input('reasons');
         $lastElement = end($reasons);
@@ -243,7 +249,12 @@ class GameController extends Controller
     {
         foreach ($reasons as $key => $value) {
             if ($value == $lastElement) {
-                if ((is_array($answersIds) && $answersIds[1] == $request->input('answerId')) || !is_array($answersIds)) {
+                if (is_array($answersIds)) {
+                    $lastElement = end($answersIds);
+                    if($lastElement == $request->input('answerId')) {
+                        return $this->game($code, $level);
+                    }
+                } elseif(!is_array($answersIds)) {
                     return $this->game($code, $level);
                 }
 
