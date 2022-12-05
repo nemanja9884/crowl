@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('language_id');
             $table->bigInteger('answer_id')->index();
             $table->string('reason')->nullable();
-            $table->string('sentence_bad_part')->nullable();
+            $table->text('sentence_bad_part')->nullable();
             $table->timestamps();
         });
     }

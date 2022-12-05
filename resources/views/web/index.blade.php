@@ -4,8 +4,8 @@
     <main class="px-3">
         <div class="row mt-3">
             @foreach($languages as $language)
-                <div class="col-md-4 mt-3">
-                    <a href="{{route('languageIndex', ['id' => $language->id, 'code' => $language->lang_code])}}">
+                <div class="col-md-3 mt-3">
+                    <a class="none-decoration" href="{{route('languageIndex', ['id' => $language->id, 'code' => $language->lang_code])}}">
                         <div class="card">
                             <img src="{{$language->image}}" class="card-img-top"
                                  alt="{{$language->name}}">

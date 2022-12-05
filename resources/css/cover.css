@@ -91,3 +91,7 @@ li {
 .float-right {
     float: right !important;
 }
+
+.none-decoration {
+    text-decoration: none !important;
+}

@@ -51,6 +51,8 @@ return [
 
         'mailgun' => [
             'transport' => 'mailgun',
+            'domain' => 'bloglly.com',
+            'secret' => 'key-8d0d16922cd3a3c842b7b97e4aad90a6',
         ],
 
         'postmark' => [
