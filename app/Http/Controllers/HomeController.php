@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -35,7 +36,8 @@ class HomeController extends Controller
     public function languageIndex($id, $code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $language = Language::find($id);
-        app()->setLocale($language->lang_code);
+        App::setLocale($language->lang_code);
+        session()->put('locale', $language->lang_code);
         return view('web.index_language', ['language' => $language]);
     }
 }
