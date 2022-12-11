@@ -20,7 +20,7 @@
                 <label for="language{{$language->id}}" class="form-control-label">{{$language->name}}
                     translation</label>
                 <input type="text" id="language{{$language->id}}" name="language{{$language->id}}"
-                       placeholder="{{$language->name}} translation" class="form-control" value="{{$translation->text[$language->lang_code]}}">
+                       placeholder="{{$language->name}} translation" class="form-control" value="{{$translation->text[$language->lang_code] ?? ''}}">
             </div>
         @endforeach
 

@@ -109,9 +109,9 @@ class TranslationController extends Controller
         $fragment = Fragment::find($id);
         $fragment->key = 'home.' . $request->input('english_word');
         foreach ($languages as $language) {
-            if ($request->input('language' . $language->id)) {
+//            if ($request->input('language' . $language->id)) {
                 $fragment->setTranslation('text', $language->lang_code, $request->input('language' . $language->id));
-            }
+//            }
         }
         $fragment->save();
 
