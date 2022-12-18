@@ -34,4 +34,5 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::post('sentences/import', [App\Http\Controllers\Admin\SentenceController::class, 'import'])->name('sentences.import');
     Route::get('answers', [App\Http\Controllers\Admin\AnswersController::class, 'index'])->name('answers.index');
     Route::get('answersDetails/{id}', [App\Http\Controllers\Admin\AnswersController::class, 'answerDetails'])->name('answers.details');
+    Route::resource('admins', App\Http\Controllers\Admin\AdminUsersController::class);
 });

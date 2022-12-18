@@ -129,7 +129,12 @@ class SentenceController extends Controller
 
         $file = $request->file('file');
         $file->move('sentences', $file->getClientOriginalName());
-        SentenceImport::dispatch($file->getClientOriginalName(), $request->input('language_id'))->onConnection('database');
+//        if(config('app.env') == 'production') {
+//
+//        }
+//        SentenceImport::dispatchNow($file->getClientOriginalName(), $request->input('language_id'))->onConnection('database');
+
+        SentenceImport::dispatchNow($file->getClientOriginalName(), $request->input('language_id'));
 
         Session::flash('message', 'Your sentences will be imported soon, please be patient. Refresh page after a while to check if your sentences have been imported');
         Session::flash('alert-class', 'success');
