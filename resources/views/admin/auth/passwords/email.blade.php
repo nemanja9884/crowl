@@ -1,4 +1,4 @@
-@extends('layouts.app_login')
+@extends('admin.layouts.app_login')
 @section('content')
     <div class="container-fluid thirdContainer">
         <div class="sufee-login d-flex align-content-center flex-wrap">

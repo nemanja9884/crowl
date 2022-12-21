@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\AnswerExport;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\AnswerDetail;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AnswersController extends Controller
 {
@@ -19,5 +21,10 @@ class AnswersController extends Controller
     {
         $answerDetails = AnswerDetail::where('answer_id', $id)->get();
         return view('admin.answers.details', ['answerDetails' => $answerDetails]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new AnswerExport(), 'answers.xlsx');
     }
 }
