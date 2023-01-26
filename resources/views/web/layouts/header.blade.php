@@ -9,20 +9,20 @@
             @guest
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link" href="{{ route('login') }}">{{trans('home.Login')}}</a>
                     </li>
                 @endif
 
                 @if (Route::has('register'))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register</a>
+                        <a class="nav-link" href="{{ route('register') }}">{{trans('home.Register')}}</a>
                     </li>
                 @endif
             @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->name }}
+                        {{ Auth::user()->username }}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

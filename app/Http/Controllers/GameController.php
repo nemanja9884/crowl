@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Answer;
 use App\Models\AnswerDetail;
 use App\Models\Language;
+use App\Models\Score;
 use App\Models\Sentence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -141,6 +142,7 @@ class GameController extends Controller
         if (isset($request->bothOfThem)) {
             $request->bothOfThem = explode(',', $request->bothOfThem);
             foreach ($request->bothOfThem as $both) {
+                Score::scoring(1, $language->id, $both, 1, 0);
                 Answer::store($language->id, $both, 1, 0);
             }
             return $this->game($code, $level);
@@ -148,6 +150,7 @@ class GameController extends Controller
             $request->noneOfThem = explode(',', $request->noneOfThem);
             $answersIds = [];
             foreach ($request->noneOfThem as $none) {
+                Score::scoring(1, $language->id, $none, 0, 1);
                 $answer = Answer::store($language->id, $none, 0, 1);
                 $answersIds [] = $answer->id;
             }
@@ -158,6 +161,8 @@ class GameController extends Controller
                 return $this->level(2, $language, $level, $request->noneOfThem[0], $answersIds, $answersIds[0]);
             }
         } else {
+            Score::scoring(1, $language->id, $request->input('answer'), 0, 1);
+
             $answer = Answer::store($language->id, $request->input('answer'), 0, 1);
             if($request->input('firstSentenceId') == $request->input('answer')) {
                 $positiveAnswer = $request->input('secondSentenceId');
@@ -187,10 +192,7 @@ class GameController extends Controller
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         $answer = Answer::find($request->input('answerId'));
-
         $reasons = $request->input('answer');
-
-
 
         if(in_array('fine', $reasons)) {
             $answer->positive_answer = 1;
@@ -198,7 +200,8 @@ class GameController extends Controller
             $answer->save();
         } else {
             foreach ($reasons as $reason) {
-                AnswerDetail::store($language->id, $answer->id, $reason);
+                AnswerDetail::store($language->id, $request->input('sentenceId'), $answer->id, $reason);
+                Score::scoring(2, $language->id, $answer->id, null, null, $reason);
             }
         }
 
@@ -234,6 +237,7 @@ class GameController extends Controller
             $answer->negative_answer = 0;
             $answer->save();
         } else {
+            Score::scoring(3, $language->id, $request->input('sentenceId'), null, null, null, $request->input('problematicWords'));
             $answerDetail = AnswerDetail::find($request->input('reasonId'));
             $answerDetail->sentence_bad_part = $request->input('problematicWords');
             $answerDetail->save();

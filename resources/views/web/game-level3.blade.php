@@ -14,6 +14,7 @@
                     @method('POST')
                     <h4>{{trans('home.Tap or click where the problem is')}} ({{$answerDetail->reason}})</h4>
                     <p id="selectable-sentence" class="sentence">{{$sentence->sentence}}</p>
+                    <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
                     <input type="hidden" name="answerId" value="{{$answerId}}"/>
                     <input type="hidden" name="reasonId" value="{{$reasonId}}"/>
                     @if(is_array($answersIds))
@@ -60,7 +61,7 @@
                 $('#submit').click(function (e){
                     var str = "";
                     $('.highlighted').each(function(){
-                        str += $(this).text() + ", ";
+                        str += $(this).text() + "| ";
                     });
                     let problematicWords = $('#problematicWords');
                     problematicWords.val(str);

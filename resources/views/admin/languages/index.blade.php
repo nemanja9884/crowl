@@ -2,13 +2,6 @@
 @section('content')
     <div id="right-panel" class="right-panel">
         @include('admin.layouts.header')
-        {{--        <nav class="navbar navbar-light bg-light" style="margin: 0 0 10px !important;">--}}
-        {{--            <form class="container-fluid justify-content-start">--}}
-        {{--                <a href="{{ route('categories.index') }}" class="btn @if($page != 'all') btn-outline-primary @else btn-primary @endif me-2 mr-3" type="button">Sve vrste kategorija</a>--}}
-        {{--                <a href="{{ route('categories.index') }}?display=Članci" class="btn @if($page != 'Članci') btn-outline-primary @else btn-primary @endif me-2 mr-3" type="button">Članci</a>--}}
-        {{--                <a href="{{ route('categories.index') }}?display=Proizvodi" class="btn @if($page != 'Proizvodi') btn-outline-primary @else btn-primary @endif -primary me-2 mr-3" type="button">Proizvodi</a>--}}
-        {{--            </form>--}}
-        {{--        </nav>--}}
         @foreach ($errors->all() as $error)
             <div class="col-md-12 alert alert-danger" role="alert">
                 {!! $errors->first() !!}

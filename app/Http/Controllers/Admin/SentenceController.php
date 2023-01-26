@@ -17,9 +17,34 @@ class SentenceController extends Controller
      */
     public function index(Request $request)
     {
-        $sentences = Sentence::paginate(50);
+        $sentences = (new Sentence())->newQuery();
+        $page = 'all';
+        if ($request->filled('sentence')) {
+            $page = 'search';
+            $sentences->where('sentence', 'like', '%' . $request->input('sentence') . '%');
+        }
+        if ($request->filled('language')) {
+            $page = 'search';
+            $sentences->where('language_id', $request->input('language'));
+        }
+        if ($request->filled('positive_answer')) {
+            $page = 'search';
+            $sentences->where('positive_answers',  $request->input('positive_answer'));
+        }
+        if ($request->filled('negative_answer')) {
+            $page = 'search';
+            $sentences->where('negative_answers', $request->input('negative_answer'));
+        }
+        if ($request->filled('finished')) {
+            $page = 'search';
+            $sentences->where('finished', $request->input('finished'));
+        }
+
+        $sentences = $sentences->paginate(50);
+
+
         $languages = Language::all();
-        return view('admin.sentences.index', ['sentences' => $sentences, 'languages' => $languages]);
+        return view('admin.sentences.index', ['sentences' => $sentences, 'languages' => $languages, 'page' => $page]);
     }
 
     /**

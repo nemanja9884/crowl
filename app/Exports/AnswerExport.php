@@ -38,8 +38,8 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
         $reasons = '';
         $sentenceBadPart = '';
         foreach ($row->answersDetails as $detail) {
-            $reasons .= '; ' . $detail->reason;
-            $sentenceBadPart .= '; ' . $detail->reason;
+            $reasons .= '| ' . $detail->reason;
+            $sentenceBadPart .= ' . Bad parts for reason: ' . $detail->reason . ': ' . $detail->sentence_bad_part;
         }
         return [
             $row->language->name,

@@ -67,8 +67,13 @@ class Answer extends Model
         $positiveAnswers = DB::select(DB::raw("SELECT sum(positive_answer) as positive_answer from answers where sentence_id = $sentenceId"));
         $negativeAnswers = DB::select(DB::raw("SELECT sum(negative_answer) as negative_answer from answers where sentence_id = $sentenceId"));
         $answersDiff = abs($positiveAnswers[0]->positive_answer - $negativeAnswers[0]->negative_answer);
-        if($answersDiff >= 3) {
+        if ($answersDiff >= 3) {
             Sentence::where('id', $sentenceId)->update(['finished' => 1]);
         }
+    }
+
+    public static function answerCheck($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
+    {
+        return Answer::where(['language_id' => $langId, 'sentence_id' => $sentenceId, 'positive_answer' => $positiveAnswer, 'negative_answer' => $negativeAnswer])->first();
     }
 }

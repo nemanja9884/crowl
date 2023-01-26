@@ -2,13 +2,6 @@
 @section('content')
     <div id="right-panel" class="right-panel">
         @include('admin.layouts.header')
-        {{--        <nav class="navbar navbar-light bg-light" style="margin: 0 0 10px !important;">--}}
-        {{--            <form class="container-fluid justify-content-start">--}}
-        {{--                <a href="{{ route('categories.index') }}" class="btn @if($page != 'all') btn-outline-primary @else btn-primary @endif me-2 mr-3" type="button">Sve vrste kategorija</a>--}}
-        {{--                <a href="{{ route('categories.index') }}?display=Članci" class="btn @if($page != 'Članci') btn-outline-primary @else btn-primary @endif me-2 mr-3" type="button">Članci</a>--}}
-        {{--                <a href="{{ route('categories.index') }}?display=Proizvodi" class="btn @if($page != 'Proizvodi') btn-outline-primary @else btn-primary @endif -primary me-2 mr-3" type="button">Proizvodi</a>--}}
-        {{--            </form>--}}
-        {{--        </nav>--}}
         @foreach ($errors->all() as $error)
             <div class="col-md-12 alert alert-danger" role="alert">
                 {!! $errors->first() !!}
@@ -19,6 +12,83 @@
                 {{ Session::get('message') }}
             </div>
         @endif
+        <div class="col-md-12">
+            <a class="nav-link @if($page == 'search') active @endif btn btn-outline-primary mb-3" data-toggle="collapse"
+               href="#searchBox"
+               role="button" aria-expanded="false" aria-controls="searchBox">
+                <i class="mdi mdi-magnify"></i> Search
+            </a>
+            <div class="collapse @if($page == 'search') show @endif" id="searchBox">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Search</h4>
+                        <form class="forms-sample" method="GET" action="{{ route('admin.sentences.index')}}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="sentence">Sentence</label>
+                                        <input type="search" class="form-control" name="sentence" id="sentence"
+                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="language">Language</label>
+                                        <select name="language" id="language" class="form-control">
+                                            <option value="" selected>Choose language</option>
+                                            @foreach($languages as $language)
+                                                <option value="{{$language->id}}"
+                                                        @if(isset($_GET['language']) && $_GET['language'] == $language->id) selected @endif>{{$language->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="positive_answer">Positive answers</label>
+                                        <select name="positive_answer" id="positive_answer" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="1" @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 1) selected @endif>Yes</option>
+                                            <option value="0" @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 0) selected @endif>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="negative_answer">Negative answers</label>
+                                        <select name="negative_answer" id="negative_answer" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="1" @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 1) selected @endif>Yes</option>
+                                            <option value="0" @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 0) selected @endif>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="finished">Finished</label>
+                                        <select name="finished" id="finished" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="1" @if(isset($_GET['finished']) && $_GET['finished'] == 1) selected @endif>Yes</option>
+                                            <option value="0" @if(isset($_GET['finished']) && $_GET['finished'] == 0) selected @endif>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary mr-2">Search</button>
+                                    <a class="btn btn-light"
+                                       href="{{ route('admin.sentences.index') }}">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -26,11 +96,12 @@
                 </div>
                 <div class="col-md-12 card-body card-block">
                     <div class="alert alert-info">
-                        <form action="{{ route('admin.sentences.import') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.sentences.import') }}" method="POST"
+                              enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="file">Upload CSV</label>
-                                <input type="file" name="file" id="file" accept=".csv" />
+                                <input type="file" name="file" id="file" accept=".csv"/>
                             </div>
                             <div class="form-group">
                                 <label for="language_id" class="form-control-label">Language</label>
@@ -52,7 +123,8 @@
                         @csrf
                         <div class="col form-group">
                             <label for="sentence" class="form-control-label">Sentence</label>
-                            <textarea name="sentence" id="sentence" rows="3" class="form-control" placeholder="Sentence" required></textarea>
+                            <textarea name="sentence" id="sentence" rows="3" class="form-control" placeholder="Sentence"
+                                      required></textarea>
                         </div>
 
                         <div class="col form-group">

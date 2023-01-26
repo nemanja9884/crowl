@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -38,12 +40,47 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function showLoginForm()
+    public function showLoginForm(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        if(!session()->has('url.intended'))
-        {
+        if (!session()->has('url.intended')) {
             session(['url.intended' => url()->previous()]);
         }
         return view('auth.login');
+    }
+
+    public function redirectToProvider($driver): \Symfony\Component\HttpFoundation\RedirectResponse|\Illuminate\Http\RedirectResponse
+    {
+        return Socialite::driver($driver)->redirect();
+    }
+
+    public function handleProviderCallback($driver): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    {
+        try {
+            $user = Socialite::driver($driver)->user();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route('login');
+        }
+
+        $existingUser = User::where('email', $user->getEmail())->first();
+
+        if ($existingUser) {
+            auth()->login($existingUser, true);
+        } else {
+            $newUser = new User;
+            $newUser->provider_name = $driver;
+            $newUser->provider_id = $user->getId();
+            $newUser->username = $user->getName();
+            $newUser->email = $user->getEmail();
+            // we set email_verified_at because the user's email is already veridied by social login portal
+            $newUser->email_verified_at = now();
+            // you can also get avatar, so create avatar column in database it you want to save profile image
+            // $newUser->avatar            = $user->getAvatar();
+            $newUser->save();
+
+            auth()->login($newUser, true);
+        }
+
+        return redirect($this->redirectPath());
     }
 }

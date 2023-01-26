@@ -23,6 +23,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Answers list</h5>
+                    <a class="btn btn-primary" href="{{route('admin.answers.export')}}">Export to excel</a>
                     <div class="fluid-container styled-table table-responsive">
                         <table class="table">
                             <thead>

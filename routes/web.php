@@ -36,7 +36,10 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['admin']], fun
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::get('/test', function () {
-    app()->setLocale('sl');
-    return trans('home.greeting');
-});
+//Route::get('/test', function () {
+//    app()->setLocale('sl');
+//    return trans('home.greeting');
+//});
+
+Route::get('redirect/{driver}', [App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider']);
+Route::get('{driver}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback']);

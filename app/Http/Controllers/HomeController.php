@@ -25,6 +25,8 @@ class HomeController extends Controller
      */
     public function index(): \Illuminate\Contracts\Support\Renderable
     {
+        App::setLocale('pt-BR');
+        session()->put('locale', 'pt-BR');
         return view('web.index', ['languages' => Language::where('status', '1')->orderBy('sort', 'ASC')->get()]);
     }
 

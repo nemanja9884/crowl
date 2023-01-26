@@ -15,6 +15,7 @@
                     @method('POST')
                     <h4>{{trans('home.Why not this one?')}}</h4>
                     <p class="sentence">{{$sentence->sentence}}</p>
+                    <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
                     <input type="hidden" name="answerId" value="{{$answerId}}"/>
                     @if(is_array($answersIds))
                         @foreach($answersIds as $item)
