@@ -195,6 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Services\Locale\TranslationServiceProvider::class,
+        \App\Providers\ViewServiceProvider::class,
     ],
 
     /*

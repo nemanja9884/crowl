@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('working_on_university')->after('age')->default(false);
             $table->boolean('language_teacher')->after('working_on_university')->default(false);
             $table->boolean('dominant_language')->after('language_teacher')->default(false);
-            $table->string('language')->after('dominant_language');
+            $table->string('language')->after('dominant_language')->nullable();
             $table->string('name')->nullable()->change();
         });
     }

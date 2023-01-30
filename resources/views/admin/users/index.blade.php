@@ -28,8 +28,7 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>First name</th>
-                                                <th>Last name</th>
+                                                <th>Username</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
                                                 <th>Created at</th>
@@ -40,8 +39,7 @@
                                             @foreach($users as $user)
                                                 <tr>
                                                     <td>{{$user->id}}</td>
-                                                    <td>{{$user->name}}</td>
-                                                    <td>{{$user->last_name}}</td>
+                                                    <td>{{$user->username}}</td>
                                                     <td>{{$user->email}}</td>
                                                     <td>
                                                         @if($user->status == 1)

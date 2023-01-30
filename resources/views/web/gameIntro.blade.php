@@ -49,9 +49,9 @@
                             1 + 2 + 3
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-3">{{trans('home.Start Game!')}}</button>
+                    <button type="submit" class="btn btn-primary mt-3 float-left">{{trans('home.Start Game!')}}</button>
+                    <p class="float-right mt-3">Points: <b>{{$points}}</b></p>
                 </form>
-
             </div>
         </div>
     </main>

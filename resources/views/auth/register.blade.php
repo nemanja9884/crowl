@@ -77,8 +77,8 @@
                             <label for="working_on_university" class="col-md-7 col-form-label text-md-end">{{trans('home.Have you completed, or are you working towards, a university degree with a major component in language or linguistics?')}}</label>
                             <div class="col-md-3">
                                 <select name="working_on_university" id="working_on_university" class="form-control">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1">{{trans('home.Yes')}}</option>
+                                    <option value="0">{{trans('home.No')}}</option>
                                 </select>
                             </div>
                         </div>
@@ -118,10 +118,11 @@
                             <div class="social-button">
                                 <a href="{{url('redirect/google')}}"
                                    class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
-                                        src="https://img.icons8.com/color/16/000000/google-logo.png" > Registruj se preko google-a
+                                        src="https://img.icons8.com/color/16/000000/google-logo.png" style="width: 20px;"> Registruj se preko google-a
                                 </a>
-                                <a href="{{url('redirect/google')}}" type="button" class="btn social facebook btn-flat btn-addon mb-3"><i
-                                        class="ti-facebook"></i>Registruj se preko facebook-a
+                                <a href="{{url('redirect/facebook')}}"
+                                   class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" style="width: 20px;"> Registruj se preko facebook-a
                                 </a>
                             </div>
                         </div>

@@ -35,8 +35,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'name' => 'required',
-            'last_name' => 'required',
+            'username' => 'required',
             'email' => 'required',
             'status' => 'required',
             'password' => 'required',
@@ -78,13 +77,12 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, array(
-            'name' => 'required',
-            'last_name' => 'required',
+            'username' => 'required',
             'email' => 'required',
             'status' => 'required',
         ));
 
-        $user->update($request->all('name', 'last_name', 'email', 'status', $request->filled('password') ? 'password' : ''));
+        $user->update($request->all('name', 'last_name', 'email', 'status', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
         Session::flash('message', 'Successfully updated user');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.users.index');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Score extends Model
 {
@@ -43,6 +44,15 @@ class Score extends Model
 
     public static function store()
     {
-        Score::create(['user_id' => Auth::guard('web')->user()->id, 'points' => 1]);
+        $userId = Auth::guard('web')->user()->id;
+        $check = Score::where('user_id', $userId)->first();
+        if($check) {
+            Score::where('user_id', $userId)
+                ->update([
+                    'points'=> DB::raw('points+1'),
+                ]);
+        } else {
+            Score::create(['user_id' => $userId, 'points' => 1]);
+        }
     }
 }
