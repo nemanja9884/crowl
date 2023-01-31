@@ -13,6 +13,11 @@ class Score extends Model
 
     protected $fillable = ['user_id', 'points'];
 
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
     public static function scoring($level, $langId, $sentenceId, $positiveAnswer = null, $negativeAnswer = null, $reason = null, $problematicWords = null)
     {
         if(!Auth::guard('web')->user()) {
@@ -23,36 +28,28 @@ class Score extends Model
             case '1':
                 $checkAnswer = Answer::answerCheck($langId, $sentenceId, $positiveAnswer, $negativeAnswer);
                 if ($checkAnswer) {
-                    self::store();
+                    self::store($langId);
                 }
                 break;
             case '2':
                 $checkAnswer = AnswerDetail::answerReasonCheck($langId, $sentenceId, $reason);
                 if ($checkAnswer) {
-                    self::store();
+                    self::store($langId);
                 }
                 break;
             case '3':
                 $checkAnswer = AnswerDetail::answerProblematicCheck($langId, $sentenceId, $problematicWords);
                 if ($checkAnswer) {
-                    self::store();
+                    self::store($langId);
                 }
                 break;
         }
 
     }
 
-    public static function store()
+    public static function store($langId, $points = 1)
     {
         $userId = Auth::guard('web')->user()->id;
-        $check = Score::where('user_id', $userId)->first();
-        if($check) {
-            Score::where('user_id', $userId)
-                ->update([
-                    'points'=> DB::raw('points+1'),
-                ]);
-        } else {
-            Score::create(['user_id' => $userId, 'points' => 1]);
-        }
+        Score::create(['user_id' => $userId, 'language_id' => $langId, 'points' => $points]);
     }
 }

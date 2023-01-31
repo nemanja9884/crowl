@@ -57,6 +57,7 @@
                             <li><i class="fa fa-user-plus"></i><a href="{{route('admin.users.create')}}">Add new user</a></li>
                             <li><i class="fa fa-user"></i><a href="{{route('admin.admins.index')}}">Admins</a></li>
                             <li><i class="fa fa-user-plus"></i><a href="{{route('admin.admins.create')}}">Add new admin</a></li>
+                            <li><i class="fa fa-balance-scale"></i><a href="{{route('admin.scores.index')}}">Scores</a></li>
                         </ul>
                     </li>
                     <h3 class="menu-title">Settings</h3><!-- /.menu-title -->
