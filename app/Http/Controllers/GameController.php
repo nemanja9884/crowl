@@ -29,6 +29,8 @@ class GameController extends Controller
         $language = Language::where('lang_code', $code)->first();
         $user = Auth::guard('web')->user();
 
+        $this->gamesInRow($language->id);
+
         switch ($level) {
             case '1':
             case '1+2':
@@ -271,6 +273,23 @@ class GameController extends Controller
         }
 
         return null;
+    }
+
+    public function gamesInRow($langId)
+    {
+        $data = session()->get('playerData');
+        if($data === false) {
+            session()->put('playerData', 0);
+        } else {
+            if($data == 5) {
+                Score::store($langId, 5);
+                toastr()->info('You got 5 extra points!');
+                $data = 0;
+            } else {
+                $data = $data + 1;
+            }
+            session()->put('playerData', $data);
+        }
     }
 }
 

@@ -22,16 +22,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Search</h4>
-                        <form class="forms-sample" method="GET" action="{{ route('admin.sentences.index')}}">
+                        <form class="forms-sample" method="GET" action="{{ route('admin.scores.index')}}">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="sentence">Sentence</label>
-                                        <input type="search" class="form-control" name="sentence" id="sentence"
-                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">
-                                    </div>
-                                </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="user">User</label>
@@ -40,6 +32,19 @@
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}"
                                                         @if(isset($_GET['user']) && $_GET['user'] == $user->id) selected @endif>{{$user->username}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="language">Language</label>
+                                        <select name="language" id="language" class="form-control">
+                                            <option value="" selected>Choose language</option>
+                                            @foreach($languages as $language)
+                                                <option value="{{$language->id}}"
+                                                        @if(isset($_GET['language']) && $_GET['language'] == $language->id) selected @endif>{{$language->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -66,6 +71,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">User</th>
+                                <th scope="col">Language</th>
                                 <th scope="col">Points</th>
                                 <th scope="col">Created</th>
                                 <th scope="col">Updated</th>
@@ -76,6 +82,7 @@
                                 <tr>
                                     <td>{{$score->id}}</td>
                                     <td><a href="{{route('admin.users.edit', $user->id)}}" target="_blank">{{$score->user->username}}</a></td>
+                                    <td>{{$score->language->name}}</td>
                                     <td>{{$score->points}}</td>
                                     <td>{{$score->created_at}}</td>
                                     <td>{{$score->updated_at}}</td>

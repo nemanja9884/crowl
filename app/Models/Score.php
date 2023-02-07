@@ -11,11 +11,16 @@ class Score extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'points'];
+    protected $fillable = ['user_id', 'language_id', 'points'];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function language(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Language::class, 'language_id', 'id');
     }
 
     public static function scoring($level, $langId, $sentenceId, $positiveAnswer = null, $negativeAnswer = null, $reason = null, $problematicWords = null)

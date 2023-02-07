@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
 use App\Models\Score;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,14 +17,22 @@ class ScoreController extends Controller
     public function index(Request $request)
     {
         $page = 'all';
-        $scores = Score::orderBy('id', 'desc')
-            ->when($request->input('user'), function ($query) use ($request){
-                $page = 'search';
-                return $query->where('user_id', $request->input('user'));
-            })->paginate(50);
-        $users = User::all();
+        $scores = (new Score)->newQuery();
+        if($request->input('user')) {
+            $scores->where('user_id', $request->input('user'));
+            $page = 'search';
+        }
 
-        return view('admin.scores.index', ['scores' => $scores, 'users' => $users, 'page' => $page]);
+        if($request->input('language')) {
+            $scores->where('language_id', $request->input('language'));
+            $page = 'search';
+        }
+
+        $scores = $scores->orderBy('id', 'desc')->paginate(50);
+        $users = User::all();
+        $languages = Language::all();
+
+        return view('admin.scores.index', ['scores' => $scores, 'users' => $users, 'page' => $page, 'languages' => $languages]);
     }
 
     /**
