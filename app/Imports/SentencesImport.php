@@ -21,12 +21,18 @@ class SentencesImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        if ($row[2] != null && $row[2] != 'GDEX score') {
+//        dd($row);
+//        if ($row[2] != null && $row[2] != 'GDEX score') {
+        if($row['sentence']) {
             Sentence::create([
-                'sentence' => str_replace(['<s> ', ' </s>'], ['', ''], $row['preloadedpor_jsi_newsfeed_virt']),
+                'sentence' => str_replace(['<s> ', ' </s>'], ['', ''], $row['sentence']),
                 'language_id' => $this->languageId,
-                'word_reliability' => $row[2],
+                'word_reliability' => $row['gdex_score'],
+                'source_toknum' => $row['source_toknum'],
+                'source_id' => $row['source_id']
             ]);
         }
+
+//        }
     }
 }
