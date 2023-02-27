@@ -62,14 +62,16 @@
                             {{trans('home.Lack of context/incomprehensible')}}
                         </label>
                     </div>
-                    <div class="form-check sentence">
-                        <input class="form-check-input answer" type="checkbox"
-                               id="fine"
-                               name="answer[]" value="fine">
-                        <label class="form-check-label" for="fine">
-                            {{trans('home.This sentence is fine')}}
-                        </label>
-                    </div>
+                    @if($level == 2)
+                        <div class="form-check sentence">
+                            <input class="form-check-input answer" type="checkbox"
+                                   id="fine"
+                                   name="answer[]" value="fine">
+                            <label class="form-check-label" for="fine">
+                                {{trans('home.This sentence is fine')}}
+                            </label>
+                        </div>
+                    @endif
                     <button id="submit" type="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
                     <p class="float-right mt-3">Points: <b>{{$points}}</b></p>
                 </form>

@@ -17,5 +17,11 @@
                 </div>
             @endforeach
         </div>
+        @guest
+            <div class="text-center mt-3">
+                <a href="{{route('login')}}" type="button" class="btn btn-primary">{{trans('home.Login')}}</a>
+                <a href="{{route('register')}}" type="button" class="btn btn-success">{{trans('home.Register')}}</a>
+            </div>
+        @endguest
     </main>
 @endsection

@@ -128,7 +128,7 @@ class GameController extends Controller
     public function gdexFn($sentenceDb)
     {
         $random = rand(1, 2);
-        if($random == 1) {
+        if ($random == 1) {
             $sort = 'ASC';
         } else {
             $sort = 'DESC';
@@ -166,7 +166,7 @@ class GameController extends Controller
             Score::scoring(1, $language->id, $request->input('answer'), 0, 1);
 
             $answer = Answer::store($language->id, $request->input('answer'), 0, 1);
-            if($request->input('firstSentenceId') == $request->input('answer')) {
+            if ($request->input('firstSentenceId') == $request->input('answer')) {
                 $positiveAnswer = $request->input('secondSentenceId');
             } else {
                 $positiveAnswer = $request->input('firstSentenceId');
@@ -186,7 +186,7 @@ class GameController extends Controller
      */
     public function answerLevel2(Request $request, $code, $level)
     {
-        if(!$request->input('answer')) {
+        if (!$request->input('answer')) {
             return redirect()->route('index');
         }
 
@@ -196,7 +196,7 @@ class GameController extends Controller
         $answer = Answer::find($request->input('answerId'));
         $reasons = $request->input('answer');
 
-        if(in_array('fine', $reasons)) {
+        if (in_array('fine', $reasons)) {
             $answer->positive_answer = 1;
             $answer->negative_answer = 0;
             $answer->save();
@@ -233,7 +233,7 @@ class GameController extends Controller
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         $answerId = $request->input('answerId');
-        if($request->input('fine')) {
+        if ($request->input('fine')) {
             $answer = Answer::find($answerId);
             $answer->positive_answer = 1;
             $answer->negative_answer = 0;
@@ -257,10 +257,10 @@ class GameController extends Controller
             if ($value == $lastElement) {
                 if (is_array($answersIds)) {
                     $lastElement = end($answersIds);
-                    if($lastElement == $request->input('answerId')) {
+                    if ($lastElement == $request->input('answerId')) {
                         return $this->game($code, $level);
                     }
-                } elseif(!is_array($answersIds)) {
+                } elseif (!is_array($answersIds)) {
                     return $this->game($code, $level);
                 }
 
@@ -277,18 +277,20 @@ class GameController extends Controller
 
     public function gamesInRow($langId)
     {
-        $data = session()->get('playerData');
-        if($data === false) {
-            session()->put('playerData', 0);
-        } else {
-            if($data == 5) {
-                Score::store($langId, 5);
-                toastr()->info('You got 5 extra points!');
-                $data = 0;
+        if (Auth::guard('web')->user()) {
+            $data = session()->get('playerData');
+            if ($data === false) {
+                session()->put('playerData', 0);
             } else {
-                $data = $data + 1;
+                if ($data == 5) {
+                    Score::store($langId, 5);
+                    toastr()->info('You got 5 extra points!');
+                    $data = 0;
+                } else {
+                    $data = $data + 1;
+                }
+                session()->put('playerData', $data);
             }
-            session()->put('playerData', $data);
         }
     }
 }

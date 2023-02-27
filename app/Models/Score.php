@@ -54,6 +54,10 @@ class Score extends Model
 
     public static function store($langId, $points = 1)
     {
+        if(!Auth::guard('web')->user()) {
+            return false;
+        }
+
         $userId = Auth::guard('web')->user()->id;
         Score::create(['user_id' => $userId, 'language_id' => $langId, 'points' => $points]);
     }

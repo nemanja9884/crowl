@@ -58,7 +58,6 @@ class LoginController extends Controller
         try {
             $user = Socialite::driver($driver)->user();
         } catch (\Exception $e) {
-            dd($e->getMessage());
             return redirect()->route('login');
         }
 

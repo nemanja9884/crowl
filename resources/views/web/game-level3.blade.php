@@ -5,10 +5,12 @@
         <div class="card color-black">
             <div class="card-header">
                 {{trans('home.LEVEL 3')}}
-                <a href="{{route('gameIntro', $language->lang_code)}}" class="btn btn-secondary float-right">{{trans('home.Level choose')}}</a>
+                <a href="{{route('gameIntro', $language->lang_code)}}"
+                   class="btn btn-secondary float-right">{{trans('home.Level choose')}}</a>
             </div>
             <div class="card-body">
-                <form id="gameForm" action="{{route('answerLevel3', ['code' => $language->lang_code, 'level' => $level])}}"
+                <form id="gameForm"
+                      action="{{route('answerLevel3', ['code' => $language->lang_code, 'level' => $level])}}"
                       method="POST">
                     @csrf
                     @method('POST')
@@ -27,15 +29,17 @@
                     @foreach($reasons as $reason)
                         <input type="hidden" name="reasons[]" value="{{$reason}}"/>
                     @endforeach
-                    <div class="form-check sentence">
-                        <input class="form-check-input answer" type="checkbox"
-                               id="fine"
-                               name="fine" value="1">
-                        <label class="form-check-label" for="fine">
-                            {{trans('home.This sentence is fine')}}
-                        </label>
-                    </div>
-                    <input type="hidden" name="problematicWords" id="problematicWords" />
+                    @if($level == 3)
+                        <div class="form-check sentence">
+                            <input class="form-check-input answer" type="checkbox"
+                                   id="fine"
+                                   name="fine" value="1">
+                            <label class="form-check-label" for="fine">
+                                {{trans('home.This sentence is fine')}}
+                            </label>
+                        </div>
+                    @endif
+                    <input type="hidden" name="problematicWords" id="problematicWords"/>
                     <button id="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
                     <button id="removeBtn" class="btn btn-primary mt-3">{{trans('home.Remove markers')}}</button>
                     <p class="float-right mt-3">Points: <b>{{$points}}</b></p>
@@ -46,8 +50,8 @@
 @endsection
 @section('javascript')
     <script>
-        window.onload = function (){
-            $(document).ready(function(){
+        window.onload = function () {
+            $(document).ready(function () {
                 (function () {
                     var removeBtn = document.getElementById('removeBtn');
                     var sandbox = document.getElementById('selectable-sentence');
@@ -59,14 +63,14 @@
                     });
                 })();
 
-                $('#submit').click(function (e){
+                $('#submit').click(function (e) {
                     var str = "";
-                    $('.highlighted').each(function(){
+                    $('.highlighted').each(function () {
                         str += $(this).text() + "| ";
                     });
                     let problematicWords = $('#problematicWords');
                     problematicWords.val(str);
-                    if(problematicWords.val() === "" && $('#fine').is(":checked") === false) {
+                    if (problematicWords.val() === "" && $('#fine').is(":checked") === false) {
                         e.preventDefault();
                         // toastr.error('Please select problematic words, then press button "choose"');
                         alert('Please select problematic words, then press button "choose"');
