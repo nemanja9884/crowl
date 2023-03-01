@@ -47,19 +47,19 @@
                         </label>
                     </div>
                     <div class="form-check sentence">
-                        <input class="form-check-input answer" type="checkbox" id="spelling/grammarProblems"
+                        <input class="form-check-input answer" type="checkbox" id="spelling and/or grammar problems"
                                name="answer[]"
-                               value="spelling/grammarProblems">
-                        <label class="form-check-label" for="spelling/grammarProblems">
-                            {{trans('home.Spelling/grammar problems')}}
+                               value="spelling and/or grammar problems">
+                        <label class="form-check-label" for="spelling and/or grammar problems">
+                            {{trans('home.Spelling and/or grammar problems')}}
                         </label>
                     </div>
                     <div class="form-check sentence">
                         <input class="form-check-input answer" type="checkbox"
-                               id="lackOfContext/incomprehensible"
-                               name="answer[]" value="lackOfContext/incomprehensible">
-                        <label class="form-check-label" for="lackOfContext/incomprehensible">
-                            {{trans('home.Lack of context/incomprehensible')}}
+                               id="lack of context and/or incomprehensible"
+                               name="answer[]" value="lack of context and/or incomprehensible">
+                        <label class="form-check-label" for="lack of context and/or incomprehensible">
+                            {{trans('home.Lack of context and/or incomprehensible')}}
                         </label>
                     </div>
                     @if($level == 2)
