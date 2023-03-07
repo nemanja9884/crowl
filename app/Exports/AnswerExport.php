@@ -3,18 +3,38 @@
 namespace App\Exports;
 
 use App\Models\Answer;
+use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
 class AnswerExport implements WithHeadings, FromCollection, WithMapping
 {
+    public $request;
+
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
-        return Answer::all();
+        $answers = Answer::orderBy('sentence_id', 'ASC');
+        if ($this->request->filled('language')) {
+            $answers->where('language_id', $this->request->input('language'));
+        }
+        if ($this->request->filled('date_from')) {
+            $answers->whereDate('created_at', '>=', Carbon::parse($this->request->input('date_from'))->format('Y-m-d'));
+        }
+        if ($this->request->filled('date_to')) {
+            $answers->whereDate('created_at', '<=', Carbon::parse($this->request->input('date_to'))->format('Y-m-d'));
+        }
+
+        return $answers->get();
+//        return Answer::all();
     }
 
     public function headings(): array
@@ -28,8 +48,8 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
             'Negative answer',
             'Reasons',
             'Sentence bad part',
-            'Created at',
-            'Updated at'
+//            'Created at',
+//            'Updated at'
         ];
     }
 
@@ -50,8 +70,8 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
             $row->negative_answer,
             $reasons,
             $sentenceBadPart,
-            $row->created_at,
-            $row->updated_at
+//            $row->created_at,
+//            $row->updated_at
         ];
     }
 }

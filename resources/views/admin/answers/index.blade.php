@@ -20,10 +20,70 @@
             </div>
         @endif
         <div class="col-md-12">
+            <a class="nav-link @if($page == 'search') active @endif btn btn-outline-primary mb-3" data-toggle="collapse"
+               href="#searchBox"
+               role="button" aria-expanded="false" aria-controls="searchBox">
+                <i class="mdi mdi-magnify"></i> Search
+            </a>
+            <div class="collapse @if($page == 'search') show @endif" id="searchBox">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Search</h4>
+                        <form class="forms-sample" method="GET" action="{{ route('admin.answers.index')}}">
+                            <div class="row">
+{{--                                <div class="col-md-6">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="sentence">Sentence</label>--}}
+{{--                                        <input type="search" class="form-control" name="sentence" id="sentence"--}}
+{{--                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="language">Language</label>
+                                        <select name="language" id="language" class="form-control">
+                                            <option value="" selected>Choose language</option>
+                                            @foreach($languages as $language)
+                                                <option value="{{$language->id}}"
+                                                        @if(isset($_GET['language']) && $_GET['language'] == $language->id) selected @endif>{{$language->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="sentence">Date From</label>
+                                        <input type="date" class="form-control" name="date_from" id="date_from"
+                                               placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_to">Date To</label>
+                                        <input type="date" class="form-control" name="date_to" id="date_to"
+                                               placeholder="Date To" value="{{$_GET['date_to'] ?? ''}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                    <button type="submit" class="btn btn-success" name="export" value="1">Export to excel</button>
+                                    <a class="btn btn-secondary"
+                                       href="{{ route('admin.answers.index') }}">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Answers list</h5>
-                    <a class="btn btn-primary" href="{{route('admin.answers.export')}}">Export to excel</a>
                     <div class="fluid-container styled-table table-responsive">
                         <table class="table">
                             <thead>
