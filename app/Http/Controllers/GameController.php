@@ -208,8 +208,6 @@ class GameController extends Controller
         }
 
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
-
-
         if(count($request->input('answer')) == 1 && $request->input('answer')[0] == 'lack of context and/or incomprehensible' && is_array($answersIds) && count($answersIds) > 1 && $answersIds[1] == $request->input('answerId')) {
             return $this->game($code, $level);
         } elseif(count($request->input('answer')) == 1 && $request->input('answer')[0] == 'lack of context and/or incomprehensible' && is_array($answersIds) && count($answersIds) > 1 && $answersIds[0] == $request->input('answerId')) {
@@ -222,7 +220,7 @@ class GameController extends Controller
             $sentenceAnswer = Answer::find($answersIds[1]);
             return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } else {
-            if ($level == '2' || $level == '1+2') {
+            if ($level == '2' || $level == '1+2' || ($level == '1+2+3' && $request->input('answer')[0] == 'lack of context and/or incomprehensible')) {
                 return $this->game($code, $level);
             } elseif ($level == '2+3' || $level == '1+2+3') {
                 if (is_array($answersIds)) {
