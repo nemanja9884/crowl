@@ -64,6 +64,19 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="social-login-content text-center mt-3">
+                            <div class="social-button">
+                                <a href="{{url('redirect/google')}}"
+                                   class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
+                                        src="https://img.icons8.com/color/16/000000/google-logo.png" style="width: 20px;"> {{trans('home.Register with google')}}
+                                </a>
+                                <a href="{{url('redirect/facebook')}}"
+                                   class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" style="width: 20px;"> {{trans('home.Register with facebook')}}
+                                </a>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

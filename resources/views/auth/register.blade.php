@@ -1,7 +1,7 @@
 @extends('web.layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-3 mb-3">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

@@ -8,10 +8,13 @@
         {!! $language->content !!}
 
         @guest
+            <a href="{{route('login')}}" type="button" class="btn btn-primary">{{trans('home.Login')}}</a>
+            <a href="{{route('register')}}" type="button" class="btn btn-success">{{trans('home.Register')}}</a>
             <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary">{{trans('home.Continue as
                 guest')}}</a>
         @else
-            <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-primary">{{trans('home.Start game')}}</a>
+            <a href="{{route('gameIntro', $language->lang_code)}}" type="button"
+               class="btn btn-primary">{{trans('home.Start game')}}</a>
         @endguest
     </main>
 @endsection

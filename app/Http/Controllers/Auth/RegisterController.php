@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -75,5 +76,21 @@ class RegisterController extends Controller
             'language_teacher' => $data['language_teacher'],
             'language' => App::getLocale()
         ]);
+    }
+
+    protected function additionUserInfo(Request $request, $userId)
+    {
+        $user = User::findorfail($userId);
+        $user->update([
+            'working_on_university' => $request->working_on_university,
+            'age' => $request->age,
+            'dominant_language' => $request->dominant_language,
+            'language_teacher' => $request->language_teacher,
+            'language' => App::getLocale()
+        ]);
+
+        auth()->login($user, true);
+        toastr()->info('Thank you for your answer!');
+        return redirect()->route('index');
     }
 }

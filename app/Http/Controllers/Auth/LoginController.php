@@ -53,7 +53,7 @@ class LoginController extends Controller
         return Socialite::driver($driver)->redirect();
     }
 
-    public function handleProviderCallback($driver): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application
+    public function handleProviderCallback($driver)
     {
         try {
             $user = Socialite::driver($driver)->user();
@@ -65,6 +65,7 @@ class LoginController extends Controller
 
         if ($existingUser) {
             auth()->login($existingUser, true);
+            return redirect($this->redirectPath());
         } else {
             $newUser = new User;
             $newUser->provider_name = $driver;
@@ -77,9 +78,9 @@ class LoginController extends Controller
             // $newUser->avatar            = $user->getAvatar();
             $newUser->save();
 
-            auth()->login($newUser, true);
-        }
+//            auth()->login($newUser, true);
 
-        return redirect($this->redirectPath());
+            return view('auth.additional-info', ['user' => $newUser]);
+        }
     }
 }
