@@ -11,28 +11,28 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="username" class="form-control-label">Username</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                            <input type="text" id="username" name="username" placeholder="Username"
-                                                   class="form-control"
-                                                   value="{{$user->username}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email" class="form-control-label">Email</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-                                            <input type="email" id="email" name="email" placeholder="Email"
-                                                   class="form-control"
-                                                   value="{{$user->email}}">
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                <div class="col-md-6">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="username" class="form-control-label">Username</label>--}}
+{{--                                        <div class="input-group">--}}
+{{--                                            <div class="input-group-addon"><i class="fa fa-user"></i></div>--}}
+{{--                                            <input type="text" id="username" name="username" placeholder="Username"--}}
+{{--                                                   class="form-control"--}}
+{{--                                                   value="{{$user->username}}">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="col-md-6">--}}
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="email" class="form-control-label">Email</label>--}}
+{{--                                        <div class="input-group">--}}
+{{--                                            <div class="input-group-addon"><i class="fa fa-envelope"></i></div>--}}
+{{--                                            <input type="email" id="email" name="email" placeholder="Email"--}}
+{{--                                                   class="form-control"--}}
+{{--                                                   value="{{$user->email}}">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="status" class="form-control-label">Status</label>

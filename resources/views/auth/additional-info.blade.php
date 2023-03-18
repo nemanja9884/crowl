@@ -21,6 +21,7 @@
                                     <option value="51-60">51-60</option>
                                     <option value="above70">{{trans('home.Above 70')}}</option>
                                 </select>
+                                <div class="ageMessageDiv"></div>
                             </div>
                         </div>
 
@@ -31,6 +32,7 @@
                                     <option value="1">{{trans('home.Yes')}}</option>
                                     <option value="0">{{trans('home.No')}}</option>
                                 </select>
+                                <div class="universityMessageDiv"></div>
                             </div>
                         </div>
 
@@ -41,6 +43,7 @@
                                     <option value="1">{{trans('home.Yes')}}</option>
                                     <option value="0">{{trans('home.No')}}</option>
                                 </select>
+                                <div class="teacherMessageDiv"></div>
                             </div>
                         </div>
                         @php
@@ -54,6 +57,7 @@
                                     <option value="1">{{trans('home.Yes')}}</option>
                                     <option value="0">{{trans('home.No')}}</option>
                                 </select>
+                                <div class="domLanguageMessageDiv"></div>
                             </div>
                         </div>
 
@@ -72,4 +76,50 @@
         </div>
     </div>
 </div>
+@endsection
+@section('javascript')
+    <script>
+        window.onload = function () {
+            $(document).ready(function () {
+                $('#age').on('change', function () {
+                    let value = $(this).val();
+                    let key = 'age';
+                    $.fn.myfunction(key, value, '.ageMessageDiv');
+                });
+
+                $('#dominant_language').on('change', function () {
+                    let value = $(this).val();
+                    let key = 'dominant_language';
+                    $.fn.myfunction(key, value, '.domLanguageMessageDiv');
+                });
+
+                $('#language_teacher').on('change', function () {
+                    let value = $(this).val();
+                    let key = 'language_teacher';
+                    $.fn.myfunction(key, value, '.teacherMessageDiv');
+                });
+
+                $('#working_on_university').on('change', function () {
+                    let value = $(this).val();
+                    let key = 'working_on_university';
+                    $.fn.myfunction(key, value, '.universityMessageDiv');
+                });
+
+                $.fn.myfunction = function(key, value, messageDiv) {
+                    console.log('takisa');
+                    let url = "{{url('additional-info-data')}}/" + key + "/" + value;
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        success: function (data) {
+                            $(messageDiv).html("<p style='color: red;'>" + data + "% of people chose the same</p>");
+                        },
+                        error: function () {
+                            alert('Some error occurred, please try again.');
+                        }
+                    });
+                };
+            });
+        }
+    </script>
 @endsection

@@ -35,8 +35,8 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'username' => 'required',
-            'email' => 'required',
+//            'username' => 'required',
+//            'email' => 'required',
             'status' => 'required',
             'password' => 'required',
         ));
@@ -77,8 +77,8 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $this->validate($request, array(
-            'username' => 'required',
-            'email' => 'required',
+//            'username' => 'required',
+//            'email' => 'required',
             'status' => 'required',
         ));
 

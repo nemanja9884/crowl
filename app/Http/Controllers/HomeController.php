@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -41,5 +42,13 @@ class HomeController extends Controller
         App::setLocale($language->lang_code);
         session()->put('locale', $language->lang_code);
         return view('web.index_language', ['language' => $language]);
+    }
+
+    public function additionalInfoData($field, $value)
+    {
+        $usersCount = User::count();
+        $dataCount = User::where($field, $value)->count();
+
+        return ($dataCount / $usersCount) * 100;
     }
 }

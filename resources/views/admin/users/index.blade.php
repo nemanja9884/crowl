@@ -28,8 +28,8 @@
                                             <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Username</th>
-                                                <th>Email</th>
+{{--                                                <th>Username</th>--}}
+{{--                                                <th>Email</th>--}}
                                                 <th>Status</th>
                                                 <th>Created at</th>
                                                 <th>Action</th>
@@ -39,8 +39,8 @@
                                             @foreach($users as $user)
                                                 <tr>
                                                     <td>{{$user->id}}</td>
-                                                    <td>{{$user->username}}</td>
-                                                    <td>{{$user->email}}</td>
+{{--                                                    <td>{{$user->username}}</td>--}}
+{{--                                                    <td>{{$user->email}}</td>--}}
                                                     <td>
                                                         @if($user->status == 1)
                                                             <span class="badge badge-primary">Active</span>
