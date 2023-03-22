@@ -24,6 +24,12 @@ class GameController extends Controller
         return $this->game($code, $request->input('level'));
     }
 
+    public function noGames($code)
+    {
+        $language = Language::where('lang_code', $code)->first();
+        return view('web.no-games', ['language' => $language]);
+    }
+
     public function game($code, $level)
     {
         $language = Language::where('lang_code', $code)->first();
@@ -41,7 +47,7 @@ class GameController extends Controller
                 }
 
                 if (!$firstSentence || !$secondSentence) {
-                    return redirect()->route('noGames');
+                    return redirect()->route('noGames', $code);
                 }
 
                 return view('web.game-level1', ['language' => Language::where('lang_code', $code)->first(), 'level' => $level, 'firstSentence' => $firstSentence, 'secondSentence' => $secondSentence]);
@@ -49,13 +55,13 @@ class GameController extends Controller
             case '2+3':
                 $answers = $this->gameData($user, $language->id, $level);
                 if (count($answers) < 1) {
-                    return redirect()->route('noGames');
+                    return redirect()->route('noGames', $code);
                 }
                 return $this->level($level == 3 ? 3 : 2, $language, $level, $answers[0]->sentence_id, $answers->pluck('id')->toArray(), $answers[0]->id);
             case '3':
                 $answers = $this->gameData($user, $language->id, $level);
                 if (count($answers) < 1) {
-                    return redirect()->route('noGames');
+                    return redirect()->route('noGames', $code);
                 } elseif (count($answers) == 1) {
                     $answers = $answers[0];
                     $sentenceAnswer = Answer::find($answers);
@@ -115,11 +121,11 @@ class GameController extends Controller
                 }
             case '2':
             case '2+3':
-                return Answer::where(function ($q) {
+                return Answer::where('language_id', $langId)->where(function ($q) {
                     $q->where('negative_answer', 1);
                 })->whereDoesntHave('answersDetails')->limit(1)->get();
             case '3';
-                return Answer::whereHas('answersDetails', function ($q) use ($user) {
+                return Answer::where('language_id', $langId)->whereHas('answersDetails', function ($q) use ($user) {
                     $q->whereNull('sentence_bad_part');
                 })->limit(2)->pluck('id')->toArray();
         }
@@ -208,9 +214,9 @@ class GameController extends Controller
         }
 
         // Check if there is more than one question and check if this is first, if so, let him answer on second question
-        if(count($request->input('answer')) == 1 && $request->input('answer')[0] == 'lack of context and/or incomprehensible' && is_array($answersIds) && count($answersIds) > 1 && $answersIds[1] == $request->input('answerId')) {
+        if (count($request->input('answer')) == 1 && $request->input('answer')[0] == 'lack of context and/or incomprehensible' && is_array($answersIds) && count($answersIds) > 1 && $answersIds[1] == $request->input('answerId')) {
             return $this->game($code, $level);
-        } elseif(count($request->input('answer')) == 1 && $request->input('answer')[0] == 'lack of context and/or incomprehensible' && is_array($answersIds) && count($answersIds) > 1 && $answersIds[0] == $request->input('answerId')) {
+        } elseif (count($request->input('answer')) == 1 && $request->input('answer')[0] == 'lack of context and/or incomprehensible' && is_array($answersIds) && count($answersIds) > 1 && $answersIds[0] == $request->input('answerId')) {
             $sentenceAnswer = Answer::find($answersIds[1]);
             return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } elseif (is_array($answersIds) && count($answersIds) > 1 && $level == '1+2+3') {
@@ -254,8 +260,7 @@ class GameController extends Controller
 //        }
     }
 
-    public
-    function answerLevel3(Request $request, $code, $level)
+    public function answerLevel3(Request $request, $code, $level)
     {
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
@@ -279,8 +284,7 @@ class GameController extends Controller
         return $this->level3Reasons($reasons, $lastElement, $language, $level, $answersIds, $request, $code);
     }
 
-    public
-    function level3Reasons($reasons, $lastElement, $language, $level, $answersIds, $request, $code)
+    public function level3Reasons($reasons, $lastElement, $language, $level, $answersIds, $request, $code)
     {
         foreach ($reasons as $key => $value) {
             if ($value == $lastElement) {
@@ -304,8 +308,7 @@ class GameController extends Controller
         return null;
     }
 
-    public
-    function gamesInRow($langId)
+    public function gamesInRow($langId)
     {
         if (Auth::guard('web')->user()) {
             $data = session()->get('playerData');

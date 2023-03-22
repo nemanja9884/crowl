@@ -5,7 +5,8 @@
         <div class="card color-black">
             <div class="card-header">
                 {{trans('home.LEVEL 1')}}
-                <a href="{{route('gameIntro', $language->lang_code)}}" class="btn btn-secondary float-right">{{trans('home.Level choose')}}</a>
+                <a href="{{route('index')}}" type="button" class="btn btn-danger float-right ml-2">{{trans('home.exit game')}}</a>
+                <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary float-right mr-2" style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
             </div>
             <div class="card-body">
                 <form action="{{route('answerLevel1', ['code' => $language->lang_code, 'level' => $level])}}" method="POST">

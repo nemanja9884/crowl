@@ -90,7 +90,7 @@
                             <tr>
                                 <th scope="col">Sentence</th>
                                 <th scope="col">Language</th>
-                                <th scope="col">User</th>
+                                <th scope="col">User ID</th>
                                 <th scope="col">IP Address</th>
                                 <th scope="col">Positive answer</th>
                                 <th scope="col">Negative answer</th>
@@ -103,7 +103,8 @@
                                 <tr>
                                     <td>{{$answer->sentence->sentence}}</td>
                                     <td>{{$answer->language->name}}</td>
-                                    <td>{{$answer->user ? $answer->user->name : ''}}</td>
+                                    <td>{{$answer->user_id}}</td>
+{{--                                    <td>{{$answer->user ? $answer->user->email : ''}}</td>--}}
                                     <td>{{$answer->ip_address}}</td>
                                     <td>
                                         @if($answer->positive_answer)
