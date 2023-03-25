@@ -7,12 +7,12 @@
                 GAME INTRO
             </div>
             <div class="card-body text-left">
-                <h5 class="card-title">You can choose between 3 levels of game. 1,2 or 3 level, or you can take 1 + 2 or 2
-                    3 or 1 + 2 + 3. Good luck!</h5>
+                <h5 class="card-title">{{trans('home.You can choose between 3 levels of game. 1,2 or 3 level, or you can take 1 + 2 or 2
+                    3 or 1 + 2 + 3. Good luck!')}}</h5>
                 <form action="{{route('startGame', $language->lang_code)}}" method="POST">
                     @csrf
                     @method('POST')
-                    <h5>Please choose your level:</h5>
+                    <h5>{{trans('home.Please choose your level:')}}</h5>
                     <div class="form-check sentence">
                         <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1" checked>
                         <label class="form-check-label" for="gameLevel">
@@ -50,7 +50,7 @@
                         </label>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3 float-left">{{trans('home.Start Game!')}}</button>
-                    <p class="float-right mt-3">Points: <b>{{$points}}</b></p>
+                    <p class="float-right mt-3">{{trans('home.Points:')}} <b>{{$points}}</b></p>
                 </form>
             </div>
         </div>
