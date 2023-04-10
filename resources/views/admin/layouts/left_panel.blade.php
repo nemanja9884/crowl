@@ -63,6 +63,7 @@
                     <h3 class="menu-title">Settings</h3><!-- /.menu-title -->
                     <li>
                         <a href="{{route('admin.translations.index')}}"> <i class="menu-icon fa fa-language"></i>Translations</a>
+                        <a href="{{route('admin.settings.index')}}"> <i class="menu-icon fa fa-language"></i>Settings</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

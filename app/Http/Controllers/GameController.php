@@ -7,6 +7,7 @@ use App\Models\AnswerDetail;
 use App\Models\Language;
 use App\Models\Score;
 use App\Models\Sentence;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -36,6 +37,13 @@ class GameController extends Controller
         $user = Auth::guard('web')->user();
 
         $this->gamesInRow($language->id);
+
+        if (!$user) {
+            $gamesCycle = $this->gamesCycles();
+            if ($gamesCycle['success']) {
+                return view('web.games-cycles', ['code' => $code]);
+            }
+        }
 
         switch ($level) {
             case '1':
@@ -324,6 +332,24 @@ class GameController extends Controller
                 }
                 session()->put('playerData', $data);
             }
+        }
+    }
+
+    public function gamesCycles()
+    {
+        $data = session()->get('gameCycles');
+        if ($data === false) {
+            session()->put('gameCycles', 1);
+        } else {
+            if ($data == 5) {
+                $data = 0;
+                session()->put('gameCycles', $data);
+                return ['success' => true];
+            } else {
+                $data = $data + 1;
+            }
+            session()->put('gameCycles', $data);
+            return ['success' => false];
         }
     }
 }

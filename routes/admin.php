@@ -37,4 +37,5 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::get('answers/export', [App\Http\Controllers\Admin\AnswersController::class, 'export'])->name('answers.export');
     Route::resource('admins', App\Http\Controllers\Admin\AdminUsersController::class);
     Route::resource('scores', App\Http\Controllers\Admin\ScoreController::class);
+    Route::resource('settings', App\Http\Controllers\Admin\SettingsController::class);
 });

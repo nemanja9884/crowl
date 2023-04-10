@@ -14,37 +14,37 @@
                     @method('POST')
                     <h5>{{trans('home.Please choose your level:')}}</h5>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1" checked>
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1" @if(!Auth::guard('web')->user()) disabled @else checked @endif>
                         <label class="form-check-label" for="gameLevel">
                             1
                         </label>
                     </div>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="2">
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="2" @if(!Auth::guard('web')->user()) disabled @endif>
                         <label class="form-check-label" for="gameLevel">
                             2
                         </label>
                     </div>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="3">
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="3" @if(!Auth::guard('web')->user()) disabled @endif>
                         <label class="form-check-label" for="gameLevel">
                             3
                         </label>
                     </div>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1+2">
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1+2" @if(!Auth::guard('web')->user()) disabled @endif>
                         <label class="form-check-label" for="gameLevel">
                             1 + 2
                         </label>
                     </div>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="2+3">
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="2+3" @if(!Auth::guard('web')->user()) disabled @endif>
                         <label class="form-check-label" for="gameLevel">
                             2 + 3
                         </label>
                     </div>
                     <div class="form-check sentence">
-                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1+2+3">
+                        <input class="form-check-input" type="radio" name="level" id="gameLevel" value="1+2+3" @if(!Auth::guard('web')->user()) checked @endif>
                         <label class="form-check-label" for="gameLevel">
                             1 + 2 + 3
                         </label>
