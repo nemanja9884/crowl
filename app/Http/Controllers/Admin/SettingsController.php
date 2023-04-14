@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
 class SettingsController extends Controller
@@ -75,6 +76,8 @@ class SettingsController extends Controller
 
         $settings = Setting::findorfail($id);
         $settings->update($request->all());
+
+        Cache::forget('getSettings');
 
         Session::flash('message', 'Successfully saved settings');
         Session::flash('alert-class', 'success');

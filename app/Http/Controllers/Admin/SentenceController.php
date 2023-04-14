@@ -29,7 +29,7 @@ class SentenceController extends Controller
         }
         if ($request->filled('positive_answer')) {
             $page = 'search';
-            $sentences->where('positive_answers',  $request->input('positive_answer'));
+            $sentences->where('positive_answers', $request->input('positive_answer'));
         }
         if ($request->filled('negative_answer')) {
             $page = 'search';
@@ -76,7 +76,7 @@ class SentenceController extends Controller
             'word_reliability' => $request->input('word_reliability')
         ]);
 
-        if($sentence) {
+        if ($sentence) {
             Session::flash('message', 'Successfully made new sentence');
             Session::flash('alert-class', 'success');
         } else {
@@ -90,7 +90,7 @@ class SentenceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -162,6 +162,17 @@ class SentenceController extends Controller
         SentenceImport::dispatchNow($file->getClientOriginalName(), $request->input('language_id'));
 
         Session::flash('message', 'Your sentences will be imported soon, please be patient. Refresh page after a while to check if your sentences have been imported');
+        Session::flash('alert-class', 'success');
+        return redirect()->route('admin.sentences.index');
+    }
+
+    public function return(Request $request, $id)
+    {
+        $sentence = Sentence::findorfail($id);
+        $sentence->finished = 0;
+        $sentence->returned = 1;
+        $sentence->save();
+        Session::flash('message', 'Successfully returned sentence in game!');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.sentences.index');
     }

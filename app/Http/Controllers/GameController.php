@@ -7,13 +7,15 @@ use App\Models\AnswerDetail;
 use App\Models\Language;
 use App\Models\Score;
 use App\Models\Sentence;
-use App\Models\Setting;
+use App\Traits\CacheSystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class GameController extends Controller
 {
+    use CacheSystem;
+
     public function gameIntro($code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $language = Language::where('lang_code', $code)->first();
@@ -179,12 +181,14 @@ class GameController extends Controller
         } else {
             Score::scoring(1, $language->id, $request->input('answer'), 0, 1);
 
+            // One that is not checked get negative answer
             $answer = Answer::store($language->id, $request->input('answer'), 0, 1);
             if ($request->input('firstSentenceId') == $request->input('answer')) {
                 $positiveAnswer = $request->input('secondSentenceId');
             } else {
                 $positiveAnswer = $request->input('firstSentenceId');
             }
+            // Checked one get positive answer
             Answer::store($language->id, $positiveAnswer, 1, 0);
 
             if ($level == '1') {
@@ -246,26 +250,6 @@ class GameController extends Controller
                 }
             }
         }
-
-
-//        // Check if there is more than one question and check if this is first, if so, let him answer on second question
-//        if (is_array($answersIds) && count($answersIds) > 1 && $answersIds[0] == $request->input('answerId')) {
-//            $sentenceAnswer = Answer::find($answersIds[1]);
-//            return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
-//        } else {
-//            if ($level == '2' || $level == '1+2') {
-//                return $this->game($code, $level);
-//            } elseif ($level == '2+3' || $level == '1+2+3') {
-//                if (is_array($answersIds)) {
-//                    $sentenceAnswer = Answer::find($answersIds[0]);
-//                    return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[0]);
-//                } else {
-//                    $sentenceAnswer = Answer::find($answersIds);
-//                    return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds);
-//                }
-//
-//            }
-//        }
     }
 
     public function answerLevel3(Request $request, $code, $level)
@@ -337,11 +321,12 @@ class GameController extends Controller
 
     public function gamesCycles()
     {
+        $settings = $this->getSettings();
         $data = session()->get('gameCycles');
         if ($data === false) {
             session()->put('gameCycles', 1);
         } else {
-            if ($data == 5) {
+            if ($data == $settings->guests_plays_cycles ?? 5) {
                 $data = 0;
                 session()->put('gameCycles', $data);
                 return ['success' => true];

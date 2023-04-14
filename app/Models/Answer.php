@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\CacheSystem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class Answer extends Model
 {
-    use HasFactory;
+    use HasFactory, CacheSystem;
 
     protected $fillable = ['id', 'language_id', 'sentence_id', 'user_id', 'ip_address', 'positive_answer', 'negative_answer', 'created_at', 'updated_at'];
 
@@ -35,6 +36,7 @@ class Answer extends Model
 
     public static function store($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
     {
+        // For case if user just refresh page, we do not want to get 2 same answers from him
         $user = Auth::guard('web')->user();
         $answer = Answer::where(['sentence_id' => $sentenceId, 'language_id' => $langId]);
         if ($user) {
@@ -54,7 +56,7 @@ class Answer extends Model
                 'negative_answer' => $negativeAnswer,
             ]);
 
-            self::checkSentenceDiff($sentenceId);
+            (new Answer)->checkSentenceDiff($sentenceId);
 
             return $answer;
         } else {
@@ -62,13 +64,14 @@ class Answer extends Model
         }
     }
 
-    public static function checkSentenceDiff($sentenceId)
+    public function checkSentenceDiff($sentenceId)
     {
-        $positiveAnswers = DB::select(DB::raw("SELECT sum(positive_answer) as positive_answer from answers where sentence_id = $sentenceId"));
-        $negativeAnswers = DB::select(DB::raw("SELECT sum(negative_answer) as negative_answer from answers where sentence_id = $sentenceId"));
+        $settings = $this->getSettings();
+        $positiveAnswers = DB::select(DB::raw("SELECT sum(positive_answer) as positive_answer from answers where sentence_id = $sentenceId and user_id is not null"));
+        $negativeAnswers = DB::select(DB::raw("SELECT sum(negative_answer) as negative_answer from answers where sentence_id = $sentenceId and user_id is not null"));
         $answersDiff = abs($positiveAnswers[0]->positive_answer - $negativeAnswers[0]->negative_answer);
-        if ($answersDiff >= 3) {
-            Sentence::where('id', $sentenceId)->update(['finished' => 1]);
+        if ($answersDiff >= $settings->finished_ration ?? 3) {
+            Sentence::where('id', $sentenceId)->update(['finished' => 1, 'returned' => 0]);
         }
     }
 

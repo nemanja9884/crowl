@@ -32,6 +32,7 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::resource('sentences', App\Http\Controllers\Admin\SentenceController::class);
     Route::resource('users', App\Http\Controllers\Admin\UsersController::class);
     Route::post('sentences/import', [App\Http\Controllers\Admin\SentenceController::class, 'import'])->name('sentences.import');
+    Route::get('sentence/return/{id}', [App\Http\Controllers\Admin\SentenceController::class, 'return'])->name('sentence.return');
     Route::get('answers', [App\Http\Controllers\Admin\AnswersController::class, 'index'])->name('answers.index');
     Route::get('answersDetails/{id}', [App\Http\Controllers\Admin\AnswersController::class, 'answerDetails'])->name('answers.details');
     Route::get('answers/export', [App\Http\Controllers\Admin\AnswersController::class, 'export'])->name('answers.export');

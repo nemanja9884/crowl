@@ -50,8 +50,14 @@
                                         <label for="positive_answer">Positive answers</label>
                                         <select name="positive_answer" id="positive_answer" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="1" @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 1) selected @endif>Yes</option>
-                                            <option value="0" @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 0) selected @endif>No</option>
+                                            <option value="1"
+                                                    @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 1) selected @endif>
+                                                Yes
+                                            </option>
+                                            <option value="0"
+                                                    @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 0) selected @endif>
+                                                No
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -61,8 +67,14 @@
                                         <label for="negative_answer">Negative answers</label>
                                         <select name="negative_answer" id="negative_answer" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="1" @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 1) selected @endif>Yes</option>
-                                            <option value="0" @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 0) selected @endif>No</option>
+                                            <option value="1"
+                                                    @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 1) selected @endif>
+                                                Yes
+                                            </option>
+                                            <option value="0"
+                                                    @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 0) selected @endif>
+                                                No
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -72,8 +84,14 @@
                                         <label for="finished">Finished</label>
                                         <select name="finished" id="finished" class="form-control">
                                             <option value="">Choose</option>
-                                            <option value="1" @if(isset($_GET['finished']) && $_GET['finished'] == 1) selected @endif>Yes</option>
-                                            <option value="0" @if(isset($_GET['finished']) && $_GET['finished'] == 0) selected @endif>No</option>
+                                            <option value="1"
+                                                    @if(isset($_GET['finished']) && $_GET['finished'] == 1) selected @endif>
+                                                Yes
+                                            </option>
+                                            <option value="0"
+                                                    @if(isset($_GET['finished']) && $_GET['finished'] == 0) selected @endif>
+                                                No
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -169,6 +187,7 @@
                                 <th scope="col">Positive answers</th>
                                 <th scope="col">Negative answers</th>
                                 <th scope="col">Finished</th>
+                                <th scope="col">Status</th>
                                 <th scope="col" class="d-none d-md-table-cell">Created</th>
                                 <th scope="col" style="text-align: right">Action</th>
                             </tr>
@@ -188,9 +207,23 @@
                                             <span class="badge badge-secondary">False</span>
                                         @endif
                                     </td>
+                                    <td>
+                                        @if($sentence->returned)
+                                            <span class="badge badge-danger">Returned</span>
+                                        @elseif($sentence->finished)
+                                            <span class="badge badge-primary">Done</span>
+                                        @elseif(count($sentence->answers) == 0)
+                                            <span class="badge badge-success">New</span>
+                                        @elseif(count($sentence->answers) > 0)
+                                            <span class="badge badge-secondary">In game</span>
+                                        @endif
+                                    </td>
                                     <td class="d-none d-md-table-cell">{{$sentence->created_at?->format('d M Y H:i')}}</td>
                                     <td style="min-width: 110px;">
                                         <div class="float-right">
+                                            @if($sentence->finished)
+                                                <a href="{{route('admin.sentence.return', $sentence->id)}}" class="btn btn-outline-danger btn-sm">Return sentence</a>
+                                            @endif
                                             <button class="btn btn-outline-primary btn-sm edit" data-toggle="modal"
                                                     data-target="#exampleModal1" data-id="{{$sentence->id}}"><i
                                                     class="fa fa-magic"></i>&nbsp;Edit
