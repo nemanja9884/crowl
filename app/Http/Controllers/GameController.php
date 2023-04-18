@@ -131,11 +131,21 @@ class GameController extends Controller
                 }
             case '2':
             case '2+3':
-                return Answer::where('language_id', $langId)->where(function ($q) {
+            // Prevent user to answer again on already answered sentence
+                return Answer::where('language_id', $langId)->where('user_id', '!=', Auth::guard('web')->user()->id)->where(function ($q) {
                     $q->where('negative_answer', 1);
+                })->whereNotIn('sentence_id', function ($query){
+                    $query->select('sentence_id')
+                        ->from(with(new Answer)->getTable())
+                        ->where('user_id', Auth::guard('web')->user()->id);
                 })->whereDoesntHave('answersDetails')->limit(1)->get();
             case '3';
-                return Answer::where('language_id', $langId)->whereHas('answersDetails', function ($q) use ($user) {
+            // Prevent user to answer again on already answered sentence
+                return Answer::where('language_id', $langId)->where('user_id', '!=', Auth::guard('web')->user()->id)->whereNotIn('sentence_id', function ($query){
+                    $query->select('sentence_id')
+                        ->from(with(new Answer)->getTable())
+                        ->where('user_id', Auth::guard('web')->user()->id);
+                })->whereHas('answersDetails', function ($q) use ($user) {
                     $q->whereNull('sentence_bad_part');
                 })->limit(2)->pluck('id')->toArray();
         }
@@ -215,13 +225,16 @@ class GameController extends Controller
         $reasons = $request->input('answer');
 
         if (in_array('fine', $reasons)) {
-            $answer->positive_answer = 1;
-            $answer->negative_answer = 0;
-            $answer->save();
+            Answer::store($language->id, $request->input('sentenceId'), 1, 0);
         } else {
             foreach ($reasons as $reason) {
                 AnswerDetail::store($language->id, $request->input('sentenceId'), $answer->id, $reason);
                 Score::scoring(2, $language->id, $answer->id, null, null, $reason);
+
+                if($level == '2+3' || $level = '2') {
+                    // Player 2 categorised this sentence as negative, so we give one more negative answer to this sentence
+                    Answer::store($language->id, $request->input('sentenceId'), 0, 1);
+                }
             }
         }
 
@@ -257,17 +270,18 @@ class GameController extends Controller
         toastr()->info('Thank you for your answer!');
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
-        $answerId = $request->input('answerId');
         if ($request->input('fine')) {
-            $answer = Answer::find($answerId);
-            $answer->positive_answer = 1;
-            $answer->negative_answer = 0;
-            $answer->save();
+            Answer::store($language->id, $request->input('sentenceId'), 1, 0);
         } else {
             Score::scoring(3, $language->id, $request->input('sentenceId'), null, null, null, $request->input('problematicWords'));
             $answerDetail = AnswerDetail::find($request->input('reasonId'));
             $answerDetail->sentence_bad_part = $request->input('problematicWords');
             $answerDetail->save();
+
+            if($level = '3') {
+                // Player 2 categorised this sentence as negative, so we give one more negative answer to this sentence
+                Answer::store($language->id, $request->input('sentenceId'), 0, 1);
+            }
         }
 
         $reasons = $request->input('reasons');
