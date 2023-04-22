@@ -231,7 +231,7 @@ class GameController extends Controller
                 AnswerDetail::store($language->id, $request->input('sentenceId'), $answer->id, $reason);
                 Score::scoring(2, $language->id, $answer->id, null, null, $reason);
 
-                if($level == '2+3' || $level = '2') {
+                if($level == '2+3' || $level == '2') {
                     // Player 2 categorised this sentence as negative, so we give one more negative answer to this sentence
                     Answer::store($language->id, $request->input('sentenceId'), 0, 1);
                 }
@@ -245,9 +245,11 @@ class GameController extends Controller
             $sentenceAnswer = Answer::find($answersIds[1]);
             return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } elseif (is_array($answersIds) && count($answersIds) > 1 && $level == '1+2+3') {
+            // We have more than 1 answers and this is level 1+2+3
             $sentenceAnswer = Answer::find($request->input('answerId'));
             return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $request->input('answerId'));
         } elseif (is_array($answersIds) && count($answersIds) > 1 && $answersIds[0] == $request->input('answerId')) {
+            // We have more than 1 answers and this is first sentence answer, let user play again for second answer on this level 2
             $sentenceAnswer = Answer::find($answersIds[1]);
             return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[1]);
         } else {
