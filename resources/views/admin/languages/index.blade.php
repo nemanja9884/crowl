@@ -4,7 +4,7 @@
         @include('admin.layouts.header')
         @foreach ($errors->all() as $error)
             <div class="col-md-12 alert alert-danger" role="alert">
-                {!! $errors->first() !!}
+                {!! $error !!}
             </div>
         @endforeach
         @if(Session::has('message'))
@@ -18,19 +18,20 @@
                     <strong>Add language</strong>
                 </div>
                 <div class="col-md-12 card-body card-block">
-                    <form action="{{ route('admin.languages.store') }}" method="post" enctype="multipart/form-data"
+                    <form action="{{ route('admin.languages.store') }}" method="post"
+                          enctype="multipart/form-data"
                           class="form-horizontal">
                         @csrf
                         <div class="col form-group">
                             <label for="name" class="form-control-label">Language name</label>
                             <input type="text" id="name" name="name"
-                                   placeholder="Language name" class="form-control">
+                                   placeholder="Language name" class="form-control" required>
                         </div>
 
                         <div class="col form-group">
                             <label for="lang_code" class="form-control-label">Language code</label>
                             <input type="text" id="lang_code" name="lang_code"
-                                   placeholder="Language code" class="form-control">
+                                   placeholder="Language code" class="form-control" required>
                         </div>
 
                         <div class="col form-group">
@@ -53,11 +54,12 @@
                         <div class="col form-group">
                             <label for="sort" class="form-control-label">Sort</label>
                             <input type="number" id="sort" name="sort"
-                                   placeholder="Sort" class="form-control">
+                                   placeholder="Sort" class="form-control" required>
                         </div>
 
                         <div class="col-md-12 text-center form-group" style="margin: 0 auto;">
-                            <div class="col col-md-12"><label for="file-input" class=" form-control-label">Add image for
+                            <div class="col col-md-12"><label for="file-input" class=" form-control-label">Add
+                                    image for
                                     language</label></div>
                             <div class="col-12 col-md-12">
                                 <div class="input-group" style="margin: 0 auto;">
@@ -75,10 +77,10 @@
                         </div>
                         <div class="card-footer col-12 text-center">
                             <button type="submit" class="btn btn-primary btn-sm">
-                                <i class="fa fa-dot-circle-o"></i> Sačuvaj
+                                <i class="fa fa-dot-circle-o"></i> Save
                             </button>
                             <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Resetuj
+                                <i class="fa fa-ban"></i> Reset
                             </button>
                         </div>
                     </form>
@@ -108,11 +110,13 @@
                             @foreach ($languages as $language)
                                 <tr>
                                     <td class="d-none d-md-table-cell">
-                                        <input class="styled-checkbox" id="category-{{$language->id}}" type="checkbox">
+                                        <input class="styled-checkbox" id="category-{{$language->id}}"
+                                               type="checkbox">
                                         <label for="category-{{$language->id}}"></label>
                                     </td>
                                     <td>{{$language->name}}</td>
-                                    <td><img class="img-fluid" src="{{$language->image}}" style="max-width: 50px;"/>
+                                    <td><img class="img-fluid" src="{{$language->image}}"
+                                             style="max-width: 50px;"/>
                                     </td>
                                     <td>
                                         @if($language->status == 0)
@@ -124,7 +128,8 @@
                                     <td class="d-none d-md-table-cell">{{$language->created_at->format('d M Y H:i')}}</td>
                                     <td style="min-width: 110px;">
                                         <div class="float-right">
-                                            <button class="btn btn-outline-primary btn-sm edit" data-toggle="modal"
+                                            <button class="btn btn-outline-primary btn-sm edit"
+                                                    data-toggle="modal"
                                                     data-target="#exampleModal1" data-id="{{$language->id}}"><i
                                                     class="fa fa-magic"></i>&nbsp;Edit
                                             </button>

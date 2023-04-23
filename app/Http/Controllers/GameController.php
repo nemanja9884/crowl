@@ -280,7 +280,7 @@ class GameController extends Controller
             $answerDetail->sentence_bad_part = $request->input('problematicWords');
             $answerDetail->save();
 
-            if($level = '3') {
+            if($level == '3') {
                 // Player 2 categorised this sentence as negative, so we give one more negative answer to this sentence
                 Answer::store($language->id, $request->input('sentenceId'), 0, 1);
             }

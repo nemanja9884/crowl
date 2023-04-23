@@ -42,7 +42,13 @@ class LanguageController extends Controller
             'image' => 'required',
             'status' => 'required',
             'sort' => 'required',
-        ));
+        ), [
+            'name.required' => 'Name is required',
+            'lang_code.required' => 'Language code is required',
+            'image' => 'Image is required',
+            'status' => 'Status is required',
+            'sort' => 'Sort is required'
+        ]);
 
         $language = Language::create([
             'name' => $request->input('name'),
@@ -97,7 +103,12 @@ class LanguageController extends Controller
             'lang_code' => 'required',
             'status' => 'required',
             'sort' => 'required'
-        ));
+        ), [
+            'name.required' => 'Name is required',
+            'lang_code.required' => 'Language code is required',
+            'status' => 'Status is required',
+            'sort' => 'Sort is required'
+        ]);
 
         $language = Language::find($id);
         $language->update([

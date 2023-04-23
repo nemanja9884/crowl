@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-5">Sačuvaj</button>
+                <button type="submit" class="btn btn-primary mt-5">Save</button>
             </form>
         </div>
 @endsection
