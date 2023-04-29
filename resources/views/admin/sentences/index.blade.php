@@ -47,40 +47,6 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="positive_answer">Positive answers</label>
-                                        <select name="positive_answer" id="positive_answer" class="form-control">
-                                            <option value="">Choose</option>
-                                            <option value="1"
-                                                    @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 1) selected @endif>
-                                                Yes
-                                            </option>
-                                            <option value="0"
-                                                    @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 0) selected @endif>
-                                                No
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="negative_answer">Negative answers</label>
-                                        <select name="negative_answer" id="negative_answer" class="form-control">
-                                            <option value="">Choose</option>
-                                            <option value="1"
-                                                    @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 1) selected @endif>
-                                                Yes
-                                            </option>
-                                            <option value="0"
-                                                    @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 0) selected @endif>
-                                                No
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label for="finished">Finished</label>
                                         <select name="finished" id="finished" class="form-control">
                                             <option value="">Choose</option>
@@ -184,8 +150,6 @@
                                 <th scope="col">Sentence</th>
                                 <th scope="col">Language</th>
                                 <th scope="col">Gdex score</th>
-                                <th scope="col">Positive answers</th>
-                                <th scope="col">Negative answers</th>
                                 <th scope="col">Finished</th>
                                 <th scope="col">Status</th>
                                 <th scope="col" class="d-none d-md-table-cell">Created</th>

@@ -26,6 +26,12 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
         if ($this->request->filled('language')) {
             $answers->where('language_id', $this->request->input('language'));
         }
+        if ($this->request->filled('positive_answer')) {
+            $answers->where('positive_answer', $this->request->input('positive_answer'));
+        }
+        if ($this->request->filled('negative_answer')) {
+            $answers->where('negative_answer', $this->request->input('negative_answer'));
+        }
         if ($this->request->filled('date_from')) {
             $answers->whereDate('created_at', '>=', Carbon::parse($this->request->input('date_from'))->format('Y-m-d'));
         }
@@ -34,7 +40,6 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
         }
 
         return $answers->get();
-//        return Answer::all();
     }
 
     public function headings(): array

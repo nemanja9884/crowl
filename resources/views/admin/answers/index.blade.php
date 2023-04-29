@@ -31,13 +31,13 @@
                         <h4 class="card-title">Search</h4>
                         <form class="forms-sample" method="GET" action="{{ route('admin.answers.index')}}">
                             <div class="row">
-{{--                                <div class="col-md-6">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        <label for="sentence">Sentence</label>--}}
-{{--                                        <input type="search" class="form-control" name="sentence" id="sentence"--}}
-{{--                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="col-md-6">--}}
+                                {{--                                    <div class="form-group">--}}
+                                {{--                                        <label for="sentence">Sentence</label>--}}
+                                {{--                                        <input type="search" class="form-control" name="sentence" id="sentence"--}}
+                                {{--                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -48,6 +48,40 @@
                                                 <option value="{{$language->id}}"
                                                         @if(isset($_GET['language']) && $_GET['language'] == $language->id) selected @endif>{{$language->name}}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="positive_answer">Positive answers</label>
+                                        <select name="positive_answer" id="positive_answer" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="1"
+                                                    @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 1) selected @endif>
+                                                Yes
+                                            </option>
+                                            <option value="0"
+                                                    @if(isset($_GET['positive_answer']) && $_GET['positive_answer'] == 0) selected @endif>
+                                                No
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="negative_answer">Negative answers</label>
+                                        <select name="negative_answer" id="negative_answer" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="1"
+                                                    @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 1) selected @endif>
+                                                Yes
+                                            </option>
+                                            <option value="0"
+                                                    @if(isset($_GET['negative_answer']) && $_GET['negative_answer'] == 0) selected @endif>
+                                                No
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -70,7 +104,9 @@
 
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-primary">Search</button>
-                                    <button type="submit" class="btn btn-success" name="export" value="1">Export to excel</button>
+                                    <button type="submit" class="btn btn-success" name="export" value="1">Export to
+                                        excel
+                                    </button>
                                     <a class="btn btn-secondary"
                                        href="{{ route('admin.answers.index') }}">Reset</a>
                                 </div>
@@ -104,7 +140,7 @@
                                     <td>{{$answer->sentence->sentence}}</td>
                                     <td>{{$answer->language->name}}</td>
                                     <td>{{$answer->user_id}}</td>
-{{--                                    <td>{{$answer->user ? $answer->user->email : ''}}</td>--}}
+                                    {{--                                    <td>{{$answer->user ? $answer->user->email : ''}}</td>--}}
                                     <td>{{$answer->ip_address}}</td>
                                     <td>
                                         @if($answer->positive_answer)

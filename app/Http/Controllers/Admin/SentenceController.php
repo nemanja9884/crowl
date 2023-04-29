@@ -27,14 +27,6 @@ class SentenceController extends Controller
             $page = 'search';
             $sentences->where('language_id', $request->input('language'));
         }
-        if ($request->filled('positive_answer')) {
-            $page = 'search';
-            $sentences->where('positive_answers', $request->input('positive_answer'));
-        }
-        if ($request->filled('negative_answer')) {
-            $page = 'search';
-            $sentences->where('negative_answers', $request->input('negative_answer'));
-        }
         if ($request->filled('finished')) {
             $page = 'search';
             $sentences->where('finished', $request->input('finished'));

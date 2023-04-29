@@ -25,6 +25,14 @@ class AnswersController extends Controller
             $page = 'search';
             $answers->where('language_id', $request->input('language'));
         }
+        if ($request->filled('positive_answer')) {
+            $page = 'search';
+            $answers->where('positive_answer', $request->input('positive_answer'));
+        }
+        if ($request->filled('negative_answer')) {
+            $page = 'search';
+            $answers->where('negative_answer', $request->input('negative_answer'));
+        }
         if ($request->filled('date_from')) {
             $page = 'search';
             $answers->whereDate('created_at', '>=', Carbon::parse($request->input('date_from'))->format('Y-m-d'));
