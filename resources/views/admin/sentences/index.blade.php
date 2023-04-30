@@ -127,6 +127,22 @@
                                    placeholder="Gdex score" class="form-control" step="any" required>
                         </div>
 
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date_from">Date From</label>
+                                <input type="date" class="form-control" name="date_from" id="date_from"
+                                       placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date_to">Date To</label>
+                                <input type="date" class="form-control" name="date_to" id="date_to"
+                                       placeholder="Date To" value="{{$_GET['date_to'] ?? ''}}">
+                            </div>
+                        </div>
+
                         <div class="card-footer col-12 text-center">
                             <button type="submit" class="btn btn-primary btn-sm">
                                 <i class="fa fa-dot-circle-o"></i> Save
@@ -162,8 +178,6 @@
                                     <td>{{$sentence->sentence}}</td>
                                     <td>{{$sentence->language->name}}</td>
                                     <td>{{$sentence->word_reliability}}</td>
-                                    <td>{{$sentence->positive_answers}}</td>
-                                    <td>{{$sentence->negative_answers}}</td>
                                     <td>
                                         @if($sentence->finished)
                                             <span class="badge badge-success">True</span>

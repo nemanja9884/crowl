@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Jobs\SentenceImport;
 use App\Models\Language;
 use App\Models\Sentence;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -30,6 +31,14 @@ class SentenceController extends Controller
         if ($request->filled('finished')) {
             $page = 'search';
             $sentences->where('finished', $request->input('finished'));
+        }
+        if ($request->filled('date_from')) {
+            $page = 'search';
+            $sentences->whereDate('created_at', '>=', Carbon::parse($request->input('date_from'))->format('Y-m-d'));
+        }
+        if ($request->filled('date_to')) {
+            $page = 'search';
+            $sentences->whereDate('created_at', '<=', Carbon::parse($request->input('date_to'))->format('Y-m-d'));
         }
 
         $sentences = $sentences->paginate(50);

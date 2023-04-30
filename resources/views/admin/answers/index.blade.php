@@ -130,7 +130,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="sentence">Date From</label>
+                                        <label for="date_from">Date From</label>
                                         <input type="date" class="form-control" name="date_from" id="date_from"
                                                placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
                                     </div>
