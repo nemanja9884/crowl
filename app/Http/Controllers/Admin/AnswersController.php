@@ -15,12 +15,44 @@ class AnswersController extends Controller
 {
     public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Contracts\Foundation\Application
     {
-        if(isset($request->export) && $request->export) {
+        if (isset($request->export) && $request->export) {
             return Excel::download(new AnswerExport($request), 'answers.xlsx');
         }
 
         $answers = Answer::orderBy('sentence_id', 'ASC');
         $page = 'all';
+        if ($request->filled('sentence')) {
+            $page = 'search';
+            $answers->whereHas('sentence', function ($query) use ($request) {
+                $query->where('sentence', 'like', '%' . $request->input('sentence') . '%');
+            });
+        }
+        if ($request->filled('sentence_status')) {
+            $page = 'search';
+            if ($request->input('sentence_status') == 'returned') {
+                $answers->whereHas('sentence', function ($query) use ($request) {
+                    $query->where('returned', 1);
+                });
+            } elseif ($request->input('sentence_status') == 'done') {
+                $answers->whereHas('sentence', function ($query) use ($request) {
+                    $query->where('finished', 1);
+                });
+            } elseif ($request->input('sentence_status') == 'new') {
+                $answers->whereDoesntHave('sentence');
+            } elseif ($request->input('sentence_status') == 'in-game') {
+                $answers->whereHas('sentence', function ($query) use ($request) {
+                    $query->where('finished', 0);
+                });
+            }
+        }
+        if ($request->filled('user_status')) {
+            $page = 'search';
+            if ($request->input('user_status') == 'registered_user') {
+                $answers->whereNotNull('user_id');
+            } elseif ($request->input('user_status') == 'guest_user') {
+                $answers->whereNull('user_id');
+            }
+        }
         if ($request->filled('language')) {
             $page = 'search';
             $answers->where('language_id', $request->input('language'));

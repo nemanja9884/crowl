@@ -23,6 +23,35 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
     public function collection()
     {
         $answers = Answer::orderBy('sentence_id', 'ASC');
+        if ($this->request->filled('sentence')) {
+            $answers->whereHas('sentence', function ($query) {
+                $query->where('sentence', 'like', '%' . $this->request->input('sentence') . '%');
+            });
+        }
+        if ($this->request->filled('sentence_status')) {
+            if ($this->request->input('sentence_status') == 'returned') {
+                $answers->whereHas('sentence', function ($query) {
+                    $query->where('returned', 1);
+                });
+            } elseif ($this->request->input('sentence_status') == 'done') {
+                $answers->whereHas('sentence', function ($query) {
+                    $query->where('finished', 1);
+                });
+            } elseif ($this->request->input('sentence_status') == 'new') {
+                $answers->whereDoesntHave('sentence');
+            } elseif ($this->request->input('sentence_status') == 'in-game') {
+                $answers->whereHas('sentence', function ($query) {
+                    $query->where('finished', 0);
+                });
+            }
+        }
+        if ($this->request->filled('user_status')) {
+            if ($this->request->input('user_status') == 'registered_user') {
+                $answers->whereNotNull('user_id');
+            } elseif ($this->request->input('user_status') == 'guest_user') {
+                $answers->whereNull('user_id');
+            }
+        }
         if ($this->request->filled('language')) {
             $answers->where('language_id', $this->request->input('language'));
         }

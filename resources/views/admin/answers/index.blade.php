@@ -31,13 +31,13 @@
                         <h4 class="card-title">Search</h4>
                         <form class="forms-sample" method="GET" action="{{ route('admin.answers.index')}}">
                             <div class="row">
-                                {{--                                <div class="col-md-6">--}}
-                                {{--                                    <div class="form-group">--}}
-                                {{--                                        <label for="sentence">Sentence</label>--}}
-                                {{--                                        <input type="search" class="form-control" name="sentence" id="sentence"--}}
-                                {{--                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="sentence">Sentence</label>
+                                        <input type="search" class="form-control" name="sentence" id="sentence"
+                                               placeholder="Sentence" value="{{$_GET['sentence'] ?? ''}}">
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -88,6 +88,48 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="sentence_status">Sentence status</label>
+                                        <select name="sentence_status" id="sentence_status" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="returned"
+                                                    @if(isset($_GET['sentence_status']) && $_GET['sentence_status'] == 'returned') selected @endif>
+                                                Returned
+                                            </option>
+                                            <option value="done"
+                                                    @if(isset($_GET['sentence_status']) && $_GET['sentence_status'] == 'done') selected @endif>
+                                                Done
+                                            </option>
+                                            <option value="new"
+                                                    @if(isset($_GET['sentence_status']) && $_GET['sentence_status'] == 'new') selected @endif>
+                                                New
+                                            </option>
+                                            <option value="in-game"
+                                                    @if(isset($_GET['sentence_status']) && $_GET['sentence_status'] == 'in-game') selected @endif>
+                                                In game
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="user_status">User status</label>
+                                        <select name="user_status" id="user_status" class="form-control">
+                                            <option value="">Choose</option>
+                                            <option value="registered_user"
+                                                    @if(isset($_GET['user_status']) && $_GET['user_status'] == 'registered_user') selected @endif>
+                                                Registered user
+                                            </option>
+                                            <option value="guest_user"
+                                                    @if(isset($_GET['user_status']) && $_GET['user_status'] == 'guest_user') selected @endif>
+                                                Guest user
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="sentence">Date From</label>
                                         <input type="date" class="form-control" name="date_from" id="date_from"
                                                placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
@@ -127,10 +169,9 @@
                                 <th scope="col">Sentence</th>
                                 <th scope="col">Language</th>
                                 <th scope="col">User ID</th>
-                                <th scope="col">IP Address</th>
+                                <th scope="col">User status</th>
                                 <th scope="col">Positive answer</th>
                                 <th scope="col">Negative answer</th>
-                                <th scope="col" class="d-none d-md-table-cell">Created</th>
                                 <th scope="col" style="text-align: right">Action</th>
                             </tr>
                             </thead>
@@ -141,7 +182,13 @@
                                     <td>{{$answer->language->name}}</td>
                                     <td>{{$answer->user_id}}</td>
                                     {{--                                    <td>{{$answer->user ? $answer->user->email : ''}}</td>--}}
-                                    <td>{{$answer->ip_address}}</td>
+                                    <td>
+                                        @if($answer->user_id)
+                                            Registered user
+                                        @else
+                                            Guest user
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($answer->positive_answer)
                                             <span class="badge badge-success">True</span>
@@ -156,7 +203,6 @@
                                             <span class="badge badge-secondary">False</span>
                                         @endif
                                     </td>
-                                    <td class="d-none d-md-table-cell">{{$answer->created_at?->format('d M Y H:i')}}</td>
                                     <td style="min-width: 110px;">
                                         <div class="float-right">
                                             <button class="btn btn-outline-primary btn-sm edit" data-toggle="modal"
