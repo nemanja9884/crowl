@@ -29,6 +29,7 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     });
     Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
     Route::resource('translations', App\Http\Controllers\Admin\TranslationController::class);
+    Route::post('translations/import', [App\Http\Controllers\Admin\TranslationController::class, 'import'])->name('translations.import');
     Route::resource('sentences', App\Http\Controllers\Admin\SentenceController::class);
     Route::resource('users', App\Http\Controllers\Admin\UsersController::class);
     Route::post('sentences/import', [App\Http\Controllers\Admin\SentenceController::class, 'import'])->name('sentences.import');

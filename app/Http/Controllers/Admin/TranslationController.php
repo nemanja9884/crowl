@@ -3,21 +3,29 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\TranslationsImport;
 use App\Models\Fragment;
 use App\Models\Language;
 use App\Models\Translation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TranslationController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $translations = DB::table('fragments')->paginate(50);
+        $translations = DB::table('fragments');
+        if ($request->filled('key')) {
+            $page = 'search';
+            $translations->where('key', 'like', '%' . $request->input('key') . '%');
+        }
+
+        $translations = $translations->paginate(50);
         $translations->getCollection()->transform(function ($item) {
             if (!is_array($item->text)) {
                 $item->text = json_decode($item->text, true);
@@ -30,7 +38,7 @@ class TranslationController extends Controller
         });
 
         $languages = Language::get();
-        return view('admin.translations.index', ['translations' => $translations, 'languages' => $languages]);
+        return view('admin.translations.index', ['translations' => $translations, 'languages' => $languages, 'page' => $page ?? 'all']);
     }
 
     /**
@@ -128,6 +136,23 @@ class TranslationController extends Controller
     {
         Fragment::find($id)->delete();
         Session::flash('message', 'Successfully delete translation');
+        Session::flash('alert-class', 'success');
+        return redirect()->route('admin.translations.index');
+    }
+
+    public function import(Request $request)
+    {
+        $this->validate($request, array(
+            'file' => 'required'
+        ));
+
+        $file = $request->file('file');
+        $file->move('translations', $file->getClientOriginalName());
+
+        $import = new TranslationsImport();
+        Excel::import($import, public_path('translations/' . $file->getClientOriginalName()));
+
+        Session::flash('message', 'Successfully imported translations');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.translations.index');
     }

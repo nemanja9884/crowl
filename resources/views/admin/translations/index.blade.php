@@ -19,12 +19,58 @@
                 {{ Session::get('message') }}
             </div>
         @endif
+
+        <div class="col-md-12">
+            <a class="nav-link @if($page == 'search') active @endif btn btn-outline-primary mb-3" data-toggle="collapse"
+               href="#searchBox"
+               role="button" aria-expanded="false" aria-controls="searchBox">
+                <i class="mdi mdi-magnify"></i> Search
+            </a>
+            <div class="collapse @if($page == 'search') show @endif" id="searchBox">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Search</h4>
+                        <form class="forms-sample" method="GET" action="{{ route('admin.translations.index')}}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="key">Key</label>
+                                        <input type="search" class="form-control" name="key" id="key"
+                                               placeholder="Key" value="{{$_GET['key'] ?? ''}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary mr-2">Search</button>
+                                    <a class="btn btn-light"
+                                       href="{{ route('admin.translations.index') }}">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
                     <strong>Add translation</strong>
                 </div>
                 <div class="col-md-12 card-body card-block">
+                    <div class="alert alert-info">
+                        <form action="{{ route('admin.translations.import') }}" method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="file">Upload CSV</label>
+                                <input type="file" name="file" id="file"/>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-lg btn-success">Import</button>
+                            </div>
+                        </form>
+                    </div>
+
                     <form action="{{ route('admin.translations.store') }}" method="post" enctype="multipart/form-data"
                           class="form-horizontal">
                         @csrf
