@@ -82,6 +82,8 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
             'Negative answer',
             'Reasons',
             'Sentence bad part',
+            'Sentence source_id',
+            'Sentence source_toknum',
 //            'Created at',
 //            'Updated at'
         ];
@@ -104,6 +106,8 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
             $row->negative_answer,
             $reasons,
             $sentenceBadPart,
+            $row->sentence->source_id,
+            $row->sentence->source_toknum,
 //            $row->created_at,
 //            $row->updated_at
         ];
