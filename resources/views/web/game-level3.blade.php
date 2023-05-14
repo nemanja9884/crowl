@@ -5,7 +5,7 @@
         <div class="card color-black">
             <div class="card-header">
                 {{trans('home.LEVEL 3')}}
-                <a href="{{route('index')}}" type="button" class="btn btn-danger float-right ml-2">{{trans('home.exit game')}}</a>
+                <a href="{{route('index')}}" type="button" class="btn btn-danger float-right ml-2">{{trans('home.Exit game')}}</a>
                 <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary float-right mr-2" style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
             </div>
             <div class="card-body">
@@ -14,7 +14,7 @@
                       method="POST">
                     @csrf
                     @method('POST')
-                    <h4>{{trans('home.Tap or click where the problem is')}} ({{$answerDetail->reason}})</h4>
+                    <h4>{{trans("home.This sentence has been considered $answerDetail->reason for teaching English. Tap or click where the problem is.")}}</h4>
                     <p id="selectable-sentence" class="sentence">{{$sentence->sentence}}</p>
                     <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
                     <input type="hidden" name="answerId" value="{{$answerId}}"/>

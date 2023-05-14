@@ -105,7 +105,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Translations list</h5>
-                    <div class="fluid-container styled-table">
+                    <div class="fluid-container styled-table table-responsive">
                         <table class="table">
                             <thead>
                             <tr>

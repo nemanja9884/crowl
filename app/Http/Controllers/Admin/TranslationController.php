@@ -75,7 +75,7 @@ class TranslationController extends Controller
 
         Session::flash('message', 'Successfully made new translations');
         Session::flash('alert-class', 'success');
-        return redirect()->route('admin.translations.index');
+        return redirect()->back();
     }
 
     /**
@@ -125,7 +125,7 @@ class TranslationController extends Controller
 
         Session::flash('message', 'Successfully updated translation');
         Session::flash('alert-class', 'success');
-        return redirect()->route('admin.translations.index');
+        return redirect()->back();
     }
 
     /**
@@ -137,7 +137,7 @@ class TranslationController extends Controller
         Fragment::find($id)->delete();
         Session::flash('message', 'Successfully delete translation');
         Session::flash('alert-class', 'success');
-        return redirect()->route('admin.translations.index');
+        return redirect()->back();
     }
 
     public function import(Request $request)

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ trans('home.Register') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
@@ -104,7 +104,7 @@
 
                             <div class="row mb-3">
                                 <label for="language_teacher"
-                                       class="col-md-4 col-form-label text-md-end">{{ __('Are you a language teacher?') }}</label>
+                                       class="col-md-4 col-form-label text-md-end">{{trans('home.Are you a language teacher?')}}</label>
                                 <div class="col-md-6">
                                     <select name="language_teacher" id="language_teacher" class="form-control">
                                         <option value="1">{{trans('home.Yes')}}</option>
@@ -129,9 +129,9 @@
                                 </div>
                             </div>
 
-                            <p>This information is important to us. Click <a
-                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">here</a>
-                                to know why</p>
+                            <p>{{trans('home.This information is important to us. Click')}} <a
+                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">{{trans('home.here')}}</a>
+                                {{trans('home.to know why')}}</p>
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -146,13 +146,13 @@
                                     <a href="{{url('redirect/google')}}"
                                        class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
                                             src="https://img.icons8.com/color/16/000000/google-logo.png"
-                                            style="width: 20px;"> {{trans('home.Register with google')}}
+                                            style="width: 20px;"> {{trans('home.Sign-up via Google ')}}
                                     </a>
-                                    <a href="{{url('redirect/facebook')}}"
-                                       class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
-                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png"
-                                            style="width: 20px;"> {{trans('home.Register with facebook')}}
-                                    </a>
+{{--                                    <a href="{{url('redirect/facebook')}}"--}}
+{{--                                       class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img--}}
+{{--                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png"--}}
+{{--                                            style="width: 20px;"> {{trans('home.Register with facebook')}}--}}
+{{--                                    </a>--}}
                                 </div>
                             </div>
                         </form>

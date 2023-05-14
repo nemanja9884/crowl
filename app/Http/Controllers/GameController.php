@@ -165,7 +165,7 @@ class GameController extends Controller
 
     public function answerLevel1(Request $request, $code, $level)
     {
-        toastr()->info('Thank you for your answer!');
+        toastr()->info(trans('home.Thank you for your answer!'));
         $language = Language::where('lang_code', $code)->first();
         if (isset($request->bothOfThem)) {
             $request->bothOfThem = explode(',', $request->bothOfThem);
@@ -218,7 +218,7 @@ class GameController extends Controller
             return redirect()->route('index');
         }
 
-        toastr()->info('Thank you for your answer!');
+        toastr()->info(trans('home.Thank you for your answer!'));
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         $answer = Answer::find($request->input('answerId'));
@@ -269,7 +269,7 @@ class GameController extends Controller
 
     public function answerLevel3(Request $request, $code, $level)
     {
-        toastr()->info('Thank you for your answer!');
+        toastr()->info(trans('home.Thank you for your answer!'));
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
         if ($request->input('fine')) {
@@ -325,7 +325,7 @@ class GameController extends Controller
             } else {
                 if ($data == 5) {
                     Score::store($langId, 5);
-                    toastr()->info('You got 5 extra points!');
+                    toastr()->info(trans('home.You got 5 extra points!'));
                     $data = 0;
                 } else {
                     $data = $data + 1;
