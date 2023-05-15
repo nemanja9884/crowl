@@ -95,8 +95,8 @@
 <script src="{{asset('vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/main.js')}}"></script>
 <script src="{{ asset('js/lightbox.min.js') }}"></script>
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 <script src="{{asset('plugins/tinymce/tinymce.min.js?v=2')}}"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
