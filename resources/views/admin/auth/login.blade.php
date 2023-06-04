@@ -7,7 +7,9 @@
                     <div class="login-logo">
                     </div>
                     <div class="login-form">
-                        <img class="w-100" src="" alt="Logo">
+                        <div class="text-center">
+                            <img src="{{asset('images/logo_vertical.png')}}" style="width: 60%;" alt="Logo">
+                        </div>
                         <form class="mt-3" method="POST" action="{{ route('admin.login') }}">
                             @csrf
                             <div class="form-group">
