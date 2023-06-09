@@ -100,7 +100,7 @@ class AnswerExport implements WithHeadings, FromCollection, WithMapping
         return [
             $row->language->name,
             $row->sentence->sentence,
-            $row->user ? $row->user->name : '',
+            $row->user_id,
 //            $row->ip_address,
             $row->positive_answer,
             $row->negative_answer,
