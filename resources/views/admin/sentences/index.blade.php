@@ -85,7 +85,7 @@
                             @csrf
                             <div class="form-group">
                                 <label for="file">Upload CSV</label>
-                                <input type="file" name="file" id="file" accept=".csv"/>
+                                <input type="file" name="file" id="file" />
                             </div>
                             <div class="form-group">
                                 <label for="language_id" class="form-control-label">Language</label>
