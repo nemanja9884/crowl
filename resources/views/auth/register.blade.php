@@ -82,7 +82,6 @@
                                         <option value="31-40">31-40</option>
                                         <option value="41-50">41-50</option>
                                         <option value="51-60">51-60</option>
-                                        <option value="51-60">51-60</option>
                                         <option value="above70">{{trans('home.Above 70')}}</option>
                                     </select>
                                     <div class="ageMessageDiv"></div>

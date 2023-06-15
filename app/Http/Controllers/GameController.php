@@ -146,7 +146,7 @@ class GameController extends Controller
                         ->from(with(new Answer)->getTable())
                         ->where('user_id', Auth::guard('web')->user()->id);
                 })->whereHas('answersDetails', function ($q) use ($user) {
-                    $q->whereNull('sentence_bad_part');
+                    $q->whereNull('sentence_bad_part')->where('reason', '!=', 'lack of context and/or incomprehensible');
                 })->limit(2)->pluck('id')->toArray();
         }
     }
@@ -305,8 +305,12 @@ class GameController extends Controller
                     return $this->game($code, $level);
                 }
 
-                $sentenceAnswer = Answer::find(is_array($answersIds) ? $answersIds[1] : $answersIds);
-                return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, is_array($answersIds) ? $answersIds[1] : $answersIds);
+                if($level == 3) {
+                    return $this->game($code, $level);
+                } else {
+                    $sentenceAnswer = Answer::find(is_array($answersIds) ? $answersIds[1] : $answersIds);
+                    return $this->level(2, $language, $level, $sentenceAnswer->sentence_id, $answersIds, is_array($answersIds) ? $answersIds[1] : $answersIds);
+                }
             } elseif ($value == $request->input('reasonId')) {
                 $sentenceAnswer = Answer::find($request->input('answerId'));
                 return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $request->input('answerId'), $reasons[$key + 1]);
