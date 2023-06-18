@@ -59,7 +59,7 @@ class TranslationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, array(
-            'english_word' => 'required|max:255',
+            'english_word' => 'required',
         ));
 
         $languages = Language::get();
@@ -110,7 +110,7 @@ class TranslationController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, array(
-            'english_word' => 'required|max:255',
+            'english_word' => 'required',
         ));
 
         $languages = Language::get();
