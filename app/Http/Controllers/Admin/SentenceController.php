@@ -42,7 +42,7 @@ class SentenceController extends Controller
         }
 
         $sentences = $sentences->paginate(50);
-
+        $sentences->setPath('');
 
         $languages = Language::all();
         return view('admin.sentences.index', ['sentences' => $sentences, 'languages' => $languages, 'page' => $page]);

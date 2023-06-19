@@ -26,6 +26,7 @@ class TranslationController extends Controller
         }
 
         $translations = $translations->paginate(50);
+        $translations->setPath('');
         $translations->getCollection()->transform(function ($item) {
             if (!is_array($item->text)) {
                 $item->text = json_decode($item->text, true);

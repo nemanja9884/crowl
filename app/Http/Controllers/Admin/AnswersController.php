@@ -75,6 +75,7 @@ class AnswersController extends Controller
         }
 
         $answers = $answers->paginate(50);
+        $answers->setPath('');
 
         return view('admin.answers.index', ['answers' => $answers, 'languages' => Language::all(), 'page' => $page]);
     }

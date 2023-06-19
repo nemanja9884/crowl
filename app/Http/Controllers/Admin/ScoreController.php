@@ -29,6 +29,7 @@ class ScoreController extends Controller
         }
 
         $scores = $scores->orderBy('id', 'desc')->paginate(50);
+        $scores->setPath('');
         $users = User::all();
         $languages = Language::all();
 
