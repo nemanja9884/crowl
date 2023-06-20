@@ -52,6 +52,7 @@ class LanguageController extends Controller
 
         $language = Language::create([
             'name' => $request->input('name'),
+            'intro' => $request->input('intro'),
             'lang_code' => $request->input('lang_code'),
             'content' => $request->input('content'),
             'image' => $request->input('image'),
@@ -113,6 +114,7 @@ class LanguageController extends Controller
         $language = Language::find($id);
         $language->update([
             'name' => $request->input('name'),
+            'intro' => $request->input('intro'),
             'lang_code' => $request->input('lang_code'),
             'content' => $request->input('content'),
             'image' => $request->input('image') ?? $language->image,

@@ -35,12 +35,17 @@
                         </div>
 
                         <div class="col form-group">
+                            <label for="intro" class="form-control-label">Intro text</label>
+                            <textarea name="intro" id="intro" rows="3"
+                                      placeholder="Intro..."
+                                      class="form-control"></textarea>
+                        </div>
+
+                        <div class="col form-group">
                             <label for="textarea-input" class="form-control-label">Content</label>
                             <textarea name="content" id="textarea-input" rows="3"
                                       placeholder="content..."
                                       class="form-control"></textarea>
-                            {{--                            <div class="col col-md-3"></div>--}}
-                            {{--                            <div class="col-12 col-md-9"></div>--}}
                         </div>
 
                         <div class="col form-group">

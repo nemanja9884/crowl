@@ -11,11 +11,16 @@
                                  alt="{{$language->name}}">
                             <div class="card-body">
                                 <h5 class="card-title">{{$language->name}}</h5>
+                                <p class="mt-2">{{$language->intro}}</p>
                             </div>
                         </div>
                     </a>
                 </div>
             @endforeach
+
+            <div class="index-content mt-5 white-color">
+                {!! $settings->index_content !!}
+            </div>
         </div>
     </main>
 @endsection

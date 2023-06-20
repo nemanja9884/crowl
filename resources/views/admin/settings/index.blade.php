@@ -33,6 +33,14 @@
                                    value="{{$settings->guests_plays_cycles}}">
                             <small>Number of cycles guest users can play</small>
                         </div>
+                        <div class="form-group mb-3">
+                            <label for="textarea-input" class="form-control-label">Content</label>
+                            <textarea name="index_content" id="textarea-input" rows="3"
+                                      placeholder="content..."
+                                      class="form-control">{{$settings->index_content}}</textarea>
+                            {{--                            <div class="col col-md-3"></div>--}}
+                            {{--                            <div class="col-12 col-md-9"></div>--}}
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-5">Save</button>

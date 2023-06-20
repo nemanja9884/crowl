@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Language;
 use App\Models\User;
+use App\Traits\CacheSystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
+    use CacheSystem;
+
     /**
      * Create a new controller instance.
      *
@@ -30,7 +33,7 @@ class HomeController extends Controller
     {
         App::setLocale('pt-BR');
         session()->put('locale', 'pt-BR');
-        return view('web.index', ['languages' => Language::where('status', '1')->orderBy('sort', 'ASC')->get()]);
+        return view('web.index', ['languages' => Language::where('status', '1')->orderBy('sort', 'ASC')->get(), 'settings' => $this->getSettings()]);
     }
 
     public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
