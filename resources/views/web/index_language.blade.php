@@ -12,7 +12,7 @@
             <a href="{{route('register')}}" type="button" class="btn btn-success mb-2">{{trans('home.Sign-up via email')}}</a>
             <a href="{{url('redirect/google')}}"
                class="btn btn-google btn-block btn-light mb-2"><img
-                    src="https://img.icons8.com/color/16/000000/google-logo.png" style="width: 20px;"> {{trans('home.Sign-up via Google ')}}
+                    src="https://img.icons8.com/color/16/000000/google-logo.png" style="width: 20px;"> {{trans('home.Sign-up via Google')}}
             </a>
 {{--            <a href="{{url('redirect/facebook')}}"--}}
 {{--               class="btn btn-google btn-block btn-light mb-2"><img--}}
