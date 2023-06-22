@@ -75,7 +75,7 @@
                             <div class="social-button">
                                 <a href="{{url('redirect/google')}}"
                                    class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
-                                        src="https://img.icons8.com/color/16/000000/google-logo.png" style="width: 20px;"> {{trans('home.Sign-up via Google ')}}
+                                        src="https://img.icons8.com/color/16/000000/google-logo.png" style="width: 20px;"> {{trans('home.Sign-up via Google')}}
                                 </a>
 {{--                                <a href="{{url('redirect/facebook')}}"--}}
 {{--                                   class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img--}}

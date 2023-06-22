@@ -50,6 +50,8 @@ class SentencesImport implements ToModel, WithHeadingRow
             'negative_answer' => $row['problematic'] == 'n' ? 0 : 1,
         ]);
 
+
+
         if ($row['offensive'] == 'x') {
             $this->insertReason($sentenceId, $answer->id, 'offensive');
         }
@@ -59,7 +61,7 @@ class SentencesImport implements ToModel, WithHeadingRow
         }
 
         if ($row['sensitive_content'] == 'x') {
-            $this->insertReason($sentenceId, $answer->id, 'offensive');
+            $this->insertReason($sentenceId, $answer->id, 'sensitiveContent');
         }
 
         if ($row['spellinggrammar_problems'] == 'x') {
