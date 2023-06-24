@@ -24,7 +24,6 @@ class SentencesImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
 //        dd($row);
-//        if ($row[2] != null && $row[2] != 'GDEX score') {
         if ($row['sentence']) {
             $sentence = Sentence::create([
                 'sentence' => str_replace(['<s> ', ' </s>'], ['', ''], $row['sentence']),
@@ -34,10 +33,10 @@ class SentencesImport implements ToModel, WithHeadingRow
                 'source_id' => $row['source_id']
             ]);
 
-            $this->insertAnswer($sentence->id, $row);
+            if($row['problematic']) {
+                $this->insertAnswer($sentence->id, $row);
+            }
         }
-
-//        }
     }
 
     public function insertAnswer($sentenceId, $row)
@@ -64,8 +63,16 @@ class SentencesImport implements ToModel, WithHeadingRow
             $this->insertReason($sentenceId, $answer->id, 'sensitiveContent');
         }
 
+        if ($row['spelling_problem'] == 'x') {
+            $this->insertReason($sentenceId, $answer->id, 'spellingProblem');
+        }
+
         if ($row['spellinggrammar_problems'] == 'x') {
             $this->insertReason($sentenceId, $answer->id, 'spelling and/or grammar problems');
+        }
+
+        if ($row['wrong_grammar'] == 'x') {
+            $this->insertReason($sentenceId, $answer->id, 'wrongGrammar');
         }
 
         if ($row['lack_of_contextincomprehensible'] == 'x') {
