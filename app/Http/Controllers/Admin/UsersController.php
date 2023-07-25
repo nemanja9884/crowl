@@ -82,7 +82,7 @@ class UsersController extends Controller
             'status' => 'required',
         ));
 
-        $user->update($request->all('name', 'last_name', 'email', 'status', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
+        $user->update($request->all('status', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
         Session::flash('message', 'Successfully updated user');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.users.index');

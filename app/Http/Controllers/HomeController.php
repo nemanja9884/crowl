@@ -81,7 +81,7 @@ class HomeController extends Controller
         $this->middleware('auth');
         $user = Auth::guard('web')->user();
         $userDb = User::findorfail($user->id);
-        $userDb->update($request->all('name', 'last_name', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
+        $userDb->update($request->all('username', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
 
         toastr()->info('Successfully saved user profile');
         return redirect()->back();

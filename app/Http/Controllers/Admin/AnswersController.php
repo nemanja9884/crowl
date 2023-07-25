@@ -9,6 +9,7 @@ use App\Models\AnswerDetail;
 use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AnswersController extends Controller
@@ -16,7 +17,7 @@ class AnswersController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Contracts\Foundation\Application
     {
         if (isset($request->export) && $request->export) {
-            return Excel::download(new AnswerExport($request), 'answers.xlsx');
+            return Excel::download(new AnswerExport($request), Auth::guard('admin')->user()->name . '_' . Carbon::now()->timestamp . '.xlsx');
         }
 
         $answers = Answer::orderBy('sentence_id', 'ASC');
