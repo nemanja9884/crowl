@@ -16,7 +16,7 @@
                 <ul class="nav navbar-nav">
                     <li class="active">
                         <a href="{{route('admin.index')}}"> <i class="menu-icon fa fa-dashboard"></i>Admin dashboard </a>
-                        <a href="{{route('index')}}"> <i class="menu-icon fa fa-sitemap"></i>Website </a>
+                        <a href="{{route('index')}}" target="_blank"> <i class="menu-icon fa fa-sitemap"></i>Website </a>
                     </li>
                     <h3 class="menu-title">Admin tools</h3><!-- /.menu-title -->
                     <li class="menu-item-has-children dropdown">

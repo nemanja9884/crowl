@@ -78,11 +78,10 @@
                                        class="col-md-4 col-form-label text-md-end">{{trans('home.What is your age?')}}</label>
                                 <div class="col-md-6">
                                     <select name="age" id="age" class="form-control">
-                                        <option value="18-30">18-30</option>
-                                        <option value="31-40">31-40</option>
-                                        <option value="41-50">41-50</option>
-                                        <option value="51-60">51-60</option>
-                                        <option value="above70">{{trans('home.Above 70')}}</option>
+                                        <option value="below20">{{trans('home.Below 20')}}</option>
+                                        <option value="20-40">20-40</option>
+                                        <option value="41-60">41-60</option>
+                                        <option value="above60">{{trans('home.Above 60')}}</option>
                                     </select>
                                     <div class="ageMessageDiv"></div>
                                 </div>
@@ -131,6 +130,9 @@
                             <p>{{trans('home.This information is important to us. Click')}} <a
                                     href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">{{trans('home.here')}}</a>
                                 {{trans('home.to know why')}}</p>
+
+                            <p>{{trans('home.Already have an account? Login')}} <a
+                                href="{{route('login')}}">{{trans('home.here')}}</a></p>
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">

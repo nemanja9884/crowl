@@ -16,9 +16,9 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body class="d-flex h-100 bg-dark">
+<body class="d-flex bg-dark" style="min-height: 100%;">
 
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+<div class="cover-container d-flex w-100 p-3 mx-auto flex-column">
     @include('web.layouts.header')
 
     @yield('content')
