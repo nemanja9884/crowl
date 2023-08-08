@@ -42,7 +42,7 @@
                     <input type="hidden" name="problematicWords" id="problematicWords"/>
                     <button id="submit" class="btn btn-primary mt-3">{{trans('home.Save')}}</button>
                     <button id="removeBtn" class="btn btn-primary mt-3">{{trans('home.Remove markers')}}</button>
-                    <p class="float-right mt-3">Points: <b>{{$points}}</b></p>
+                    <p class="float-right mt-3 points">Points: <b class="color-black">{{$points}}</b></p>
                 </form>
             </div>
         </div>

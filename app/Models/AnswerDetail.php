@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class AnswerDetail extends Model
 {
@@ -19,7 +20,7 @@ class AnswerDetail extends Model
     public static function store($langId, $sentenceId, $answerId, $reason)
     {
         $answerDetail = AnswerDetail::where(['answer_id' => $answerId, 'sentence_id' => $sentenceId, 'language_id' => $langId, 'reason' => $reason])->first();
-        if(!$answerDetail) {
+        if (!$answerDetail) {
             return AnswerDetail::create([
                 'language_id' => $langId,
                 'sentence_id' => $sentenceId,
@@ -39,15 +40,25 @@ class AnswerDetail extends Model
         $badWords = explode('|', $badPart);
         $answerDetails = AnswerDetail::where(['sentence_id' => $sentenceId, 'language_id' => $langId])->get();
         foreach ($answerDetails as $item) {
-            if($item->sentence_bad_part) {
+            if ($item->sentence_bad_part) {
                 $badWordsDb = explode('|', $item->sentence_bad_part);
-                $check = array_intersect($badWords,$badWordsDb);
-                if(!empty($check)) {
+                $check = array_intersect($badWords, $badWordsDb);
+                if (!empty($check)) {
                     return true;
                 }
             }
         }
 
         return false;
+    }
+
+    public static function checkIfIsAnswered($answerId)
+    {
+       return AnswerDetail::where('answer_id', $answerId)->first();
+    }
+
+    public static function checkIfIsAnsweredLvl3($answerId)
+    {
+        return AnswerDetail::whereNotNull('sentence_bad_part')->where('id', $answerId)->first();
     }
 }

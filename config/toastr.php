@@ -22,7 +22,4 @@ return array(
     |     'progressBar' => true,
     | ],
     */
-
-    'options' => array(
-    ),
 );

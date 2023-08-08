@@ -95,3 +95,23 @@ li {
 .none-decoration {
     text-decoration: none !important;
 }
+
+.fl-icon {
+    display: none !important;
+}
+
+.fl-title {
+    display: none !important;
+}
+
+.main-container {
+    background-color: #39b54a;
+}
+
+.points {
+    color: purple;
+}
+
+.color-black {
+    color: black;
+}

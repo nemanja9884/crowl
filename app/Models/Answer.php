@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\GlobalHelper;
 use App\Traits\CacheSystem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,5 +79,18 @@ class Answer extends Model
     public static function answerCheck($langId, $sentenceId, $positiveAnswer, $negativeAnswer)
     {
         return Answer::where(['language_id' => $langId, 'sentence_id' => $sentenceId, 'positive_answer' => $positiveAnswer, 'negative_answer' => $negativeAnswer])->first();
+    }
+
+    public static function checkIfIsAnswered($sentenceId)
+    {
+        $user = Auth::guard('web')->user();
+        $answer = Answer::where(['sentence_id' => $sentenceId]);
+        if ($user) {
+            $answer->where('user_id', $user->id);
+        } else {
+            $answer->where('ip_address', Request()->ip());
+        }
+
+        return $answer->first();
     }
 }
