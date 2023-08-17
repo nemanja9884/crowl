@@ -93,4 +93,19 @@ class Answer extends Model
 
         return $answer->first();
     }
+
+    public static function compareLvl1Statistic($langId, $data): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|null
+    {
+        $user = Auth::guard('web')->user();
+        $allAnswers = Answer::where('user_id', '!=', $user->id)->where('negative_answer', 1)->where('sentence_id', $data['sentenceId'])->count();
+        $sameAsUserAnswers = Answer::where('user_id', '!=', $user->id)->where('positive_answer', $data['positiveAnswer'])->where('negative_answer', $data['negativeAnswer'])->where('sentence_id', $data['sentenceId'])->count();
+
+        if ($allAnswers > 0 && $sameAsUserAnswers > 0) {
+            $points = $sameAsUserAnswers / $allAnswers * 100;
+            Score::store($langId, $points);
+            return view('web.additional-message', ['message' => "$points% of the players have answered the same as you. You’ve got $points extra points!"]);
+        } else {
+            return null;
+        }
+    }
 }

@@ -62,6 +62,22 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_from">Date From</label>
+                                        <input type="date" class="form-control" name="date_from" id="date_from"
+                                               placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_to">Date To</label>
+                                        <input type="date" class="form-control" name="date_to" id="date_to"
+                                               placeholder="Date To" value="{{$_GET['date_to'] ?? ''}}">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-primary mr-2">Search</button>
                                     <a class="btn btn-light"
@@ -125,22 +141,6 @@
                             <label for="word_reliability" class="form-control-label">Gdex score</label>
                             <input type="number" id="word_reliability" name="word_reliability"
                                    placeholder="Gdex score" class="form-control" step="any" required>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="date_from">Date From</label>
-                                <input type="date" class="form-control" name="date_from" id="date_from"
-                                       placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="date_to">Date To</label>
-                                <input type="date" class="form-control" name="date_to" id="date_to"
-                                       placeholder="Date To" value="{{$_GET['date_to'] ?? ''}}">
-                            </div>
                         </div>
 
                         <div class="card-footer col-12 text-center">

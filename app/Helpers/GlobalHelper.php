@@ -3,6 +3,8 @@
 
 namespace App\Helpers;
 
+use App\Models\Answer;
+use App\Models\AnswerDetail;
 use App\Models\Score;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +17,7 @@ class GlobalHelper
         return "<img src='" . asset("images/game/" . rand(1, 3) . ".gif") . "' style='width: 30px;'> &nbsp" . trans('home.' . Arr::random($texts, 1)[0]) . ' ' . trans('home.You got 5 extra points!');
     }
 
-    public function gamesInRow($langId): void
+    public function gamesInRow($langId, $dataArray = [])
     {
         if (Auth::guard('web')->user()) {
             $data = session()->get('playerData');
@@ -29,10 +31,65 @@ class GlobalHelper
                     $data = $data + 1;
                 }
                 session()->put('playerData', $data);
-                if($data == 5) {
-                    session()->put('info', $this->getFivePointsMessage());
-                }
             }
+            return ['view' => $this->getStatistic($langId, $dataArray)];
+            // Tracking for game statistic between 7 and 12 played games
+//            session()->put('playedGames', 11);
+
+            $playedGames = session()->get('playedGames');
+//            dd($playedGames);
+//            dd('test');
+            if (!$playedGames) {
+                session()->put('playedGames', 2);
+            } else {
+
+                if ($playedGames >= 7 && $playedGames <= 12) {
+
+                    $random = rand($playedGames, 12);
+//                    dd($random);
+                    if ($random == $playedGames) {
+                        $playedGames = 1;
+                        $returnStatistic = true;
+                    } else {
+                        $playedGames = $playedGames + 1;
+                    }
+                } else {
+                    $playedGames = $playedGames + 1;
+
+                }
+
+                session()->put('playedGames', $playedGames);
+            }
+
+            // Return message as last session put because of bug. Message must be the last created session.
+            if ($data == 5) {
+                session()->put('info', $this->getFivePointsMessage());
+            }
+
+            if (isset($returnStatistic) && $returnStatistic) {
+                return ['view' => $this->getStatistic($langId, $dataArray)];
+                if (rand(1, 2) == 1) {
+                    // This is case for % of same answers
+                    return ['view' => $this->getStatistic($langId, $dataArray)];
+                } else {
+                    // This is case for how many points user needs to reach new badge
+                    dd('taki');
+                }
+            } else {
+                return ['view' => null];
+            }
+        }
+    }
+
+    public function getStatistic($langId, $data)
+    {
+        switch ($data['level']) {
+            case 1:
+                return Answer::compareLvl1Statistic($langId, $data);
+            case 2:
+                return AnswerDetail::compareLvl2Statistic($langId, $data);
+            case 3:
+                return AnswerDetail::compareLvl3Statistic($langId, $data);
         }
     }
 }

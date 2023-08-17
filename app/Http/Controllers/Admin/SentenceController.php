@@ -41,7 +41,7 @@ class SentenceController extends Controller
             $sentences->whereDate('created_at', '<=', Carbon::parse($request->input('date_to'))->format('Y-m-d'));
         }
 
-        $sentences = $sentences->paginate(50);
+        $sentences = $sentences->orderBy('id', 'desc')->paginate(50);
         $sentences->setPath('');
 
         $languages = Language::all();

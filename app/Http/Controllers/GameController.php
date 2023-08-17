@@ -170,7 +170,12 @@ class GameController extends Controller
             if($level == 1) {
                 // Check if is this already played (refresh case), if it is not, then score it
                 if(!Answer::checkIfIsAnswered($request->bothOfThem[0]) && !Answer::checkIfIsAnswered($request->bothOfThem[1])) {
-                    (new GlobalHelper())->gamesInRow($language->id);
+                    foreach ($request->bothOfThem as $both) {
+                        $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $both, 'positiveAnswer' => 1, 'negativeAnswer' => 0]);
+                        if(isset($gamesInRow['view']) && $gamesInRow['view']) {
+                            return $gamesInRow['view']->with('level', $level);
+                        }
+                    }
                 }
             }
             foreach ($request->bothOfThem as $both) {
@@ -183,7 +188,12 @@ class GameController extends Controller
             if ($level == '1') {
                 // Check if is this already played (refresh case), if it is not, then score it
                 if (!Answer::checkIfIsAnswered($request->noneOfThem[0]) && !Answer::checkIfIsAnswered($request->noneOfThem[1])) {
-                    (new GlobalHelper())->gamesInRow($language->id);
+                    foreach ($request->noneOfThem as $none) {
+                        $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $none, 'positiveAnswer' => 0, 'negativeAnswer' => 1]);
+                        if(isset($gamesInRow['view']) && $gamesInRow['view']) {
+                            return $gamesInRow['view']->with('level', $level)->with('langCode', $code)->with('langCode', $code);
+                        }
+                    }
                 }
             }
             $answersIds = [];
@@ -203,7 +213,10 @@ class GameController extends Controller
             if ($level == '1') {
                 // Check if is this already played (refresh case), if it is not, then score it
                 if(!Answer::checkIfIsAnswered($request->input('answer'))) {
-                    (new GlobalHelper())->gamesInRow($language->id);
+                    $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $request->input('answer'), 'positiveAnswer' => 0, 'negativeAnswer' => 1]);
+                    if(isset($gamesInRow['view']) && $gamesInRow['view']) {
+                        return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
+                    }
                 }
             }
             // One that is not checked get negative answer
@@ -241,7 +254,10 @@ class GameController extends Controller
         // Check if is this already played (refresh case), if it is not, then score it
         if($level == '1+2' || $level == '2') {
             if(!AnswerDetail::checkIfIsAnswered($answer->id)) {
-                (new GlobalHelper())->gamesInRow($language->id);
+                $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 2, 'sentenceId' => $request->input('sentenceId'), 'reasons' => $reasons]);
+                if(isset($gamesInRow['view']) && $gamesInRow['view']) {
+                    return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
+                }
             }
         }
 
@@ -292,11 +308,14 @@ class GameController extends Controller
     {
         $language = Language::where('lang_code', $code)->first();
         $answersIds = $request->input('answersIds');
-
+        $answerDetail = AnswerDetail::find($request->input('reasonId'));
         // Check if is this already played (refresh case), if it is not, then score it
         if($level == '3' || $level == '2+3' || $level == '1+2+3') {
             if(!AnswerDetail::checkIfIsAnsweredLvl3($request->input('reasonId'))) {
-                (new GlobalHelper())->gamesInRow($language->id);
+                $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 3, 'sentenceId' => $request->input('sentenceId'), 'reasonId' => $request->input('reasonId'), 'problematicWords' => $request->input('problematicWords'), 'reason' => $answerDetail->reason]);
+                if(isset($gamesInRow['view']) && $gamesInRow['view']) {
+                    return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
+                }
             }
         }
 
@@ -304,7 +323,6 @@ class GameController extends Controller
             Answer::store($language->id, $request->input('sentenceId'), 1, 0);
         } else {
             Score::scoring(3, $language->id, $request->input('sentenceId'), null, null, null, $request->input('problematicWords'));
-            $answerDetail = AnswerDetail::find($request->input('reasonId'));
             $answerDetail->sentence_bad_part = $request->input('problematicWords');
             $answerDetail->save();
 
