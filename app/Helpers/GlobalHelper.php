@@ -5,9 +5,11 @@ namespace App\Helpers;
 
 use App\Models\Answer;
 use App\Models\AnswerDetail;
+use App\Models\Badge;
 use App\Models\Score;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class GlobalHelper
 {
@@ -32,21 +34,13 @@ class GlobalHelper
                 }
                 session()->put('playerData', $data);
             }
-            return ['view' => $this->getStatistic($langId, $dataArray)];
             // Tracking for game statistic between 7 and 12 played games
-//            session()->put('playedGames', 11);
-
             $playedGames = session()->get('playedGames');
-//            dd($playedGames);
-//            dd('test');
             if (!$playedGames) {
                 session()->put('playedGames', 2);
             } else {
-
                 if ($playedGames >= 7 && $playedGames <= 12) {
-
                     $random = rand($playedGames, 12);
-//                    dd($random);
                     if ($random == $playedGames) {
                         $playedGames = 1;
                         $returnStatistic = true;
@@ -55,9 +49,7 @@ class GlobalHelper
                     }
                 } else {
                     $playedGames = $playedGames + 1;
-
                 }
-
                 session()->put('playedGames', $playedGames);
             }
 
@@ -67,13 +59,12 @@ class GlobalHelper
             }
 
             if (isset($returnStatistic) && $returnStatistic) {
-                return ['view' => $this->getStatistic($langId, $dataArray)];
                 if (rand(1, 2) == 1) {
                     // This is case for % of same answers
                     return ['view' => $this->getStatistic($langId, $dataArray)];
                 } else {
                     // This is case for how many points user needs to reach new badge
-                    dd('taki');
+                    return ['view' => $this->userNextBadgeNeededPoints(Auth::guard('web')->user())];
                 }
             } else {
                 return ['view' => null];
@@ -90,6 +81,18 @@ class GlobalHelper
                 return AnswerDetail::compareLvl2Statistic($langId, $data);
             case 3:
                 return AnswerDetail::compareLvl3Statistic($langId, $data);
+        }
+    }
+
+    public function userNextBadgeNeededPoints($user): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|null
+    {
+        $pointCheck = DB::select(DB::raw("SELECT sum(points) as points from scores where user_id = $user->id"));
+        $points = $pointCheck[0]->points;
+        $badge = Badge::where('points', '>', $points)->orderBy('points', 'ASC')->first();
+        if ($badge) {
+            return view('web.additional-message', ['message' => trans("Keep it up! There’s") . " " . $badge->points - $points . " " . trans("points left to reach the") . " " . $badge->name . " " . trans("badge")]);
+        } else {
+            return null;
         }
     }
 }
