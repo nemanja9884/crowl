@@ -1,0 +1,57 @@
+.cover-container {
+    max-width: unset !important;
+}
+
+header {
+    max-width: 60em;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.card {
+    width: 100%;
+}
+
+.card-statistic {
+    height: 70vh;
+    border: 6px solid black;
+    background-color: #00a8f3;
+    border-radius: 30px;
+    width: 100%;
+}
+
+.card-body-statistic {
+    /*overflow-y: auto;*/
+}
+
+.col-md-6 {
+    display: flex;
+    align-items: center;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltip-title {
+    content: attr(title);
+    padding: 5px;
+    border: 1px solid #ccc;
+    top: 5px;
+    right: 10%;
+    background: #262424;
+    color: white;
+    font-size: 12px;
+}
+
+label {
+    max-width: 90%;
+}

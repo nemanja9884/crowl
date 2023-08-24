@@ -60,12 +60,6 @@ body {
     user-select: none;
 }
 
-@media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-    }
-}
-
 html {
     height: 100%;
 }
@@ -85,6 +79,28 @@ li {
 @media (max-width: 768px) {
     .sentence {
         font-size: 20px;
+    }
+
+    .game-page-desktop {
+        display: none;
+    }
+
+    .game-page-mobile {
+        display: block;
+    }
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+
+    .game-page-desktop {
+        display: flex;
+    }
+
+    .game-page-mobile {
+        display: none;
     }
 }
 
@@ -115,3 +131,4 @@ li {
 .color-black {
     color: black;
 }
+
