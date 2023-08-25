@@ -51,7 +51,7 @@
                 </label>
             </div>
             <button type="submit" class="btn btn-primary mt-3 float-left">{{trans('home.Start Game!')}}</button>
-            <p class="float-right mt-3">{{trans('home.Points:')}} <b>{{$points}}</b></p>
+            @include('web.shared.game-bottom-data')
         </form>
     </div>
 </div>

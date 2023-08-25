@@ -25,9 +25,8 @@
                     <div class="col-md-4 text-center">
                         <img class="mt-3" src="{{asset('images/game/percent.png')}}" style="max-width: 50%;"/>
                     </div>
-
                 </div>
-                <p class="float-right mt-3 points">Points: <b class="color-black">{{$points}}</b></p>
+                @include('web.shared.game-bottom-data')
             </div>
         </div>
     </main>

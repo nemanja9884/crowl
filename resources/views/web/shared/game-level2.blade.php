@@ -107,7 +107,7 @@
                 </div>
             @endif
             <button id="submit" type="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
-            <p class="float-right mt-3 points">Points: <b class="color-black">{{$points}}</b></p>
+            @include('web.shared.game-bottom-data')
         </form>
     </div>
 </div>
