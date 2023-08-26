@@ -45,3 +45,4 @@ Route::get('redirect/{driver}', [App\Http\Controllers\Auth\LoginController::clas
 Route::get('{driver}/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback']);
 Route::post('additional-user-info/{userId}', [App\Http\Controllers\Auth\RegisterController::class, 'additionUserInfo'])->name('additional-user-info');
 Route::get('additional-info-data/{field}/{value}', [App\Http\Controllers\HomeController::class, 'additionalInfoData'])->name('additional.info.data');
+Route::get('badges', [App\Http\Controllers\HomeController::class, 'badges'])->name('badges');

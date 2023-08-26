@@ -20,6 +20,13 @@ class GameController extends Controller
     public function gameIntro($code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $language = Language::where('lang_code', $code)->first();
+        $user = Auth::guard('web')->user();
+        if($user && !$user->showed_intro) {
+            $user->showed_intro = 1;
+            $user->save();
+            return view('web.user-intro', ['language' => $language]);
+        }
+
         return view('web.gameIntro', ['language' => $language]);
     }
 
@@ -28,7 +35,7 @@ class GameController extends Controller
         return $this->game($code, $request->input('level'));
     }
 
-    public function noGames($code)
+    public function noGames($code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $language = Language::where('lang_code', $code)->first();
         return view('web.no-games', ['language' => $language]);

@@ -29,8 +29,8 @@
                         </div>
 
                         <div class="col form-group">
-                            <label for="textarea-input" class="form-control-label">Description</label>
-                            <textarea name="description" id="textarea-input" rows="3"
+                            <label for="description" class="form-control-label">Description</label>
+                            <textarea name="description" id="description" rows="3"
                                       placeholder="Description..."
                                       class="form-control"></textarea>
                         </div>

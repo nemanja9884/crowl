@@ -97,7 +97,7 @@ class BadgesController extends Controller
             'points.required' => 'Points are required',
         ]);
 
-        $badge = Badge::find($id)->update($request->input());
+        $badge = Badge::find($id)->update($request->all(['name', 'description', 'points', $request->image ? 'image' : '']));
 
         if($badge) {
             Session::flash('message', 'Successfully created new badge');

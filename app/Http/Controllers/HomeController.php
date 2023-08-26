@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Badge;
 use App\Models\Language;
 use App\Models\User;
 use App\Traits\CacheSystem;
@@ -85,5 +86,10 @@ class HomeController extends Controller
 
         toastr()->info('Successfully saved user profile');
         return redirect()->back();
+    }
+
+    public function badges(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        return view('web.badges', ['badges' => Badge::orderBy('points', 'DESC')->get()]);
     }
 }

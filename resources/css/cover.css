@@ -128,7 +128,11 @@ li {
     color: purple;
 }
 
+.badges {
+    color: purple;
+    cursor: pointer;
+}
+
 .color-black {
     color: black;
 }
-
