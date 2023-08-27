@@ -22,6 +22,7 @@ header {
 
 .card-body-statistic {
     /*overflow-y: auto;*/
+    /*overflow: hidden;*/
 }
 
 .col-md-6 {

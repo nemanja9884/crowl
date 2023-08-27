@@ -25,7 +25,40 @@
 
     @include('web.layouts.footer')
 </div>
-
+<!-- Badges Modal -->
+<div class="modal fade" id="badgeModal" tabindex="-1" aria-labelledby="Badges" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{trans('home.Badges')}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-body-badges">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{trans('home.Close')}}</button>
+            </div>
+        </div>
+    </div>
+</div>
 @yield('javascript')
+<script>
+    window.onload = function() {
+        $(".badges").click(function () {
+            let url = '{{ route("badges") }}';
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    $(".modal-body-badges").html(data);
+                },
+                error: function () {
+                    alert('Some error occurred, please try again.');
+                }
+            });
+        });
+    };
+</script>
 </body>
 </html>
