@@ -36,7 +36,7 @@ class ViewServiceProvider extends ServiceProvider
             if ($user) {
                 $pointCheck = DB::select(DB::raw("SELECT sum(points) as points from scores where user_id = $user->id"));
                 $points = $pointCheck[0]->points;
-                $userBadge = Badge::where('points', '<', $points)->first();
+                $userBadge = Badge::where('points', '<', $points ?? 0)->first();
             }
 
             $gameStatistic = Cache::remember('gameStatistic', 60, function () {
