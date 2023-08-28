@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Badge;
-use App\Models\Category;
 use App\Models\Language;
-use App\Models\Score;
 use App\Models\Setting;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;

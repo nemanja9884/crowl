@@ -15,7 +15,7 @@ class GlobalHelper
 {
     public function getFivePointsMessage(): string
     {
-        $texts = ['Good!', 'Well done!', 'You are on a hot streak!'];
+        $texts = ['Good job!', 'Well done!', 'You are on a hot streak!'];
         return "<img src='" . asset("images/game/" . rand(1, 3) . ".gif") . "' style='width: 30px;'> &nbsp" . trans('home.' . Arr::random($texts, 1)[0]) . ' ' . trans('home.You got 5 extra points!');
     }
 
