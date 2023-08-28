@@ -84,7 +84,7 @@ class AnswerDetail extends Model
         if ($sameAnswers > 0 && $count > 0) {
             $points = $sameAnswers / $count * 100;
             Score::store($langId, $points);
-            return view('web.additional-message', ['message' => "$points% of the players have answered the same as you. You’ve got $points extra points!"]);
+            return view('web.additional-message', ['message' => $points . trans("home.% of the players have answered the same as you. You’ve got") . " " . $points . " " .trans("home.extra points!")]);
         } else {
             return null;
         }
@@ -110,7 +110,7 @@ class AnswerDetail extends Model
         if ($sameAnswers > 0 && $count > 0) {
             $points = $sameAnswers / $count * 100;
             Score::store($langId, $points);
-            return view('web.additional-message', ['message' => "$points% of the players have answered the same as you. You’ve got $points extra points!"]);
+            return view('web.additional-message', ['message' => $points . trans("home.% of the players have answered the same as you. You’ve got") . " " . $points . " " .trans("home.extra points!")]);
         } else {
             return null;
         }

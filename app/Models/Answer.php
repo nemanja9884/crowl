@@ -103,7 +103,7 @@ class Answer extends Model
         if ($allAnswers > 0 && $sameAsUserAnswers > 0) {
             $points = $sameAsUserAnswers / $allAnswers * 100;
             Score::store($langId, $points);
-            return view('web.additional-message', ['message' => "$points% of the players have answered the same as you. You’ve got $points extra points!"]);
+            return view('web.additional-message', ['message' => $points . trans("home.% of the players have answered the same as you. You’ve got") . " " . $points . " " .trans("home.extra points!")]);
         } else {
             return null;
         }
