@@ -60,7 +60,9 @@
                             </div>
                         </div>
 
-                        <p>This information is important to us. Click <a href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">here</a> to know why</p>
+                        <p>{{trans('home.This information is important to us. Click')}} <a
+                                href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">{{trans('home.here')}}</a>
+                            {{trans('home.to know why')}}</p>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

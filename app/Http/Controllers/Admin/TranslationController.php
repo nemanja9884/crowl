@@ -19,7 +19,7 @@ class TranslationController extends Controller
      */
     public function index(Request $request)
     {
-        $translations = DB::table('fragments');
+        $translations = DB::table('fragments')->whereNull('deleted_at');
         if ($request->filled('key')) {
             $page = 'search';
             $translations->where('key', 'like', '%' . $request->input('key') . '%');
