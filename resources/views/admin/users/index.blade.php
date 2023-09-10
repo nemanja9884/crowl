@@ -17,6 +17,7 @@
                 <div class="animated fadeIn">
                     <div class="row">
                         <div class="col-md-12">
+                            <a type="button" class="btn btn-outline-primary mb-2" href="{{route('admin.users.export')}}">Export users</a>
                             <div class="card">
                                 <div class="card-header">
                                     <strong class="card-title">Users</strong>

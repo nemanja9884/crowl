@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -98,5 +100,10 @@ class UsersController extends Controller
         Session::flash('message', 'Successfully deleted user');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.users.index');
+    }
+
+    public function export(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        return Excel::download(new UsersExport($request), 'users.xlsx');
     }
 }

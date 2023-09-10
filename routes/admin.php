@@ -27,6 +27,7 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::get('file-manager', function () {
         return view('admin.file-manager.index');
     });
+    Route::get('users/export', [App\Http\Controllers\Admin\UsersController::class, 'export'])->name('users.export');
     Route::resource('languages', App\Http\Controllers\Admin\LanguageController::class);
     Route::resource('translations', App\Http\Controllers\Admin\TranslationController::class);
     Route::post('translations/import', [App\Http\Controllers\Admin\TranslationController::class, 'import'])->name('translations.import');

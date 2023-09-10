@@ -159,6 +159,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Sentences list</h5>
+                    <p><b>Total senteneces: {{$sentences->total()}}</b></p>
                     <div class="fluid-container styled-table">
                         <table class="table">
                             <thead>
