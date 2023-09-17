@@ -43,22 +43,5 @@
     </div>
 </div>
 @yield('javascript')
-<script>
-    window.onload = function() {
-        $(".badges").click(function () {
-            let url = '{{ route("badges") }}';
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function (data) {
-                    $(".modal-body-badges").html(data);
-                },
-                error: function () {
-                    alert('Some error occurred, please try again.');
-                }
-            });
-        });
-    };
-</script>
 </body>
 </html>

@@ -39,10 +39,10 @@ class ViewServiceProvider extends ServiceProvider
                 $userBadge = Badge::where('points', '<', $points ?? 0)->first();
             }
 
-            $gameStatistic = Cache::remember('gameStatistic', 60, function () {
-                $locale = App::getLocale();
+            $locale = App::getLocale();
+            $gameStatistic = Cache::remember('gameStatistic_' . $locale, 60, function () use ($locale) {
                 $language = Language::where('lang_code', $locale)->first();
-                if($language) {
+                if ($language) {
                     $pointsCountry = DB::select(DB::raw("SELECT users.username as username, user_id, sum(points) as points from scores LEFT JOIN `users`
             ON `scores`.`user_id` = `users`.`id` where language_id = $language->id GROUP BY user_id ORDER BY points DESC LIMIT 0, 100"));
                     $sumCountriesPoints = DB::select(DB::raw("SELECT languages.name as language_name, language_id, sum(points) as points from scores LEFT JOIN `languages`
