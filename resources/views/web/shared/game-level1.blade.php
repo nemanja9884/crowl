@@ -24,9 +24,9 @@
                     {{$secondSentence->sentence}} ({{$secondSentence->word_reliability}})
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary mt-3 choose">{{trans('home.Choose')}}</button>
-            <button type="submit" name="noneOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn btn-primary mt-3">{{trans('home.None of them')}}</button>
-            <button type="submit" name="bothOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn btn-primary mt-3">{{trans('home.Both of them')}}</button>
+            <button type="{{$submit}}" class="btn btn-primary mt-3 {{$choose}}">{{trans('home.Choose')}}</button>
+            <button type="{{$submit}}" name="noneOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn btn-primary mt-3">{{trans('home.None of them')}}</button>
+            <button type="{{$submit}}" name="bothOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn btn-primary mt-3">{{trans('home.Both of them')}}</button>
             @include('web.shared.game-bottom-data')
         </form>
     </div>

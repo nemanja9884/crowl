@@ -11,7 +11,7 @@
                 @include('web.layouts.left_column')
             </div>
             <div class="col-md-6">
-                @include('web.shared.game-level3')
+                @include('web.shared.game-level3', ['selectableSentence' => 'selectable-sentence', 'removeBtn' => 'remove-btn', 'submit' => 'submit', 'problematicWords' => 'problematicWords', 'fine' => 'fine'])
             </div>
             <div class="col-md-3">
                 @include('web.layouts.right_column')
@@ -22,7 +22,7 @@
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">@include('web.layouts.left_column')</div>
-                    <div class="swiper-slide">@include('web.shared.game-level3')</div>
+                    <div class="swiper-slide"> @include('web.shared.game-level3', ['selectableSentence' => 'selectable-sentence-mobile', 'removeBtn' => 'remove-btn-mobile', 'submit' => 'submit-mobile', 'problematicWords' => 'problematicWordsMobile', 'fine' => 'fineMobile'])</div>
                     <div class="swiper-slide">@include('web.layouts.right_column')</div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -40,33 +40,42 @@
             initialSlide: 1,
         });
 
+        function marker(element, rmwBtn) {
+            (function () {
+                var removeBtn = document.getElementById(rmwBtn);
+                var sandbox = document.getElementById(element);
+                var hltr = new TextHighlighter(sandbox);
+
+                removeBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    hltr.removeHighlights();
+                });
+            })();
+        }
+
+        function submit(submit, probWords, fine) {
+            $('#' + submit).click(function (e) {
+                var str = "";
+                $('.highlighted').each(function () {
+                    str += $(this).text() + "| ";
+                });
+                let problematicWords = $(probWords);
+                problematicWords.val(str);
+                if (problematicWords.val() === "" && $(fine).is(":checked") === false) {
+                    e.preventDefault();
+                    alert('Please select problematic words, then press button "choose"');
+                } else {
+                    $("#gameForm" + submit).submit();
+                }
+            });
+        }
+
         window.onload = function () {
             $(document).ready(function () {
-                (function () {
-                    var removeBtn = document.getElementById('removeBtn');
-                    var sandbox = document.getElementById('selectable-sentence');
-                    var hltr = new TextHighlighter(sandbox);
-
-                    removeBtn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        hltr.removeHighlights();
-                    });
-                })();
-
-                $('#submit').click(function (e) {
-                    var str = "";
-                    $('.highlighted').each(function () {
-                        str += $(this).text() + "| ";
-                    });
-                    let problematicWords = $('#problematicWords');
-                    problematicWords.val(str);
-                    if (problematicWords.val() === "" && $('#fine').is(":checked") === false) {
-                        e.preventDefault();
-                        alert('Please select problematic words, then press button "choose"');
-                    } else {
-                        $("#gameForm").submit();
-                    }
-                });
+                marker('selectable-sentence', 'remove-btn');
+                marker('selectable-sentence-mobile', 'remove-btn-mobile');
+                submit('submit', '#problematicWords', '#fine');
+                submit('submit-mobile', '#problematicWordsMobile', '#fineMobile');
             });
         }
     </script>

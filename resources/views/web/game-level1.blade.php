@@ -11,7 +11,7 @@
                 @include('web.layouts.left_column')
             </div>
             <div class="col-md-6">
-                @include('web.shared.game-level1')
+                @include('web.shared.game-level1', ['submit' => 'submit', 'choose' => 'choose'])
             </div>
             <div class="col-md-3">
                 @include('web.layouts.right_column')
@@ -22,7 +22,7 @@
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">@include('web.layouts.left_column')</div>
-                    <div class="swiper-slide">@include('web.shared.game-level1')</div>
+                    <div class="swiper-slide">@include('web.shared.game-level1', ['submit' => 'submit-mobile', 'choose' => 'choose-mobile'])</div>
                     <div class="swiper-slide">@include('web.layouts.right_column')</div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -40,17 +40,22 @@
             initialSlide: 1,
         });
 
+        function choose(submit, choose) {
+            $(choose).click(function (e) {
+                let checked = $(".answer").is(":checked");
+                if (checked === true) {
+                    $(submit).submit();
+                } else {
+                    e.preventDefault();
+                    alert('You must select something');
+                }
+            });
+        }
+
         window.onload = function () {
             $(document).ready(function () {
-                $(".choose").click(function (e) {
-                    let checked = $(".answer").is(":checked");
-                    if (checked === true) {
-                        $("#form").submit();
-                    } else {
-                        e.preventDefault();
-                        alert('You must select something');
-                    }
-                });
+                choose('#submit', '.choose');
+                choose('#submit-mobile', '.choose-mobile');
             });
         }
     </script>

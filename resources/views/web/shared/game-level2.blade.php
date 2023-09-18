@@ -8,7 +8,7 @@
            style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
     </div>
     <div class="card-body">
-        <form id="form" action="{{route('answerLevel2', ['code' => $language->lang_code, 'level' => $level])}}"
+        <form id="form-{{$submit}}" action="{{route('answerLevel2', ['code' => $language->lang_code, 'level' => $level])}}"
               method="POST">
             @csrf
             @method('POST')
@@ -99,14 +99,14 @@
             @if($level == 2)
                 <div class="form-check sentence">
                     <input class="form-check-input answer" type="checkbox"
-                           id="fine"
+                           id="{{$fine}}"
                            name="answer[]" value="fine">
                     <label class="form-check-label" for="fine">
                         {{trans('home.This sentence is fine')}}
                     </label>
                 </div>
             @endif
-            <button id="submit" type="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
+            <button id="{{$submit}}" type="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
             @include('web.shared.game-bottom-data')
         </form>
     </div>
