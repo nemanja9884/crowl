@@ -322,8 +322,12 @@ class GameController extends Controller
                 return $this->game($code, $level);
             } elseif ($level == '2+3' || $level == '1+2+3') {
                 if (is_array($answersIds)) {
-                    $sentenceAnswer = Answer::find($answersIds[0]);
-                    return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[0]);
+                    if ($request->input('answer')[0] == 'lack of context and/or incomprehensible') {
+                        return $this->game($code, $level);
+                    } else {
+                        $sentenceAnswer = Answer::find($answersIds[0]);
+                        return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds[0]);
+                    }
                 } else {
                     $sentenceAnswer = Answer::find($answersIds);
                     return $this->level(3, $language, $level, $sentenceAnswer->sentence_id, $answersIds, $answersIds);
