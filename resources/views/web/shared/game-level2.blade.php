@@ -8,11 +8,16 @@
            style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
     </div>
     <div class="card-body">
-        <form id="form-{{$submit}}" action="{{route('answerLevel2', ['code' => $language->lang_code, 'level' => $level])}}"
+        <form id="form-{{$submit}}"
+              action="{{route('answerLevel2', ['code' => $language->lang_code, 'level' => $level])}}"
               method="POST">
             @csrf
             @method('POST')
-            <h4>{{trans('home.Why not this one?')}}</h4>
+            @if($level == 2 || $level == '2+3')
+                <h4>{{trans('home.Why can\'t this sentence be used for teaching X?')}}</h4>
+            @else
+                <h4>{{trans('home.Why not this one?')}}</h4>
+            @endif
             <p class="sentence">{{$sentence->sentence}}</p>
             <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
             <input type="hidden" name="answerId" value="{{$answerId}}"/>
@@ -96,7 +101,7 @@
                         class="tooltip-title"
                         style="display: none; margin-left: 5px;">{{trans('home.XXXX-Lack of context/incomprehensible')}}</small></span>
             </div>
-            @if($level == 2)
+            @if($level == 2 || $level == '2+3')
                 <div class="form-check sentence">
                     <input class="form-check-input answer" type="checkbox"
                            id="{{$fine}}"

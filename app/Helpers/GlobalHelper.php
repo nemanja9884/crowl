@@ -61,7 +61,13 @@ class GlobalHelper
             if (isset($returnStatistic) && $returnStatistic) {
                 if (rand(1, 2) == 1) {
                     // This is case for % of same answers
-                    return ['view' => $this->getStatistic($langId, $dataArray)];
+                    $getStatistic = $this->getStatistic($langId, $dataArray);
+                    // If there is no same answer like the users, then give mu message about next badge
+                    if(!$getStatistic){
+                        return ['view' => $this->userNextBadgeNeededPoints(Auth::guard('web')->user())];
+                    } else {
+                        return ['view' => $getStatistic];
+                    }
                 } else {
                     // This is case for how many points user needs to reach new badge
                     return ['view' => $this->userNextBadgeNeededPoints(Auth::guard('web')->user())];
