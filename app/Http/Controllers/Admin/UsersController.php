@@ -6,6 +6,7 @@ use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -84,6 +85,11 @@ class UsersController extends Controller
             'status' => 'required',
         ));
 
+        if($request->password) {
+            $request->merge([
+                'password' => Hash::make($request->password),
+            ]);
+        }
         $user->update($request->all('status', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
         Session::flash('message', 'Successfully updated user');
         Session::flash('alert-class', 'success');

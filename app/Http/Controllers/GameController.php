@@ -161,33 +161,38 @@ class GameController extends Controller
 
     public function gdexFn($sentenceDb, $random, $sentenceNumber)
     {
+        // high-> GDEX scores 1 to 0.7; medium -> GDEX scores 0.69 to  0.5; low -> GDEX scores equal or below 0.49
         switch ($random) {
             case 1:
                 if ($sentenceNumber == 0) {
-                    $sort = 'ASC';
+                    $firstValue = 0.7;
+                    $secondValue = 1;
                 } else {
-                    $sort = 'DESC';
+                    $firstValue = 0;
+                    $secondValue = 0.49;
                 }
-
-                $sentenceDb = $sentenceDb->orderBy('word_reliability', $sort)->limit(10)->get();
                 break;
             case 2:
                 if ($sentenceNumber == 0) {
-                    $sentenceDb = $sentenceDb->orderBy('word_reliability', 'DESC')->limit(10)->get();
+                    $firstValue = 0.7;
+                    $secondValue = 1;
                 } else {
-                    $sentenceDb = $sentenceDb->whereBetween('word_reliability', [0.8, 0.9])->limit(10)->get();
+                    $firstValue = 0.5;
+                    $secondValue = 0.69;
                 }
                 break;
             case 3:
                 if ($sentenceNumber == 0) {
-                    $sentenceDb = $sentenceDb->orderBy('word_reliability', 'ASC')->limit(10)->get();
+                    $firstValue = 0.5;
+                    $secondValue = 0.69;
                 } else {
-                    $sentenceDb = $sentenceDb->whereBetween('word_reliability', [0.8, 0.9])->limit(10)->get();
+                    $firstValue = 0;
+                    $secondValue = 0.49;
                 }
                 break;
         }
 
-        return $sentenceDb;
+        return $sentenceDb->whereBetween('word_reliability', [$firstValue ?? 0, $secondValue ?? 0])->limit(100)->get();
     }
 
     public function answerLevel1(Request $request, $code, $level)

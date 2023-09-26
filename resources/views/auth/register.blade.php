@@ -128,7 +128,7 @@
                             </div>
 
                             <p>{{trans('home.This information is important to us. Click')}} <a
-                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">{{trans('home.here')}}</a>
+                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
                                 {{trans('home.to know why')}}</p>
 
                             <p>{{trans('home.Already have an account? Login')}} <a
@@ -192,7 +192,6 @@
                 });
 
                     $.fn.myfunction = function(key, value, messageDiv) {
-                        console.log('takisa');
                         let url = "{{url('additional-info-data')}}/" + key + "/" + value;
                         $.ajax({
                             type: "GET",

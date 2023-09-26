@@ -120,9 +120,9 @@ li {
     display: none !important;
 }
 
-/*.main-container {*/
-/*    background-color: #39b54a;*/
-/*}*/
+.main-container {
+    background-color: #272c33;
+}
 
 .points {
     color: purple;

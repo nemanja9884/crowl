@@ -55,7 +55,7 @@ class HomeController extends Controller
         $usersCount = User::count();
         $dataCount = User::where($field, $value)->count();
 
-        return ($dataCount / $usersCount) * 100;
+        return number_format((float)($dataCount / $usersCount) * 100, 1, '.', '');
     }
 
     public function userProfile()
