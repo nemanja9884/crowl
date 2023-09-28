@@ -10,6 +10,13 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
+                            @php
+                                $locale = \Illuminate\Support\Facades\App::getLocale();
+                                $lang = \App\Models\Language::where('lang_code', $locale)->first();
+                            @endphp
+                            <p>{{trans('home.This information is important to us. Click')}} <a
+                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
+                                {{trans('home.to know why')}}</p>
 
                             <div class="row mb-3">
                                 <label for="name" class="col-md-4 col-form-label text-md-end">{{trans('home.Username')}}
@@ -111,10 +118,7 @@
                                     <div class="teacherMessageDiv"></div>
                                 </div>
                             </div>
-                            @php
-                                $locale = \Illuminate\Support\Facades\App::getLocale();
-                                $lang = \App\Models\Language::where('lang_code', $locale)->first();
-                            @endphp
+
                             <div class="row mb-3">
                                 <label for="dominant_language"
                                        class="col-md-4 col-form-label text-md-end">{{trans("home.Is $lang->name your first/dominant language?")}}</label>
@@ -126,10 +130,6 @@
                                     <div class="domLanguageMessageDiv"></div>
                                 </div>
                             </div>
-
-                            <p>{{trans('home.This information is important to us. Click')}} <a
-                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
-                                {{trans('home.to know why')}}</p>
 
                             <p>{{trans('home.Already have an account? Login')}} <a
                                 href="{{route('login')}}">{{trans('home.here')}}</a></p>

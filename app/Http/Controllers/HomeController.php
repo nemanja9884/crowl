@@ -90,6 +90,6 @@ class HomeController extends Controller
 
     public function badges(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        return view('web.badges', ['badges' => Badge::orderBy('points', 'DESC')->get()]);
+        return view('web.badges', ['badges' => Badge::orderBy('points', 'ASC')->get()]);
     }
 }

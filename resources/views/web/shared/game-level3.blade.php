@@ -11,7 +11,7 @@
             @csrf
             @method('POST')
 {{--            <h4>{{trans("home.This sentence has been considered $answerDetail->reason for teaching English. Tap or click where the problem is.")}}</h4>--}}
-            <h4>{{trans("home.This sentence has been considered")}} <b><i>{{$answerDetail->reason}}</i></b> {{trans("home.for teaching English. Tap or click where the problem is.")}}</h4>
+            <h4>{{trans("home.This sentence has been considered")}} <b><i>{{trans("home.$answerDetail->reason")}}</i></b> {{trans("home.for teaching English. Tap or click where the problem is.")}}</h4>
             <p id="{{$selectableSentence}}" class="sentence">{{$sentence->sentence}}</p>
             <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
             <input type="hidden" name="answerId" value="{{$answerId}}"/>

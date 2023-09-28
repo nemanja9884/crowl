@@ -96,7 +96,7 @@ class GlobalHelper
         $points = $pointCheck[0]->points;
         $badge = Badge::where('points', '>', $points)->orderBy('points', 'ASC')->first();
         if ($badge) {
-            return view('web.additional-message', ['message' => trans("home.Keep it up! There’s") . " " . $badge->points - $points . " " . trans("home.points left to reach the") . " " . $badge->name . " " . trans("home.badge")]);
+            return view('web.additional-message', ['message' => trans("home.Keep it up! There’s") . " " . $badge->points - $points . " " . trans("home.points left to reach the") . " " . trans('home.' . $badge->name) . " " . trans("home.badge")]);
         } else {
             return null;
         }

@@ -130,10 +130,37 @@ class GameController extends Controller
                     });
                 }
 
-                $sentenceDb = $this->gdexFn($sentenceDb, $random, $sentenceNum);
+                $sentenceResult = $this->gdexFn($sentenceDb, $random, $sentenceNum);
 
-                if (count($sentenceDb) > 0) {
-                    return $sentenceDb->random();
+                // If there is no result, try with other gdex option
+                if (count($sentenceResult) == 0) {
+                    $gdexOptions = [1, 2, 3];
+                    if (($key = array_search($random, $gdexOptions)) !== false) {
+                        unset($gdexOptions[$key]);
+                    }
+                    foreach ($gdexOptions as $option) {
+                        $sentenceResult = $this->gdexFn($sentenceDb, $option, $sentenceNum);
+                        // if result is found, stop loop
+                        if (count($sentenceResult) != 0) {
+                            break;
+                        }
+                    }
+                }
+
+                // If there is no result still, try with random combinations
+                if (count($sentenceResult) == 0) {
+                    $gdexOptions = [0, 1, 2];
+                    foreach ($gdexOptions as $option) {
+                        $sentenceResult = $this->gdexRandomFn($sentenceDb, $option);
+                        // if result is found, stop loop
+                        if (count($sentenceResult) != 0) {
+                            break;
+                        }
+                    }
+                }
+
+                if (count($sentenceResult) > 0) {
+                    return $sentenceResult->random();
                 } else {
                     return false;
                 }
@@ -193,6 +220,17 @@ class GameController extends Controller
         }
 
         return $sentenceDb->whereBetween('word_reliability', [$firstValue ?? 0, $secondValue ?? 0])->limit(100)->get();
+    }
+
+    public function gdexRandomFn($sentenceDb, $combinationNumber)
+    {
+        $combinationArray = [
+            [0, 0.49],
+            [0.5, 0.69],
+            [0.7, 1]
+        ];
+
+        return $sentenceDb->whereBetween('word_reliability', [$combinationArray[$combinationNumber]])->limit(100)->get();
     }
 
     public function answerLevel1(Request $request, $code, $level)
