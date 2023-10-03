@@ -394,9 +394,9 @@ class GameController extends Controller
             }
         }
 
-        if ($request->input('fine')) {
-            Answer::store($language->id, $request->input('sentenceId'), 1, 0);
-        } else {
+        if (!$request->input('fine')) {
+//            Answer::store($language->id, $request->input('sentenceId'), 1, 0);
+//        } else {
             Score::scoring(3, $language->id, $request->input('sentenceId'), null, null, null, $request->input('problematicWords'));
             $answerDetail->sentence_bad_part = $request->input('problematicWords');
             $answerDetail->save();

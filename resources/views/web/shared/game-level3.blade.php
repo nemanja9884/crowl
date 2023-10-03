@@ -32,7 +32,7 @@
                            id="{{$fine}}"
                            name="fine" value="1">
                     <label class="form-check-label" for="fine">
-                        {{trans('home.This sentence is fine')}}
+                        {{trans('home.This sentence doesn’t have any problem of this type.')}}
                     </label>
                 </div>
             @endif
