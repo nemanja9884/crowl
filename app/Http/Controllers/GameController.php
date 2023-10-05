@@ -114,22 +114,8 @@ class GameController extends Controller
             case '1':
             case '1+2':
             case '1+2+3':
-                $sentenceDb = Sentence::where('language_id', $langId)->finished('0');
 
-                if ($sentenceNum == 1) {
-                    $sentenceDb->where('id', '!=', $firstSentenceId);
-                }
-
-                if ($user) {
-                    $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
-                        $q->where('user_id', $user->id);
-                    });
-                } else {
-                    $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
-                        $q->where('ip_address', request()->ip());
-                    });
-                }
-
+                $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
                 $sentenceResult = $this->gdexFn($sentenceDb, $random, $sentenceNum);
 
                 // If there is no result, try with other gdex option
@@ -139,6 +125,7 @@ class GameController extends Controller
                         unset($gdexOptions[$key]);
                     }
                     foreach ($gdexOptions as $option) {
+                        $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
                         $sentenceResult = $this->gdexFn($sentenceDb, $option, $sentenceNum);
                         // if result is found, stop loop
                         if (count($sentenceResult) != 0) {
@@ -151,6 +138,7 @@ class GameController extends Controller
                 if (count($sentenceResult) == 0) {
                     $gdexOptions = [0, 1, 2];
                     foreach ($gdexOptions as $option) {
+                        $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
                         $sentenceResult = $this->gdexRandomFn($sentenceDb, $option);
                         // if result is found, stop loop
                         if (count($sentenceResult) != 0) {
@@ -164,6 +152,8 @@ class GameController extends Controller
                 } else {
                     return false;
                 }
+
+
             case '2':
             case '2+3':
                 // Prevent user to answer again on already answered sentence
@@ -184,6 +174,27 @@ class GameController extends Controller
                     $q->whereNull('sentence_bad_part')->where('reason', '!=', 'lack of context and/or incomprehensible');
                 })->limit(2)->pluck('id')->toArray();
         }
+    }
+
+    public function lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random)
+    {
+        $sentenceDb = Sentence::where('language_id', $langId)->finished('0');
+
+        if ($sentenceNum == 1) {
+            $sentenceDb->where('id', '!=', $firstSentenceId);
+        }
+
+        if ($user) {
+            $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+        } else {
+            $sentenceDb->whereDoesntHave('answers', function ($q) use ($user) {
+                $q->where('ip_address', request()->ip());
+            });
+        }
+
+        return $sentenceDb;
     }
 
     public function gdexFn($sentenceDb, $random, $sentenceNumber)
@@ -230,7 +241,7 @@ class GameController extends Controller
             [0.7, 1]
         ];
 
-        return $sentenceDb->whereBetween('word_reliability', [$combinationArray[$combinationNumber]])->limit(100)->get();
+        return $sentenceDb->whereBetween('word_reliability', $combinationArray[$combinationNumber])->limit(100)->get();
     }
 
     public function answerLevel1(Request $request, $code, $level)
