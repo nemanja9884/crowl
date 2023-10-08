@@ -48,7 +48,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="/admin/file-manager"> <i class="menu-icon fa fa-files-o"></i>File manager</a>
+                        <a href="{{url('laravel-filemanager')}}" target="_blank"> <i class="menu-icon fa fa-files-o"></i>File manager</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>User Interaction</a>
