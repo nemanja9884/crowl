@@ -376,7 +376,8 @@ class GameController extends Controller
                 return $this->game($code, $level);
             } elseif ($level == '2+3' || $level == '1+2+3') {
                 if (is_array($answersIds)) {
-                    if ($request->input('answer')[0] == 'lack of context and/or incomprehensible') {
+                    // Don't let user play level 3 if the reason is lack of context and/or incomprehensible or fine
+                    if ($request->input('answer')[0] == 'lack of context and/or incomprehensible' || in_array('fine', $reasons)) {
                         return $this->game($code, $level);
                     } else {
                         $sentenceAnswer = Answer::find($answersIds[0]);
@@ -405,9 +406,9 @@ class GameController extends Controller
             }
         }
 
-        if (!$request->input('fine')) {
-//            Answer::store($language->id, $request->input('sentenceId'), 1, 0);
-//        } else {
+        if ($request->input('fine')) {
+            Answer::store($language->id, $request->input('sentenceId'), 0, 0);
+        } else {
             Score::scoring(3, $language->id, $request->input('sentenceId'), null, null, null, $request->input('problematicWords'));
             $answerDetail->sentence_bad_part = $request->input('problematicWords');
             $answerDetail->save();
