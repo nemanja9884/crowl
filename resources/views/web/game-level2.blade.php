@@ -47,7 +47,7 @@
                     $("#form-" + submit).submit();
                 } else {
                     e.preventDefault();
-                    alert('You must select something');
+                    alert("{{trans('home.You must select something')}}");
                 }
             });
         }
