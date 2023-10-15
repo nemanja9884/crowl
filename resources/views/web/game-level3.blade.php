@@ -63,7 +63,7 @@
                 problematicWords.val(str);
                 if (problematicWords.val() === "" && $(fine).is(":checked") === false) {
                     e.preventDefault();
-                    alert('Please select problematic words, then press button "choose"');
+                    alert("{{trans('home.Please select problematic words, then press button choose')}}");
                 } else {
                     $("#gameForm" + submit).submit();
                 }
