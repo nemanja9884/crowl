@@ -75,7 +75,7 @@ class HomeController extends Controller
         ]);
 
         if ($validator->fails()) {
-            toastr()->error('Something went wrong! Check your information again');
+            toastr()->error(trans('home.Something went wrong! Check your information again'));
             return redirect()->back();
         }
 
@@ -84,7 +84,7 @@ class HomeController extends Controller
         $userDb = User::findorfail($user->id);
         $userDb->update($request->all('username', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
 
-        toastr()->info('Successfully saved user profile');
+        toastr()->info(trans('home.Successfully saved user profile'));
         return redirect()->back();
     }
 

@@ -1,4 +1,4 @@
-<header class="mb-auto">
+<header class="mb-auto pb-3">
     <div>
         <h3 class="float-md-start mb-0 text-white"><a href="https://ucpages.uc.pt/celga-iltec/crowll/"
                                                       target="_blank"><img src="{{asset('images/logo_horizontal.png')}}"

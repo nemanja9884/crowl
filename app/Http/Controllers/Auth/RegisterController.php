@@ -92,7 +92,7 @@ class RegisterController extends Controller
         ]);
 
         auth()->login($user, true);
-        toastr()->info('Thank you for your answer!');
+        toastr()->info(trans('home.Thank you for your answer!'));
         return redirect()->route('index');
     }
 }
