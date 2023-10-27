@@ -136,3 +136,12 @@ li {
 .color-black {
     color: black;
 }
+
+.card-flags {
+    border: unset !important;
+    background-color: transparent !important;
+}
+
+.card-flags-title {
+    color: white !important;
+}

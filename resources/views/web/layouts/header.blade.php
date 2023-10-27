@@ -1,8 +1,8 @@
 <header class="mb-auto pb-3">
     <div>
         <h3 class="float-md-start mb-0 text-white"><a href="https://ucpages.uc.pt/celga-iltec/crowll/"
-                                                      target="_blank"><img src="{{asset('images/logo_horizontal.png')}}"
-                                                                           alt="logo" width="200px"/></a></h3>
+                                                      target="_blank" style="color: white !important; text-decoration: none !important; font-size: 40px;"><img src="{{asset('images/logo_horizontal.png')}}"
+                                                                           alt="logo" width="200px"/> BETA</a></h3>
         <nav class="nav nav-masthead justify-content-center float-md-end">
             <li><a class="nav-link active" aria-current="page" href="{{route('index')}}">{{trans('home.Home')}}</a></li>
             {{--            <li><a class="nav-link" href="#">Features</a></li>--}}

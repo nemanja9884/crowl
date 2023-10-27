@@ -89,6 +89,7 @@ class AnswersController extends Controller
 
     public function export(Request $request): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
+        ini_set('memory_limit', '-1');
         return Excel::download(new AnswerExport($request), 'answers.xlsx');
     }
 }

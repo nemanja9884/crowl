@@ -4,6 +4,10 @@
     <main class="px-3 text-white text-center">
         <img src="{{$language->image}}" class="card-img-top mb-4"
              alt="{{$language->name}}" style="max-width: 200px;">
+        @auth
+            <p><a href="{{route('gameIntro', $language->lang_code)}}" type="button"
+               class="btn btn-primary">{{trans('home.Start game')}}</a></p>
+        @endauth
 
         {!! $language->content !!}
 
@@ -19,9 +23,6 @@
 {{--                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" style="width: 20px;"> {{trans('home.Register with facebook')}}--}}
 {{--            </a>--}}
             <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary mb-2" style="color: white;">{{trans('home.Sign-up as a guest')}}</a>
-        @else
-            <a href="{{route('gameIntro', $language->lang_code)}}" type="button"
-               class="btn btn-primary">{{trans('home.Start game')}}</a>
         @endguest
     </main>
 @endsection

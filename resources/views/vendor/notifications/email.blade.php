@@ -39,7 +39,7 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Regards'),<br>
+{{trans('home.Regards')}},<br>
 {{ config('app.name') }}
 @endif
 @endcomponent

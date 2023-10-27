@@ -255,7 +255,7 @@ class GameController extends Controller
                     foreach ($request->bothOfThem as $both) {
                         $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $both, 'positiveAnswer' => 1, 'negativeAnswer' => 0]);
                         if (isset($gamesInRow['view']) && $gamesInRow['view']) {
-                            return $gamesInRow['view']->with('level', $level);
+                            return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
                         }
                     }
                 }
@@ -273,7 +273,7 @@ class GameController extends Controller
                     foreach ($request->noneOfThem as $none) {
                         $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $none, 'positiveAnswer' => 0, 'negativeAnswer' => 1]);
                         if (isset($gamesInRow['view']) && $gamesInRow['view']) {
-                            return $gamesInRow['view']->with('level', $level)->with('langCode', $code)->with('langCode', $code);
+                            return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
                         }
                     }
                 }
