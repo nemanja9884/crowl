@@ -34,7 +34,7 @@ class HomeController extends Controller
     {
         App::setLocale('pt-BR');
         session()->put('locale', 'pt-BR');
-        return view('web.index', ['languages' => Language::where('status', '1')->orderBy('sort', 'ASC')->get(), 'settings' => $this->getSettings()]);
+        return view('web.index', ['languagesFirstRow' => Language::where('status', '1')->orderBy('sort', 'ASC')->limit(3)->get(), 'languagesSecondRow' => Language::where('status', '1')->orderBy('sort', 'ASC')->skip(3)->limit(10)->get(), 'settings' => $this->getSettings()]);
     }
 
     public function home(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
