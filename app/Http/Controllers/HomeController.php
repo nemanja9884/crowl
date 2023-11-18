@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Badge;
 use App\Models\Language;
+use App\Models\Setting;
 use App\Models\User;
 use App\Traits\CacheSystem;
 use Illuminate\Http\Request;
@@ -91,5 +92,11 @@ class HomeController extends Controller
     public function badges(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         return view('web.badges', ['badges' => Badge::orderBy('points', 'ASC')->get()]);
+    }
+
+    public function additionalInfo($code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    {
+        $settings = Setting::first();
+        return view('web.additional-info', ['settings' => $settings]);
     }
 }

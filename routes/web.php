@@ -28,6 +28,7 @@ Route::post('{code}/answer-level-1/{level}', [App\Http\Controllers\GameControlle
 Route::post('{code}/answer-level-2/{level}', [App\Http\Controllers\GameController::class, 'answerLevel2'])->name('answerLevel2');
 Route::post('{code}/answer-level-3/{level}', [App\Http\Controllers\GameController::class, 'answerLevel3'])->name('answerLevel3');
 Route::get('{code}/no-games', [App\Http\Controllers\GameController::class, 'noGames'])->name('noGames');
+Route::get('{code}/additional-info', [App\Http\Controllers\HomeController::class, 'additionalInfo'])->name('additionalInfo');
 
 Route::get('user-profile', [App\Http\Controllers\HomeController::class, 'userProfile'])->name('userProfile');
 Route::post('update-profile', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');

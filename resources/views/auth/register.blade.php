@@ -15,7 +15,7 @@
                                 $lang = \App\Models\Language::where('lang_code', $locale)->first();
                             @endphp
                             <p>{{trans('home.This information is important to us. Click')}} <a
-                                    href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
+                                    href="{{route('additionalInfo', ['code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
                                 {{trans('home.to know why')}}</p>
 
                             <div class="row mb-3">
