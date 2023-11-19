@@ -42,4 +42,5 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::resource('scores', App\Http\Controllers\Admin\ScoreController::class);
     Route::resource('settings', App\Http\Controllers\Admin\SettingsController::class);
     Route::resource('badges', App\Http\Controllers\Admin\BadgesController::class);
+    Route::get('logs', [App\Http\Controllers\Admin\LogsController::class, 'index'])->name('logs');
 });

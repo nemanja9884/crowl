@@ -64,6 +64,7 @@
                     <li>
                         <a href="{{route('admin.badges.index')}}"> <i class="menu-icon fa fa-id-badge"></i>Badges</a>
                         <a href="{{route('admin.translations.index')}}"> <i class="menu-icon fa fa-language"></i>Translations</a>
+                        <a href="{{route('admin.logs')}}"> <i class="menu-icon fa fa-book"></i>Logs</a>
                         <a href="{{route('admin.settings.index')}}"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
                     </li>
                 </ul>

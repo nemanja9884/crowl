@@ -8,6 +8,7 @@ use App\Models\Language;
 use App\Models\Sentence;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class SentenceController extends Controller
@@ -154,13 +155,13 @@ class SentenceController extends Controller
         ));
 
         $file = $request->file('file');
-        $file->move('sentences', $file->getClientOriginalName());
+        $file->move('sentences', Auth::guard('admin')->user()->id . '_' . $file->getClientOriginalName());
 //        if(config('app.env') == 'production') {
 //
 //        }
 //        SentenceImport::dispatchNow($file->getClientOriginalName(), $request->input('language_id'))->onConnection('database');
 
-        SentenceImport::dispatchNow($file->getClientOriginalName(), $request->input('language_id'));
+        SentenceImport::dispatchNow(Auth::guard('admin')->user()->id . '_' . $file->getClientOriginalName(), $request->input('language_id'));
 
         Session::flash('message', 'Your sentences will be imported soon, please be patient. Refresh page after a while to check if your sentences have been imported');
         Session::flash('alert-class', 'success');
