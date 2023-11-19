@@ -1,8 +1,25 @@
 <div class="card color-black">
     <div class="card-header">
-        {{trans('home.LEVEL 3')}}
-        <a href="{{route('index')}}" type="button" class="btn btn-danger float-right ml-2">{{trans('home.Exit game')}}</a>
-        <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary float-right mr-2" style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
+        <div class="game-page-desktop d-flex">
+            <div class="d-flex w-100">
+                <div class="col-5">
+                    <p>{{trans('home.LEVEL 3')}}</p>
+                </div>
+                <div class="col-7">
+                    <div class="buttons float-right d-flex">
+                        <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary float-right mr-2" style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
+                        <a href="{{route('index')}}" type="button" class="btn btn-danger float-right ml-2">{{trans('home.Exit game')}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="game-page-mobile">
+            {{trans('home.LEVEL 3')}}
+            <div class="buttons mt-2">
+                <a href="{{route('index')}}" type="button" class="btn btn-danger">{{trans('home.Exit game')}}</a>
+                <a href="{{route('gameIntro', $language->lang_code)}}" type="button" class="btn btn-secondary ml-2" style="color: white; margin-right: 5px;">{{trans('home.Level choose')}}</a>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <form id="gameForm{{$submit}}"
