@@ -1,6 +1,6 @@
 <div class="card color-black">
     <div class="card-header">
-        <div class="game-page-desktop d-flex">
+        <div class="game-page-desktop">
             <div class="d-flex w-100">
                 <div class="col-5">
                     <p>{{trans('home.LEVEL 3')}}</p>
