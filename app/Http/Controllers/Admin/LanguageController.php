@@ -55,6 +55,7 @@ class LanguageController extends Controller
             'intro' => $request->input('intro'),
             'lang_code' => $request->input('lang_code'),
             'content' => $request->input('content'),
+            'additional_info_content' => $request->input('additional_info_content'),
             'image' => $request->input('image'),
             'status' => $request->input('status'),
             'sort' => $request->input('sort')
@@ -117,6 +118,7 @@ class LanguageController extends Controller
             'intro' => $request->input('intro'),
             'lang_code' => $request->input('lang_code'),
             'content' => $request->input('content'),
+            'additional_info_content' => $request->input('additional_info_content'),
             'image' => $request->input('image') ?? $language->image,
             'status' => $request->input('status'),
             'sort' => $request->input('sort')

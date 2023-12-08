@@ -36,6 +36,13 @@
         </div>
 
         <div class="col form-group">
+            <label class="textarea-input-1">Additional info page content</label>
+            <textarea name="additional_info_content" rows="6" id="textarea-input-1"
+                      placeholder="Additional info page content"
+                      class="form-control">{{$language->additional_info_content}}</textarea>
+        </div>
+
+        <div class="col form-group">
             <label for="status" class="form-control-label">Status</label>
             <select name="status" id="status" class="form-control">
                 <option value="1" @if($language->status == 1) selected @endif>Published</option>

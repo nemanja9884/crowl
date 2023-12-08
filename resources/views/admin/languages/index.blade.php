@@ -49,6 +49,13 @@
                         </div>
 
                         <div class="col form-group">
+                            <label class="textarea-input-1">Additional info page content</label>
+                            <textarea name="additional_info_content" rows="6" id="textarea-input-1"
+                                      placeholder="Additional info page content"
+                                      class="form-control"></textarea>
+                        </div>
+
+                        <div class="col form-group">
                             <label for="status" class="form-control-label">Status</label>
                             <select name="status" id="status" class="form-control">
                                 <option value="1" selected>Published</option>
@@ -214,6 +221,8 @@
                             $(".modal2cont").html(data);
                             lfm('lfm4', 'file', {prefix: route_prefix});
                             tinymce.remove('#textarea-input');
+                            // tinymce.init(editor_config);
+                            tinymce.remove('#textarea-input-1');
                             tinymce.init(editor_config);
                         },
                         error: function () {

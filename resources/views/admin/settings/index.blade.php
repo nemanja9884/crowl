@@ -40,12 +40,12 @@
                                       class="form-control">{{$settings->index_content}}</textarea>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label class="form-control-label">Additional info page content</label>
-                            <textarea name="additional_info_content" rows="6"
-                                      placeholder="content..."
-                                      class="form-control">{{$settings->additional_info_content}}</textarea>
-                        </div>
+{{--                        <div class="form-group mb-3">--}}
+{{--                            <label class="form-control-label">Additional info page content</label>--}}
+{{--                            <textarea name="additional_info_content" rows="6"--}}
+{{--                                      placeholder="content..."--}}
+{{--                                      class="form-control">{{$settings->additional_info_content}}</textarea>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-5">Save</button>

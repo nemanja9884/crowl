@@ -96,7 +96,7 @@ class HomeController extends Controller
 
     public function additionalInfo($code): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        $settings = Setting::first();
-        return view('web.additional-info', ['settings' => $settings]);
+        $language = Language::where('lang_code', $code)->firstorfail();
+        return view('web.additional-info', ['language' => $language]);
     }
 }

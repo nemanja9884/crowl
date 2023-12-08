@@ -109,7 +109,7 @@
 
     var editor_config = {
         path_absolute: "/",
-        selector: "#textarea-input, #textarea-input1, #textarea-input2, #textarea-input10, #textarea-input11, #textarea-input12, #textarea-input14",
+        selector: "#textarea-input, #textarea-input1, #textarea-input-1, #textarea-input2, #textarea-input10, #textarea-input11, #textarea-input12, #textarea-input14",
         plugins: 'print preview fullpage searchreplace autolink directionality visualblocks code visualchars fullscreen image link media embedpost template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern help contextmenu paste',
         toolbar: 'formatselect | bold italic strikethrough forecolor backcolor permanentpen formatpainter | link image media embedpost | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | removeformat fullscreen preview paste blockquote',
         relative_urls: false,
