@@ -6,12 +6,13 @@ use App\Helpers\GlobalHelper;
 use App\Traits\CacheSystem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Answer extends Model
 {
-    use HasFactory, CacheSystem;
+    use HasFactory, CacheSystem, SoftDeletes;
 
     protected $fillable = ['id', 'language_id', 'sentence_id', 'user_id', 'ip_address', 'positive_answer', 'negative_answer', 'created_at', 'updated_at'];
 

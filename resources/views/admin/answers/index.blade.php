@@ -178,7 +178,7 @@
                             <tbody>
                             @foreach($answers as $answer)
                                 <tr>
-                                    <td>{{$answer->sentence->sentence}}</td>
+                                    <td>{{$answer->sentence->sentence ?? ''}}</td>
                                     <td>{{$answer->language->name}}</td>
                                     <td>{{$answer->user_id}}</td>
                                     {{--                                    <td>{{$answer->user ? $answer->user->email : ''}}</td>--}}

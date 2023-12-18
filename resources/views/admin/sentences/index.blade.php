@@ -18,6 +18,11 @@
                role="button" aria-expanded="false" aria-controls="searchBox">
                 <i class="mdi mdi-magnify"></i> Search
             </a>
+            <a class="nav-link btn btn-outline-danger mb-3" data-toggle="collapse"
+               href="#deleteBox"
+               role="button" aria-expanded="false" aria-controls="deleteBox">
+                <i class="mdi mdi-magnify"></i> Delete
+            </a>
             <div class="collapse @if($page == 'search') show @endif" id="searchBox">
                 <div class="card">
                     <div class="card-body">
@@ -80,6 +85,53 @@
 
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-primary mr-2">Search</button>
+                                    <a class="btn btn-light"
+                                       href="{{ route('admin.sentences.index') }}">Reset</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse" id="deleteBox">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Delete</h4>
+                        <form id="deleteSentences" class="forms-sample" method="post" action="{{ route('admin.delete.sentences')}}">
+                            @csrf
+                            @method('DELETE')
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="language">Language</label>
+                                        <select name="language" id="language" class="form-control">
+                                            <option value="" selected>Choose language</option>
+                                            @foreach($languages as $language)
+                                                <option value="{{$language->id}}"
+                                                        @if(isset($_GET['language']) && $_GET['language'] == $language->id) selected @endif>{{$language->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_from">Date From</label>
+                                        <input type="date" class="form-control" name="date_from" id="date_from"
+                                               placeholder="Date From" value="{{$_GET['date_from'] ?? ''}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="date_to">Date To</label>
+                                        <input type="date" class="form-control" name="date_to" id="date_to"
+                                               placeholder="Date To" value="{{$_GET['date_to'] ?? ''}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-danger mr-2">Delete</button>
                                     <a class="btn btn-light"
                                        href="{{ route('admin.sentences.index') }}">Reset</a>
                                 </div>
@@ -286,6 +338,13 @@
                             alert('Some error occurred, please try again.');
                         }
                     });
+                });
+
+                $('#deleteSentences').submit(function (e) {
+                    e.preventDefault();
+                    if (confirm("Are you sure you want to delete the sentences? And the answers to those sentences will also be deleted, be sure to export the necessary data!")) {
+                        $(this).unbind('submit').submit();
+                    }
                 });
             });
         }

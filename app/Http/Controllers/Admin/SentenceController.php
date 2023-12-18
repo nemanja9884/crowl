@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Jobs\SentenceImport;
+use App\Models\Answer;
+use App\Models\AnswerDetail;
 use App\Models\Language;
 use App\Models\Sentence;
 use Carbon\Carbon;
@@ -175,6 +177,30 @@ class SentenceController extends Controller
         $sentence->returned = 1;
         $sentence->save();
         Session::flash('message', 'Successfully returned sentence in game!');
+        Session::flash('alert-class', 'success');
+        return redirect()->route('admin.sentences.index');
+    }
+
+    public function deleteGroup(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $sentences = (new Sentence())->newQuery()->select('id');
+        if ($request->filled('language')) {
+            $sentences->where('language_id', $request->input('language'));
+        }
+        if ($request->filled('date_from')) {
+            $sentences->whereDate('created_at', '>=', Carbon::parse($request->input('date_from'))->format('Y-m-d'));
+        }
+        if ($request->filled('date_to')) {
+            $sentences->whereDate('created_at', '<=', Carbon::parse($request->input('date_to'))->format('Y-m-d'));
+        }
+
+        $sentences = $sentences->get()->pluck('id')->toArray();
+        $answers = Answer::whereIn('sentence_id', $sentences)->get()->pluck('id')->toArray();
+        AnswerDetail::whereIn('answer_id', $answers)->delete();
+        Answer::whereIn('id', $answers)->delete();
+        Sentence::whereIn('id', $sentences)->delete();
+
+        Session::flash('message', 'Successfully deleted selected sentences with answers');
         Session::flash('alert-class', 'success');
         return redirect()->route('admin.sentences.index');
     }

@@ -43,4 +43,5 @@ Route::group(['middleware' => ['authorization', 'admin']], function () {
     Route::resource('settings', App\Http\Controllers\Admin\SettingsController::class);
     Route::resource('badges', App\Http\Controllers\Admin\BadgesController::class);
     Route::get('logs', [App\Http\Controllers\Admin\LogsController::class, 'index'])->name('logs');
+    Route::delete('delete-sentences', [App\Http\Controllers\Admin\SentenceController::class, 'deleteGroup'])->name('delete.sentences');
 });
