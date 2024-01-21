@@ -119,7 +119,7 @@ class GameController extends Controller
                 $sentenceResult = $this->gdexFn($sentenceDb, $random, $sentenceNum);
 
                 // If there is no result, try with other gdex option
-                if (count($sentenceResult) == 0) {
+                if (!$sentenceResult) {
                     $gdexOptions = [1, 2, 3];
                     if (($key = array_search($random, $gdexOptions)) !== false) {
                         unset($gdexOptions[$key]);
@@ -128,31 +128,38 @@ class GameController extends Controller
                         $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
                         $sentenceResult = $this->gdexFn($sentenceDb, $option, $sentenceNum);
                         // if result is found, stop loop
-                        if (count($sentenceResult) != 0) {
+                        if ($sentenceResult) {
                             break;
                         }
                     }
                 }
 
                 // If there is no result still, try with random combinations
-                if (count($sentenceResult) == 0) {
-                    $gdexOptions = [0, 1, 2];
-                    foreach ($gdexOptions as $option) {
-                        $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
-                        $sentenceResult = $this->gdexRandomFn($sentenceDb, $option);
-                        // if result is found, stop loop
-                        if (count($sentenceResult) != 0) {
-                            break;
-                        }
-                    }
+                if (!$sentenceResult) {
+                    $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
+                    $sentenceResult = $this->randomFn($sentenceDb);
                 }
 
-                if (count($sentenceResult) > 0) {
-                    return $sentenceResult->random();
-                } else {
-                    return false;
-                }
+                // If there is no result still, try with random combinations
+//                if (count($sentenceResult) == 0) {
+//                    $gdexOptions = [0, 1, 2];
+//                    foreach ($gdexOptions as $option) {
+//                        $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
+//                        $sentenceResult = $this->gdexRandomFn($sentenceDb, $option);
+//                        // if result is found, stop loop
+//                        if (count($sentenceResult) != 0) {
+//                            break;
+//                        }
+//                    }
+//                }
 
+//                if (count($sentenceResult) > 0) {
+//                    return $sentenceResult->random();
+//                } else {
+//                    return false;
+//                }
+
+                return $sentenceResult;
 
             case '2':
             case '2+3':
@@ -230,7 +237,7 @@ class GameController extends Controller
                 break;
         }
 
-        return $sentenceDb->whereBetween('word_reliability', [$firstValue ?? 0, $secondValue ?? 0])->limit(100)->get();
+        return $sentenceDb->whereBetween('word_reliability', [$firstValue ?? 0, $secondValue ?? 0])->inRandomOrder()->first();
     }
 
     public function gdexRandomFn($sentenceDb, $combinationNumber)
@@ -241,7 +248,12 @@ class GameController extends Controller
             [0.7, 1]
         ];
 
-        return $sentenceDb->whereBetween('word_reliability', $combinationArray[$combinationNumber])->limit(100)->get();
+        return $sentenceDb->whereBetween('word_reliability', $combinationArray[$combinationNumber])->inRandomOrder()->first();
+    }
+
+    public function randomFn($sentenceDb)
+    {
+        return $sentenceDb->inRandomOrder()->first();
     }
 
     public function answerLevel1(Request $request, $code, $level)
