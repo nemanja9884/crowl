@@ -135,23 +135,23 @@ class GameController extends Controller
                 }
 
                 // If there is no result still, try with random combinations
-                if (!$sentenceResult) {
-                    $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
-                    $sentenceResult = $this->randomFn($sentenceDb);
-                }
-
-                // If there is no result still, try with random combinations
-//                if (count($sentenceResult) == 0) {
-//                    $gdexOptions = [0, 1, 2];
-//                    foreach ($gdexOptions as $option) {
-//                        $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
-//                        $sentenceResult = $this->gdexRandomFn($sentenceDb, $option);
-//                        // if result is found, stop loop
-//                        if (count($sentenceResult) != 0) {
-//                            break;
-//                        }
-//                    }
+//                if (!$sentenceResult) {
+//                    $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
+//                    $sentenceResult = $this->randomFn($sentenceDb);
 //                }
+
+//              If there is no result still, try with random combinations
+                if (!$sentenceResult) {
+                    $gdexOptions = [0, 1, 2];
+                    foreach ($gdexOptions as $option) {
+                        $sentenceDb = $this->lvl123($langId, $sentenceNum, $firstSentenceId, $user, $random);
+                        $sentenceResult = $this->gdexRandomFn($sentenceDb, $option);
+                        // if result is found, stop loop
+                        if ($sentenceResult) {
+                            break;
+                        }
+                    }
+                }
 
 //                if (count($sentenceResult) > 0) {
 //                    return $sentenceResult->random();
@@ -243,9 +243,9 @@ class GameController extends Controller
     public function gdexRandomFn($sentenceDb, $combinationNumber)
     {
         $combinationArray = [
-            [0, 0.49],
+            [0.7, 1],
             [0.5, 0.69],
-            [0.7, 1]
+            [0, 0.49]
         ];
 
         return $sentenceDb->whereBetween('word_reliability', $combinationArray[$combinationNumber])->inRandomOrder()->first();
