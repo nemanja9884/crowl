@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('answers', function (Blueprint $table) {
-            $table->softDeletes()->after('sentence_bad_part');
+            $table->softDeletes();
         });
     }
 
