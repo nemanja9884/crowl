@@ -30,7 +30,7 @@ class GameController extends Controller
         return view('web.gameIntro', ['language' => $language]);
     }
 
-    public function startGame(Request $request, $code)
+    public function startGame(Request $request, $code): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Contracts\Foundation\Application|null
     {
         return $this->game($code, $request->input('level'));
     }
@@ -259,12 +259,12 @@ class GameController extends Controller
     public function answerLevel1(Request $request, $code, $level)
     {
         $language = Language::where('lang_code', $code)->first();
-        if (isset($request->bothOfThem)) {
-            $request->bothOfThem = explode(',', $request->bothOfThem);
+        if (isset($request->noneOfThem)) {
+            $request->noneOfThem = explode(',', $request->noneOfThem);
             if ($level == 1) {
                 // Check if is this already played (refresh case), if it is not, then score it
-                if (!Answer::checkIfIsAnswered($request->bothOfThem[0]) && !Answer::checkIfIsAnswered($request->bothOfThem[1])) {
-                    foreach ($request->bothOfThem as $both) {
+                if (!Answer::checkIfIsAnswered($request->noneOfThem[0]) && !Answer::checkIfIsAnswered($request->noneOfThem[1])) {
+                    foreach ($request->noneOfThem as $both) {
                         $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $both, 'positiveAnswer' => 1, 'negativeAnswer' => 0]);
                         if (isset($gamesInRow['view']) && $gamesInRow['view']) {
                             return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
@@ -272,17 +272,17 @@ class GameController extends Controller
                     }
                 }
             }
-            foreach ($request->bothOfThem as $both) {
+            foreach ($request->noneOfThem as $both) {
                 Score::scoring(1, $language->id, $both, 1, 0);
                 Answer::store($language->id, $both, 1, 0);
             }
             return $this->game($code, $level);
-        } elseif (isset($request->noneOfThem)) {
-            $request->noneOfThem = explode(',', $request->noneOfThem);
+        } elseif (isset($request->bothOfThem)) {
+            $request->bothOfThem = explode(',', $request->bothOfThem);
             if ($level == '1') {
                 // Check if is this already played (refresh case), if it is not, then score it
-                if (!Answer::checkIfIsAnswered($request->noneOfThem[0]) && !Answer::checkIfIsAnswered($request->noneOfThem[1])) {
-                    foreach ($request->noneOfThem as $none) {
+                if (!Answer::checkIfIsAnswered($request->bothOfThem[0]) && !Answer::checkIfIsAnswered($request->bothOfThem[1])) {
+                    foreach ($request->bothOfThem as $none) {
                         $gamesInRow = (new GlobalHelper())->gamesInRow($language->id, ['level' => 1, 'sentenceId' => $none, 'positiveAnswer' => 0, 'negativeAnswer' => 1]);
                         if (isset($gamesInRow['view']) && $gamesInRow['view']) {
                             return $gamesInRow['view']->with('level', $level)->with('langCode', $code);
@@ -291,7 +291,7 @@ class GameController extends Controller
                 }
             }
             $answersIds = [];
-            foreach ($request->noneOfThem as $none) {
+            foreach ($request->bothOfThem as $none) {
                 Score::scoring(1, $language->id, $none, 0, 1);
                 $answer = Answer::store($language->id, $none, 0, 1);
                 $answersIds [] = $answer->id;
@@ -300,10 +300,10 @@ class GameController extends Controller
             if ($level == '1') {
                 return $this->game($code, $level);
             } else {
-                return $this->level(2, $language, $level, $request->noneOfThem[0], $answersIds, $answersIds[0]);
+                return $this->level(2, $language, $level, $request->bothOfThem[0], $answersIds, $answersIds[0]);
             }
         } else {
-            Score::scoring(1, $language->id, $request->input('answer'), 0, 1);
+            Score::scoring(1, $language->id, $request->input('answer'), 1, 0);
             if ($level == '1') {
                 // Check if is this already played (refresh case), if it is not, then score it
                 if (!Answer::checkIfIsAnswered($request->input('answer'))) {
@@ -313,20 +313,20 @@ class GameController extends Controller
                     }
                 }
             }
-            // One that is not checked get negative answer
-            $answer = Answer::store($language->id, $request->input('answer'), 0, 1);
+            // One that is not checked gets positive answer
+            Answer::store($language->id, $request->input('answer'), 1, 0);
             if ($request->input('firstSentenceId') == $request->input('answer')) {
-                $positiveAnswer = $request->input('secondSentenceId');
+                $negativeAnswer = $request->input('secondSentenceId');
             } else {
-                $positiveAnswer = $request->input('firstSentenceId');
+                $negativeAnswer = $request->input('firstSentenceId');
             }
             // Checked one get positive answer
-            Answer::store($language->id, $positiveAnswer, 1, 0);
+            $answer = Answer::store($language->id, $negativeAnswer, 0, 1);
 
             if ($level == '1') {
                 return $this->game($code, $level);
             } else {
-                return $this->level(2, $language, $level, $request->input('answer'), $answer->id, $answer->id);
+                return $this->level(2, $language, $level, $negativeAnswer, $answer->id, $answer->id);
             }
         }
     }

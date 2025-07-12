@@ -28,8 +28,8 @@
             @csrf
             @method('POST')
 {{--            <h4>{{trans("home.This sentence has been considered $answerDetail->reason for teaching English. Tap or click where the problem is.")}}</h4>--}}
-            <h4>{{trans("home.This sentence has been considered")}} <b><i>{{trans("home.$answerDetail->reason")}}</i></b> {{trans("home.for teaching English. Tap or click where the problem is.")}}</h4>
-            <p id="{{$selectableSentence}}" class="sentence">{{$sentence->sentence}}</p>
+            <h4 class="question">{{trans("home.This sentence has been considered")}} <b><i>{{trans("home.$answerDetail->reason")}}</i></b> {{trans("home.for teaching English. Tap or click where the problem is.")}}</h4>
+            <p id="{{$selectableSentence}}" class="sentence answer-label">{{$sentence->sentence}}</p>
             <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
             <input type="hidden" name="answerId" value="{{$answerId}}"/>
             <input type="hidden" name="reasonId" value="{{$reasonId}}"/>
@@ -48,7 +48,7 @@
                     <input class="form-check-input answer" type="checkbox"
                            id="{{$fine}}"
                            name="fine" value="1">
-                    <label class="form-check-label" for="fine">
+                    <label class="form-check-label answer-label" for="fine">
                         {{trans('home.This sentence doesn’t have any problem of this type.')}}
                     </label>
                 </div>

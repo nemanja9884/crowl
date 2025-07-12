@@ -27,17 +27,17 @@
             @method('POST')
             <input type="hidden" name="firstSentenceId" value="{{$firstSentence->id}}"/>
             <input type="hidden" name="secondSentenceId" value="{{$secondSentence->id}}"/>
-            <h4>{{trans('home.Which sentence would you choose for teaching English?')}}</h4>
+            <h4 class="question">{{trans('home.Which sentence wouldn\'t you choose for teaching English?')}}</h4>
             <div class="form-check sentence">
                 <input class="form-check-input answer" type="radio" name="answer" id="answer" value="{{$secondSentence->id}}">
-                <label class="form-check-label" for="answer">
+                <label class="form-check-label answer-label" for="answer">
                     {{$firstSentence->sentence}}
                 </label>
             </div>
 
             <div class="form-check sentence">
                 <input class="form-check-input answer" type="radio" name="answer" id="answer" value="{{$firstSentence->id}}">
-                <label class="form-check-label" for="answer">
+                <label class="form-check-label answer-label" for="answer">
                     {{$secondSentence->sentence}}
                 </label>
             </div>

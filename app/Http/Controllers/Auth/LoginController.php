@@ -70,7 +70,7 @@ class LoginController extends Controller
             $newUser = new User;
             $newUser->provider_name = $driver;
             $newUser->provider_id = $user->getId();
-            $newUser->username = $user->getName();
+            $newUser->username = User::generateUniqueUsername();
             $newUser->email = $user->getEmail();
             // we set email_verified_at because the user's email is already veridied by social login portal
             $newUser->email_verified_at = now();

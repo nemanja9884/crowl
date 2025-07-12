@@ -33,8 +33,10 @@ class HomeController extends Controller
      */
     public function index(): \Illuminate\Contracts\Support\Renderable
     {
-        App::setLocale('pt-BR');
-        session()->put('locale', 'pt-BR');
+        if (!session()->has('locale')) {
+            App::setLocale('pt-BR');
+            session()->put('locale', 'pt-BR');
+        }
         return view('web.index', ['languagesFirstRow' => Language::where('status', '1')->orderBy('sort', 'ASC')->limit(3)->get(), 'languagesSecondRow' => Language::where('status', '1')->orderBy('sort', 'ASC')->skip(3)->limit(10)->get(), 'settings' => $this->getSettings()]);
     }
 

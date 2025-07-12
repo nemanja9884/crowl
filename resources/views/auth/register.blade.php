@@ -18,22 +18,22 @@
                                     href="{{route('additionalInfo', ['code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
                                 {{trans('home.to know why')}}</p>
 
-                            <div class="row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{trans('home.Username')}}
-                                    (*)</label>
+{{--                            <div class="row mb-3">--}}
+{{--                                <label for="name" class="col-md-4 col-form-label text-md-end">{{trans('home.Username')}}--}}
+{{--                                    (*)</label>--}}
 
-                                <div class="col-md-6">
-                                    <input id="username" type="text"
-                                           class="form-control @error('username') is-invalid @enderror" name="username"
-                                           value="{{ old('username') }}" required autocomplete="username" autofocus>
+{{--                                <div class="col-md-6">--}}
+{{--                                    <input id="username" type="text"--}}
+{{--                                           class="form-control @error('username') is-invalid @enderror" name="username"--}}
+{{--                                           value="{{ old('username') }}" required autocomplete="username" autofocus>--}}
 
-                                    @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{trans('home.' . $message)}}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
+{{--                                    @error('username')--}}
+{{--                                    <span class="invalid-feedback" role="alert">--}}
+{{--                                        <strong>{{trans('home.' . $message)}}</strong>--}}
+{{--                                    </span>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
                             <div class="row mb-3">
                                 <label for="email" class="col-md-4 col-form-label text-md-end">{{trans('home.Email')}}
@@ -165,46 +165,46 @@
 @endsection
 @section('javascript')
     <script>
-        window.onload = function () {
-            $(document).ready(function () {
-                $('#age').on('change', function () {
-                    let value = $(this).val();
-                    let key = 'age';
-                    $.fn.myfunction(key, value, '.ageMessageDiv');
-                });
+        {{--window.onload = function () {--}}
+        {{--    $(document).ready(function () {--}}
+        {{--        $('#age').on('change', function () {--}}
+        {{--            let value = $(this).val();--}}
+        {{--            let key = 'age';--}}
+        {{--            $.fn.myfunction(key, value, '.ageMessageDiv');--}}
+        {{--        });--}}
 
-                $('#dominant_language').on('change', function () {
-                    let value = $(this).val();
-                    let key = 'dominant_language';
-                    $.fn.myfunction(key, value, '.domLanguageMessageDiv');
-                });
+        {{--        $('#dominant_language').on('change', function () {--}}
+        {{--            let value = $(this).val();--}}
+        {{--            let key = 'dominant_language';--}}
+        {{--            $.fn.myfunction(key, value, '.domLanguageMessageDiv');--}}
+        {{--        });--}}
 
-                $('#language_teacher').on('change', function () {
-                    let value = $(this).val();
-                    let key = 'language_teacher';
-                    $.fn.myfunction(key, value, '.teacherMessageDiv');
-                });
+        {{--        $('#language_teacher').on('change', function () {--}}
+        {{--            let value = $(this).val();--}}
+        {{--            let key = 'language_teacher';--}}
+        {{--            $.fn.myfunction(key, value, '.teacherMessageDiv');--}}
+        {{--        });--}}
 
-                $('#working_on_university').on('change', function () {
-                    let value = $(this).val();
-                    let key = 'working_on_university';
-                    $.fn.myfunction(key, value, '.universityMessageDiv');
-                });
+        {{--        $('#working_on_university').on('change', function () {--}}
+        {{--            let value = $(this).val();--}}
+        {{--            let key = 'working_on_university';--}}
+        {{--            $.fn.myfunction(key, value, '.universityMessageDiv');--}}
+        {{--        });--}}
 
-                    $.fn.myfunction = function(key, value, messageDiv) {
-                        let url = "{{url('additional-info-data')}}/" + key + "/" + value;
-                        $.ajax({
-                            type: "GET",
-                            url: url,
-                            success: function (data) {
-                                $(messageDiv).html("<p style='color: red;'>" + data + "% of people chose the same</p>");
-                            },
-                            error: function () {
-                                alert('Some error occurred, please try again.');
-                            }
-                        });
-                    };
-            });
-        }
+        {{--            $.fn.myfunction = function(key, value, messageDiv) {--}}
+        {{--                let url = "{{url('additional-info-data')}}/" + key + "/" + value;--}}
+        {{--                $.ajax({--}}
+        {{--                    type: "GET",--}}
+        {{--                    url: url,--}}
+        {{--                    success: function (data) {--}}
+        {{--                        $(messageDiv).html("<p style='color: red;'>" + data + "% of people chose the same</p>");--}}
+        {{--                    },--}}
+        {{--                    error: function () {--}}
+        {{--                        alert('Some error occurred, please try again.');--}}
+        {{--                    }--}}
+        {{--                });--}}
+        {{--            };--}}
+        {{--    });--}}
+        {{--}--}}
     </script>
 @endsection

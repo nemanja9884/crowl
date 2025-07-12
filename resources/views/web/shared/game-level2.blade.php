@@ -28,9 +28,9 @@
             @csrf
             @method('POST')
             @if($level == 2 || $level == '2+3')
-                <h4>{{trans('home.Why can\'t this sentence be used for teaching X?')}}</h4>
+                <h4 class="question">{{trans('home.Why can\'t this sentence be used for teaching X?')}}</h4>
             @else
-                <h4>{{trans('home.Why not this one?')}}</h4>
+                <h4 class="question">{{trans('home.Why not this one?')}}</h4>
             @endif
             <p class="sentence">{{$sentence->sentence}}</p>
             <input type="hidden" name="sentenceId" value="{{$sentence->id}}"/>
@@ -45,7 +45,7 @@
             <div class="form-check sentence">
                 <input class="form-check-input answer" type="checkbox" id="offensive" name="answer[]"
                        value="offensive">
-                <label class="form-check-label" for="offensive">
+                <label class="form-check-label answer-label" for="offensive">
                     {{trans('home.Offensive')}}
                 </label>
                 <span class="show-tool-tip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
@@ -59,7 +59,7 @@
             <div class="form-check sentence">
                 <input class="form-check-input answer" type="checkbox" id="vulgar" name="answer[]"
                        value="vulgar">
-                <label class="form-check-label" for="vulgar">
+                <label class="form-check-label answer-label" for="vulgar">
                     {{trans('home.Vulgar')}}
                 </label>
                 <span class="show-tool-tip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
@@ -73,7 +73,7 @@
                 <input class="form-check-input answer" type="checkbox" id="sensitiveContent"
                        name="answer[]"
                        value="sensitiveContent">
-                <label class="form-check-label" for="sensitiveContent">
+                <label class="form-check-label answer-label" for="sensitiveContent">
                     {{trans('home.Sensitive content')}}
                 </label>
                 <span class="show-tool-tip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
@@ -88,7 +88,7 @@
                 <input class="form-check-input answer" type="checkbox" id="spelling and/or grammar problems"
                        name="answer[]"
                        value="spelling and/or grammar problems">
-                <label class="form-check-label" for="spelling and/or grammar problems">
+                <label class="form-check-label answer-label" for="spelling and/or grammar problems">
                     {{trans('home.Spelling and/or grammar problems')}}
                 </label>
                 <span class="show-tool-tip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
@@ -103,7 +103,7 @@
                 <input class="form-check-input answer" type="checkbox"
                        id="lack of context and/or incomprehensible"
                        name="answer[]" value="lack of context and/or incomprehensible">
-                <label class="form-check-label" for="lack of context and/or incomprehensible">
+                <label class="form-check-label answer-label" for="lack of context and/or incomprehensible">
                     {{trans('home.Lack of context and/or incomprehensible')}}
                 </label>
                 <span class="show-tool-tip" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="right"
@@ -120,7 +120,7 @@
                     <input class="form-check-input answer" type="checkbox"
                            id="{{$fine}}"
                            name="answer[]" value="fine">
-                    <label class="form-check-label" for="fine">
+                    <label class="form-check-label answer-label" for="fine">
                         {{trans('home.This sentence is fine')}}
                     </label>
                 </div>

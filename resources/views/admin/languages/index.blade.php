@@ -140,11 +140,9 @@
                                     <td class="d-none d-md-table-cell">{{$language->created_at->format('d M Y H:i')}}</td>
                                     <td style="min-width: 110px;">
                                         <div class="float-right">
-                                            <button class="btn btn-outline-primary btn-sm edit"
-                                                    data-toggle="modal"
-                                                    data-target="#exampleModal1" data-id="{{$language->id}}"><i
+                                            <a href="{{route('admin.languages.edit', $language->id)}}" class="btn btn-outline-primary btn-sm edit"><i
                                                     class="fa fa-magic"></i>&nbsp;Edit
-                                            </button>
+                                            </a>
                                             <button type="button" class="btn btn-outline-danger btn-sm delete"
                                                     data-id="{{$language->id}}" data-toggle="modal"
                                                     data-target="#exampleModal"><i class="fa fa-warning"></i>&nbsp;
@@ -176,22 +174,6 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal2cont">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Language update</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 @section('javascript')
     <script>
@@ -209,28 +191,6 @@
                         '                                        </button>\n' +
                         '                                    </form>')
                 });
-
-                $(".edit").click(function () {
-                    let id = $(this).data("id");
-                    let url = '{{ route("admin.languages.edit", ":id") }}';
-                    url = url.replace(':id', id);
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        success: function (data) {
-                            $(".modal2cont").html(data);
-                            lfm('lfm4', 'file', {prefix: route_prefix});
-                            tinymce.remove('#textarea-input');
-                            // tinymce.init(editor_config);
-                            tinymce.remove('#textarea-input-1');
-                            tinymce.init(editor_config);
-                        },
-                        error: function () {
-                            alert('Some error occurred, please try again.');
-                        }
-                    });
-                });
-            });
         }
     </script>
 @endsection

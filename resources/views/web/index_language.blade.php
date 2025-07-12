@@ -1,5 +1,12 @@
 @extends('web.layouts.app')
-
+@section('css')
+    <style>
+        body {
+            font-family: "Anton", sans-serif;
+            font-style: normal;
+        }
+    </style>
+@endsection
 @section('content')
     <main class="px-3 text-white text-center">
         <img src="{{$language->image}}" class="card-img-top mb-4"

@@ -2,7 +2,14 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('plugins/swiper-slider/swiper-bundle.min.css')}}"/>
-    <link rel="stylesheet" href="{{asset('custom_css/game.css')}}"/>
+    <link rel="stylesheet" href="{{asset('custom_css/game.css?v=1')}}"/>
+    <style>
+        body {
+            font-family: "Anton", sans-serif;
+            font-weight: 100 !important;
+            font-style: normal;
+        }
+    </style>
 @endsection
 @section('content')
     <main class="px-3">
