@@ -48,12 +48,12 @@
                                 <label for="age" class="form-control-label">{{trans('home.What is your age?')}}</label>
                                 <div class="input-group">
                                     <select name="age" id="age" class="form-control">
-                                        <option value="below20" @if($user->age == 'below20') selected @endif>{{trans('home.Below 20')}}
-                                        </option>
-                                        <option value="20-40" @if($user->age == '20-40') selected @endif>20-40</option>
-                                        <option value="41-60" @if($user->age == '41-60') selected @endif>41-60</option>
-                                        <option value="above60" @if($user->age == 'above60') selected @endif>{{trans('home.Above 60')}}
-                                        </option>
+                                        <option value="18-24" @if($user->age == '18-24') selected @endif>18-24</option>
+                                        <option value="25-34" @if($user->age == '25-34') selected @endif>25-34</option>
+                                        <option value="35-44" @if($user->age == '35-44') selected @endif>35-44</option>
+                                        <option value="45-54" @if($user->age == '45-54') selected @endif>45-54</option>
+                                        <option value="55-64" @if($user->age == '55-64') selected @endif>55-64</option>
+                                        <option value="above65" @if($user->age == 'above65') selected @endif>{{trans('home.65 and above')}}</option>
                                     </select>
                                 </div>
                             </div>

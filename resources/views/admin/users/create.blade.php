@@ -60,10 +60,12 @@
                                         <label for="age" class="form-control-label">What is your age?</label>
                                         <div class="input-group">
                                             <select name="age" id="age" class="form-control">
-                                                <option value="below20">Below 20</option>
-                                                <option value="20-40">20-40</option>
-                                                <option value="41-60">41-60</option>
-                                                <option value="above60">Above 60</option>
+                                                <option value="18-24">18-24</option>
+                                                <option value="25-34">25-34</option>
+                                                <option value="35-44">35-44</option>
+                                                <option value="45-54">45-54</option>
+                                                <option value="55-64">55-64</option>
+                                                <option value="above65">{{trans('home.65 and above')}}</option>
                                             </select>
                                         </div>
                                     </div>

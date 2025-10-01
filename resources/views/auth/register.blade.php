@@ -85,10 +85,13 @@
                                        class="col-md-4 col-form-label text-md-end">{{trans('home.What is your age?')}}</label>
                                 <div class="col-md-6">
                                     <select name="age" id="age" class="form-control">
-                                        <option value="below20">{{trans('home.Below 20')}}</option>
-                                        <option value="20-40">20-40</option>
-                                        <option value="41-60">41-60</option>
-                                        <option value="above60">{{trans('home.Above 60')}}</option>
+{{--                                        <option value="below20">{{trans('home.Below 20')}}</option>--}}
+                                        <option value="18-24">18-24</option>
+                                        <option value="25-34">25-34</option>
+                                        <option value="35-44">35-44</option>
+                                        <option value="45-54">45-54</option>
+                                        <option value="55-64">55-64</option>
+                                        <option value="above65">{{trans('home.65 and above')}}</option>
                                     </select>
                                     <div class="ageMessageDiv"></div>
                                 </div>
