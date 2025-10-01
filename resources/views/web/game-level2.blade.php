@@ -80,6 +80,23 @@
                     $('.tooltip-title').hide();
                     $(this).children('.tooltip-title').show();
                 });
+
+                var answerCheckboxes = $('.answer');
+                var chooseButton = $('.choose-button');
+
+                function checkSelection() {
+                    if (answerCheckboxes.is(':checked')) {
+                        chooseButton.prop('disabled', false);
+                    } else {
+                        chooseButton.prop('disabled', true);
+                    }
+                }
+
+                checkSelection();
+
+                answerCheckboxes.on('change', function() {
+                    checkSelection();
+                });
             });
         }
     </script>

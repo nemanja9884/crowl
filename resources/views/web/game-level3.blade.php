@@ -47,15 +47,36 @@
             initialSlide: 1,
         });
 
-        function marker(element, rmwBtn) {
+        function checkFormValidity(saveButton) {
+            var isHighlighted = $('.highlighted').length > 0;
+            if (isHighlighted) {
+                saveButton.prop('disabled', false);
+            } else {
+                saveButton.prop('disabled', true);
+            }
+        }
+
+        function marker(element, rmwBtn, saveBtn) {
             (function () {
                 var removeBtn = document.getElementById(rmwBtn);
                 var sandbox = document.getElementById(element);
+                var saveButton = $('#' + saveBtn);
                 var hltr = new TextHighlighter(sandbox);
+
+                sandbox.addEventListener('mouseup', function () {
+                    checkFormValidity(saveButton);
+                });
+
+                sandbox.addEventListener('touchend', function () {
+                    checkFormValidity(saveButton);
+                });
+
+                checkFormValidity(saveButton);
 
                 removeBtn.addEventListener('click', function (e) {
                     e.preventDefault();
                     hltr.removeHighlights();
+                    checkFormValidity(saveButton);
                 });
             })();
         }
@@ -79,8 +100,8 @@
 
         window.onload = function () {
             $(document).ready(function () {
-                marker('selectable-sentence', 'remove-btn');
-                marker('selectable-sentence-mobile', 'remove-btn-mobile');
+                marker('selectable-sentence', 'remove-btn', 'submit');
+                marker('selectable-sentence-mobile', 'remove-btn-mobile', 'submit-mobile');
                 submit('submit', '#problematicWords', '#fine');
                 submit('submit-mobile', '#problematicWordsMobile', '#fineMobile');
             });

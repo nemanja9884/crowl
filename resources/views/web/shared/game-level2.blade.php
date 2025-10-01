@@ -125,7 +125,7 @@
                     </label>
                 </div>
             @endif
-            <button id="{{$submit}}" type="submit" class="btn btn-primary mt-3">{{trans('home.Choose')}}</button>
+            <button id="{{$submit}}" type="submit" class="btn btn-primary choose-button mt-3" disabled>{{trans('home.Choose')}}</button>
             @include('web.shared.game-bottom-data')
         </form>
     </div>

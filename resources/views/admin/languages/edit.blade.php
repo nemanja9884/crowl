@@ -75,12 +75,12 @@
                             <div class="col-12 col-md-12">
                                 <div class="input-group" style="margin: 0 auto;">
                                     <span class="input-group-btn" style="margin: 0 auto;">
-                                        <a id="lfm4" data-input="thumbnail4" data-preview="holder4"
+                                        <a id="lfm2" data-input="thumbnail2" data-preview="holder2"
                                            class="btn btn-primary text-white col-md-12" style="margin: 0 auto;">
                                             <i class="fa fa-picture-o"></i> Choose photo
                                         </a>
                                     </span>
-                                    <input id="thumbnail4" name="image" class="form-control" type="text"
+                                    <input id="thumbnail2" name="image" class="form-control" type="text"
                                            style="display: none;">
                                 </div>
                                 <div id="holder4" style="margin-top:15px;max-height:100px;"></div>

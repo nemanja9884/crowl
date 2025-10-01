@@ -29,7 +29,8 @@
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">@include('web.layouts.left_column')</div>
-                    <div class="swiper-slide">@include('web.shared.game-level1', ['submit' => 'submit-mobile', 'choose' => 'choose-mobile'])</div>
+                    <div
+                        class="swiper-slide">@include('web.shared.game-level1', ['submit' => 'submit-mobile', 'choose' => 'choose-mobile'])</div>
                     <div class="swiper-slide">@include('web.layouts.right_column')</div>
                 </div>
                 <div class="swiper-pagination"></div>
@@ -47,8 +48,8 @@
             initialSlide: 1,
         });
 
-        function choose(submit, choose) {
-            $(choose).click(function (e) {
+        function choose(submit, chooseName) {
+            $(chooseName).click(function (e) {
                 let checked = $(".answer").is(":checked");
                 if (checked === true) {
                     $(submit).submit();
@@ -56,6 +57,23 @@
                     e.preventDefault();
                     alert("{{trans('home.You must select something')}}");
                 }
+            });
+
+            var radioButtons = $('input[name="answer"]');
+            var chooseButton = $(chooseName);
+
+            function checkSelection() {
+                if (radioButtons.is(':checked')) {
+                    chooseButton.prop('disabled', false);
+                } else {
+                    chooseButton.prop('disabled', true);
+                }
+            }
+
+            checkSelection();
+
+            radioButtons.on('change', function () {
+                checkSelection();
             });
         }
 
