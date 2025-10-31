@@ -64,6 +64,9 @@
                                 href="{{route('languageIndex', ['id' => $lang->id, 'code' => $lang->lang_code])}}">{{trans('home.here')}}</a>
                             {{trans('home.to know why')}}</p>
 
+                        <p class="mt-3">{{trans('home.Your user name is') . ' ' . $user->username . '. ' . trans('home.Wanna change it?')}} <a
+                                href="{{route('userProfile')}}" target="_blank">{{trans('home.Click here')}}</a></p>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

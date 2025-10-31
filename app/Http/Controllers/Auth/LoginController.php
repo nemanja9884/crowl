@@ -78,7 +78,7 @@ class LoginController extends Controller
             // $newUser->avatar            = $user->getAvatar();
             $newUser->save();
 
-//            auth()->login($newUser, true);
+            auth()->login($newUser, true);
 
             return view('auth.additional-info', ['user' => $newUser]);
         }

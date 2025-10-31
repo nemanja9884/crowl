@@ -70,20 +70,30 @@ class HomeController extends Controller
         return view('web.user-profile', ['user' => $userDb]);
     }
 
-    public function updateProfile(Request $request)
+    public function updateProfile(Request $request): \Illuminate\Http\RedirectResponse
     {
+        $this->middleware('auth');
+        $user = Auth::guard('web')->user();
+
         $validator = Validator::make($request->all(), [
-            'username' => 'required|max:255',
+            'username' => 'required|max:255|unique:users,username,' . $user->id,
             'password' => 'max:255',
+        ], [
+            'username.unique' => trans('home.That username is already taken. Please select another.'),
         ]);
 
         if ($validator->fails()) {
-            toastr()->error(trans('home.Something went wrong! Check your information again'));
+            $usernameError = $validator->errors()->first('username');
+
+            if ($usernameError) {
+                toastr()->error($usernameError);
+            } else {
+                toastr()->error(trans('home.Something went wrong! Check your information again'));
+            }
+
             return redirect()->back();
         }
 
-        $this->middleware('auth');
-        $user = Auth::guard('web')->user();
         $userDb = User::findorfail($user->id);
         $userDb->update($request->all('username', $request->filled('password') ? 'password' : '', 'working_on_university', 'age', 'dominant_language', 'language_teacher'));
 
