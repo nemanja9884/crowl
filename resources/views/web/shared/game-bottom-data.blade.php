@@ -1,5 +1,5 @@
 <!-- shared/game-bottom-data.blade.php -->
-<div class="badge-container">
+<div class="badge-container" data-bs-toggle="modal" data-bs-target="#badgeModal">
     <div class="points-display">
         {{$points}} {{trans('home.Points:')}}
     </div>

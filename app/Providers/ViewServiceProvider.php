@@ -32,6 +32,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('*', function ($view) {
+            $badges = Badge::orderBy('points', 'ASC')->get();
             $user = Auth::guard('web')->user();
             if ($user) {
                 $pointCheck = DB::select(DB::raw("SELECT sum(points) as points from scores where user_id = $user->id"));
@@ -59,7 +60,8 @@ class ViewServiceProvider extends ServiceProvider
                 'pointsCountry' => $gameStatistic['pointsCountry'],
                 'sumCountriesPoints' => $gameStatistic['sumCountriesPoints'],
                 'medals' => ['Golden Medal', 'Silver medal', 'Bronze Medal'],
-                'userBadge' => $userBadge ?? null
+                'userBadge' => $userBadge ?? null,
+                'badges' => $badges
             ]);
         });
     }

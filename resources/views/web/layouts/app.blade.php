@@ -36,21 +36,51 @@
 </div>
 <!-- Badges Modal -->
 <div class="modal fade" id="badgeModal" tabindex="-1" aria-labelledby="Badges" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{trans('home.Badges')}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content modern-modal">
+            <div class="modal-header modern-modal-header">
+                <h5 class="modal-title">
+                    <span class="modal-icon">🏆</span>
+                    {{trans('home.Badges')}}
+                </h5>
+                <button type="button" class="btn-close-modern" data-bs-dismiss="modal" aria-label="Close">
+                    ✕
+                </button>
             </div>
             <div class="modal-body modal-body-badges">
-                ...
+                @foreach($badges as $badge)
+                    <div class="badge-item">
+                        <div class="badge-header">
+                            <div class="badge-image-container">
+                                <img src="{{$badge->image}}" alt="{{$badge->name}}" class="badge-image" />
+                            </div>
+                            <div class="badge-info">
+                                <h5 class="badge-title">
+                                    {{trans('home.Badge') . " " . $loop->iteration}}: {{trans('home.' . $badge->name)}}
+                                </h5>
+                                <div class="badge-requirement">
+                                    <span class="requirement-icon">🎯</span>
+                                    <strong>{{trans('home.Requirements: Reach')}} {{$badge->points}} {{trans('home.points')}}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="badge-description">
+                            <span class="description-icon">📝</span>
+                            <p>{{trans('home.' . $badge->description)}}</p>
+                        </div>
+                    </div>
+                @endforeach
+
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">{{trans('home.Close')}}</button>
+            <div class="modal-footer modern-modal-footer">
+                <button type="button" class="btn-close-modal" data-bs-dismiss="modal">
+                    {{trans('home.Close')}}
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 @yield('javascript')
 <script>
     function setLeaderboardMaxHeight() {

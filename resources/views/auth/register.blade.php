@@ -1,213 +1,445 @@
 @extends('web.layouts.app')
 
-@section('content')
-    <div class="container mt-3 mb-3">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ trans('home.Register') }}</div>
+@section('css')
+    <style>
+        body {
+            font-family: "Anton", sans-serif;
+            font-weight: 100 !important;
+            font-style: normal;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            min-height: 100vh;
+        }
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
-                            @csrf
-                            @php
-                                $locale = \Illuminate\Support\Facades\App::getLocale();
-                                $lang = \App\Models\Language::where('lang_code', $locale)->first();
-                            @endphp
-                            <p>{{trans('home.This information is important to us. Click')}} <a
-                                    href="{{route('additionalInfo', ['code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
-                                {{trans('home.to know why')}}</p>
+        .register-container {
+            padding: 3rem 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-{{--                            <div class="row mb-3">--}}
-{{--                                <label for="name" class="col-md-4 col-form-label text-md-end">{{trans('home.Username')}}--}}
-{{--                                    (*)</label>--}}
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 40px rgba(31, 38, 135, 0.2);
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            animation: slideInUp 0.6s ease-out;
+        }
 
-{{--                                <div class="col-md-6">--}}
-{{--                                    <input id="username" type="text"--}}
-{{--                                           class="form-control @error('username') is-invalid @enderror" name="username"--}}
-{{--                                           value="{{ old('username') }}" required autocomplete="username" autofocus>--}}
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-{{--                                    @error('username')--}}
-{{--                                    <span class="invalid-feedback" role="alert">--}}
-{{--                                        <strong>{{trans('home.' . $message)}}</strong>--}}
-{{--                                    </span>--}}
-{{--                                    @enderror--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+        .register-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 20px rgba(56, 239, 125, 0.4);
+        }
 
-                            <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{trans('home.Email')}}
-                                    (*)</label>
+        .register-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #11998e;
+            margin-bottom: 0.5rem;
+        }
 
-                                <div class="col-md-6">
-                                    <input id="email" type="email"
-                                           class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email">
+        .register-subtitle {
+            color: #6c757d;
+            font-size: 1rem;
+        }
 
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{trans('home.' . $message)}}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
+        /* Info box */
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: #333;
+        }
 
-                            <div class="row mb-3">
-                                <label for="password"
-                                       class="col-md-4 col-form-label text-md-end">{{trans('home.Password')}}(*)</label>
+        .info-box a {
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+        }
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password"
-                                           class="form-control @error('password') is-invalid @enderror" name="password"
-                                           required autocomplete="new-password">
+        .info-box a:hover {
+            text-decoration: underline;
+        }
 
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{trans('home.' . $message)}}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
+        /* Form styling */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
 
-                            <div class="row mb-3">
-                                <label for="password-confirm"
-                                       class="col-md-4 col-form-label text-md-end">{{trans('home.Confirm password')}}
-                                    (*)</label>
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: 0.95rem;
+        }
 
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
+        .required {
+            color: #dc3545;
+        }
 
-                            <div class="row mb-3">
-                                <label for="age"
-                                       class="col-md-4 col-form-label text-md-end">{{trans('home.What is your age?')}}</label>
-                                <div class="col-md-6">
-                                    <select name="age" id="age" class="form-control">
-{{--                                        <option value="below20">{{trans('home.Below 20')}}</option>--}}
-                                        <option value="18-24">18-24</option>
-                                        <option value="25-34">25-34</option>
-                                        <option value="35-44">35-44</option>
-                                        <option value="45-54">45-54</option>
-                                        <option value="55-64">55-64</option>
-                                        <option value="above65">{{trans('home.65 and above')}}</option>
-                                    </select>
-                                    <div class="ageMessageDiv"></div>
-                                </div>
-                            </div>
+        .form-control-modern {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+            box-sizing: border-box;
+        }
 
-                            <div class="row mb-3">
-                                <label for="working_on_university"
-                                       class="col-md-7 col-form-label text-md-end">{{trans('home.Have you completed, or are you working towards, a university degree with a major component in language or linguistics?')}}</label>
-                                <div class="col-md-3">
-                                    <select name="working_on_university" id="working_on_university"
-                                            class="form-control">
-                                        <option value="1">{{trans('home.Yes')}}</option>
-                                        <option value="0">{{trans('home.No')}}</option>
-                                    </select>
-                                    <div class="universityMessageDiv"></div>
-                                </div>
-                            </div>
+        .form-control-modern:focus {
+            outline: none;
+            border-color: #11998e;
+            box-shadow: 0 0 0 3px rgba(17, 153, 142, 0.1);
+        }
 
-                            <div class="row mb-3">
-                                <label for="language_teacher"
-                                       class="col-md-4 col-form-label text-md-end">{{trans('home.Are you a language teacher?')}}</label>
-                                <div class="col-md-6">
-                                    <select name="language_teacher" id="language_teacher" class="form-control">
-                                        <option value="1">{{trans('home.Yes')}}</option>
-                                        <option value="0">{{trans('home.No')}}</option>
-                                    </select>
-                                    <div class="teacherMessageDiv"></div>
-                                </div>
-                            </div>
+        .form-control-modern.is-invalid {
+            border-color: #dc3545;
+        }
 
-                            <div class="row mb-3">
-                                <label for="dominant_language"
-                                       class="col-md-4 col-form-label text-md-end">{{trans("home.Is $lang->name your first/dominant language?")}}</label>
-                                <div class="col-md-6">
-                                    <select name="dominant_language" id="dominant_language" class="form-control">
-                                        <option value="1">{{trans('home.Yes')}}</option>
-                                        <option value="0">{{trans('home.No')}}</option>
-                                    </select>
-                                    <div class="domLanguageMessageDiv"></div>
-                                </div>
-                            </div>
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
 
-                            <p>{{trans('home.Already have an account? Login')}} <a
-                                href="{{route('login')}}">{{trans('home.here')}}</a></p>
+        /* Select styling */
+        select.form-control-modern {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2311998e' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 12px;
+            padding-right: 3rem;
+        }
 
-                            <div class="row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{trans('home.Register')}}
-                                    </button>
-                                </div>
-                            </div>
+        /* Section titles */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #11998e;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
 
-                            <div class="social-login-content text-center mt-3">
-                                <div class="social-button">
-                                    <a href="{{url('redirect/google')}}"
-                                       class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img
-                                            src="https://img.icons8.com/color/16/000000/google-logo.png"
-                                            style="width: 20px;"> {{trans('home.Sign-up via Google')}}
-                                    </a>
-{{--                                    <a href="{{url('redirect/facebook')}}"--}}
-{{--                                       class="btn btn-lg btn-google btn-block text-uppercase btn-light mb-3"><img--}}
-{{--                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png"--}}
-{{--                                            style="width: 20px;"> {{trans('home.Register with facebook')}}--}}
-{{--                                    </a>--}}
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        /* Buttons */
+        .btn-register {
+            width: 100%;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(56, 239, 125, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(56, 239, 125, 0.6);
+        }
+
+        .btn-google {
+            width: 100%;
+            background: white;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            margin-top: 1rem;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            color: #333;
+        }
+
+        .btn-google img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Links */
+        .login-link {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .login-link p {
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .login-link a {
+            color: #11998e;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            color: #38ef7d;
+            text-decoration: underline;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .register-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .register-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+
+            .register-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 @endsection
-@section('javascript')
-    <script>
-        {{--window.onload = function () {--}}
-        {{--    $(document).ready(function () {--}}
-        {{--        $('#age').on('change', function () {--}}
-        {{--            let value = $(this).val();--}}
-        {{--            let key = 'age';--}}
-        {{--            $.fn.myfunction(key, value, '.ageMessageDiv');--}}
-        {{--        });--}}
 
-        {{--        $('#dominant_language').on('change', function () {--}}
-        {{--            let value = $(this).val();--}}
-        {{--            let key = 'dominant_language';--}}
-        {{--            $.fn.myfunction(key, value, '.domLanguageMessageDiv');--}}
-        {{--        });--}}
+@section('content')
+    <main class="register-container px-3">
+        <div class="register-card">
+            <!-- Header -->
+            <div class="register-header">
+                <div class="register-icon">
+                    ✨
+                </div>
+                <h1 class="register-title">{{ trans('home.Register') }}</h1>
+                <p class="register-subtitle">{{ trans('home.Create your account') }}</p>
+            </div>
 
-        {{--        $('#language_teacher').on('change', function () {--}}
-        {{--            let value = $(this).val();--}}
-        {{--            let key = 'language_teacher';--}}
-        {{--            $.fn.myfunction(key, value, '.teacherMessageDiv');--}}
-        {{--        });--}}
+            <!-- Info Box -->
+            @php
+                $locale = \Illuminate\Support\Facades\App::getLocale();
+                $lang = \App\Models\Language::where('lang_code', $locale)->first();
+            @endphp
+            <div class="info-box">
+                ℹ️ {{trans('home.This information is important to us. Click')}}
+                <a href="{{route('additionalInfo', ['code' => $lang->lang_code])}}" target="_blank">{{trans('home.here')}}</a>
+                {{trans('home.to know why')}}
+            </div>
 
-        {{--        $('#working_on_university').on('change', function () {--}}
-        {{--            let value = $(this).val();--}}
-        {{--            let key = 'working_on_university';--}}
-        {{--            $.fn.myfunction(key, value, '.universityMessageDiv');--}}
-        {{--        });--}}
+            <!-- Form -->
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-        {{--            $.fn.myfunction = function(key, value, messageDiv) {--}}
-        {{--                let url = "{{url('additional-info-data')}}/" + key + "/" + value;--}}
-        {{--                $.ajax({--}}
-        {{--                    type: "GET",--}}
-        {{--                    url: url,--}}
-        {{--                    success: function (data) {--}}
-        {{--                        $(messageDiv).html("<p style='color: red;'>" + data + "% of people chose the same</p>");--}}
-        {{--                    },--}}
-        {{--                    error: function () {--}}
-        {{--                        alert('Some error occurred, please try again.');--}}
-        {{--                    }--}}
-        {{--                });--}}
-        {{--            };--}}
-        {{--    });--}}
-        {{--}--}}
-    </script>
+                <!-- Account Information -->
+                <div class="section-title">👤 {{trans('home.Account Information')}}</div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email" class="form-label">
+                        {{trans('home.Email')}} <span class="required">*</span>
+                    </label>
+                    <input id="email"
+                           type="email"
+                           class="form-control-modern @error('email') is-invalid @enderror"
+                           name="email"
+                           value="{{ old('email') }}"
+                           placeholder="your@email.com"
+                           required
+                           autocomplete="email">
+                    @error('email')
+                    <span class="invalid-feedback">
+                            <strong>{{trans('home.' . $message)}}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        {{trans('home.Password')}} <span class="required">*</span>
+                    </label>
+                    <input id="password"
+                           type="password"
+                           class="form-control-modern @error('password') is-invalid @enderror"
+                           name="password"
+                           placeholder="••••••••"
+                           required
+                           autocomplete="new-password">
+                    @error('password')
+                    <span class="invalid-feedback">
+                            <strong>{{trans('home.' . $message)}}</strong>
+                        </span>
+                    @enderror
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label for="password-confirm" class="form-label">
+                        {{trans('home.Confirm password')}} <span class="required">*</span>
+                    </label>
+                    <input id="password-confirm"
+                           type="password"
+                           class="form-control-modern"
+                           name="password_confirmation"
+                           placeholder="••••••••"
+                           required
+                           autocomplete="new-password">
+                </div>
+
+                <!-- Personal Information -->
+                <div class="section-title">📋 {{trans('home.Personal Information')}}</div>
+
+                <!-- Age -->
+                <div class="form-group">
+                    <label for="age" class="form-label">{{trans('home.What is your age?')}}</label>
+                    <select name="age" id="age" class="form-control-modern">
+                        <option value="18-24">18-24</option>
+                        <option value="25-34">25-34</option>
+                        <option value="35-44">35-44</option>
+                        <option value="45-54">45-54</option>
+                        <option value="55-64">55-64</option>
+                        <option value="above65">{{trans('home.65 and above')}}</option>
+                    </select>
+                </div>
+
+                <!-- Language & Teaching Background -->
+                <div class="section-title">📚 {{trans('home.Language & Teaching Background')}}</div>
+
+                <!-- University Degree -->
+                <div class="form-group">
+                    <label for="working_on_university" class="form-label">
+                        {{trans('home.Have you completed, or are you working towards, a university degree with a major component in language or linguistics?')}}
+                    </label>
+                    <select name="working_on_university" id="working_on_university" class="form-control-modern">
+                        <option value="1">{{trans('home.Yes')}}</option>
+                        <option value="0" selected>{{trans('home.No')}}</option>
+                    </select>
+                </div>
+
+                <!-- Language Teacher -->
+                <div class="form-group">
+                    <label for="language_teacher" class="form-label">
+                        {{trans('home.Are you a language teacher?')}}
+                    </label>
+                    <select name="language_teacher" id="language_teacher" class="form-control-modern">
+                        <option value="1">{{trans('home.Yes')}}</option>
+                        <option value="0" selected>{{trans('home.No')}}</option>
+                    </select>
+                </div>
+
+                <!-- Dominant Language -->
+                <div class="form-group">
+                    <label for="dominant_language" class="form-label">
+                        {{trans("home.Is $lang->name your first/dominant language?")}}
+                    </label>
+                    <select name="dominant_language" id="dominant_language" class="form-control-modern">
+                        <option value="1" selected>{{trans('home.Yes')}}</option>
+                        <option value="0">{{trans('home.No')}}</option>
+                    </select>
+                </div>
+
+                <!-- Register Button -->
+                <button type="submit" class="btn-register">
+                    ✨ {{trans('home.Register')}}
+                </button>
+
+                <!-- Login Link -->
+                <div class="login-link">
+                    <p>
+                        {{trans('home.Already have an account? Login')}}
+                        <a href="{{route('login')}}">{{trans('home.here')}}</a>
+                    </p>
+                </div>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>{{ trans('home.OR') }}</span>
+                </div>
+
+                <!-- Google Sign-up -->
+                <a href="{{url('redirect/google')}}" class="btn-google">
+                    <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="Google">
+                    {{trans('home.Sign-up via Google')}}
+                </a>
+            </form>
+        </div>
+    </main>
 @endsection
