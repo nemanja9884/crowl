@@ -1,10 +1,22 @@
-<div class="float-right mt-1 d-flex" style="align-items: center;">
-    <p class="points" style="margin-right: 10px;"><b>{{trans('home.Points:')}}</b> <b class="color-black">{{$points}}</b></p>
-    <p class="badges" data-bs-toggle="modal" data-bs-target="#badgeModal"><b>{{trans('home.Badge')}}:</b>
+<!-- shared/game-bottom-data.blade.php -->
+<div class="badge-container">
+    <div class="points-display">
+        {{$points}} {{trans('home.Points:')}}
+    </div>
+
+    @if($userBadge)
+        <div class="mb-3">
+            <img src="{{ $userBadge->image }}"
+                 alt="User Badge"
+                 class="badge-image">
+        </div>
+    @endif
+
+    <h5 class="fw-bold">
         @if(!$userBadge)
-            <b class="color-black">--</b>
+            {{trans('home.No Badge')}}
         @else
-            <img src="{{$userBadge->image}}" style="max-width: 49px;"/>
+            {{$userBadge->name}}
         @endif
-    </p>
+    </h5>
 </div>

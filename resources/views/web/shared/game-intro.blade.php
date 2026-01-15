@@ -1,57 +1,104 @@
-<div class="card color-black">
-    <div class="card-header">
-        {{trans('home.Game intro')}}
+<!-- shared/game-intro.blade.php -->
+<div class="glass-card p-4">
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">🎮 {{trans('home.Game intro')}}</h2>
+        <p class="text-muted">{{trans('home.You can choose between 3 levels of game. 1,2 or 3 level, or you can take 1 + 2 or 2 3 or 1 + 2 + 3. Good luck!')}}</p>
     </div>
-    <div class="card-body text-left">
-        <h5 class="card-title question">{{trans('home.You can choose between 3 levels of game. 1,2 or 3 level, or you can take 1 + 2 or 2 3 or 1 + 2 + 3. Good luck!')}}</h5>
-        <form action="{{route('startGame', $language->lang_code)}}" method="POST">
-            @csrf
-            @method('POST')
-            <h5 class="question">{{trans('home.Please choose your level:')}}</h5>
-            <div class="form-check sentence">
-                <input class="form-check-input" type="radio" name="level" id="gameLevel1" value="1"
+
+    <form action="{{route('startGame', $language->lang_code)}}" method="POST">
+        @csrf
+        @method('POST')
+
+        <h4 class="mb-4 text-center">{{trans('home.Please choose your level:')}}</h4>
+
+        <div class="levels-container">
+            <!-- Level 1 -->
+            <label class="level-card">
+                <input class="form-check-input d-none" type="radio" name="level" value="1"
                        @if(!Auth::guard('web')->user()) disabled @else checked @endif>
-                <label class="form-check-label answer-label" for="gameLevel1">
-                    {{trans('home.1- I\'m curious!')}}
-                </label>
-            </div>
-            <div class="form-check sentence">
-                <input class="form-check-input" type="radio" name="level" id="gameLevel2" value="2"
+                <div class="level-content d-flex align-items-center">
+                    <span class="fs-1 me-3">🔍</span>
+                    <div>
+                        <h5 class="mb-0">{{trans('home.1- I\'m curious!')}}</h5>
+                        <small class="text-muted">Beginner level</small>
+                    </div>
+                </div>
+            </label>
+
+            <!-- Level 2 -->
+            <label class="level-card">
+                <input class="form-check-input d-none" type="radio" name="level" value="2"
                        @if(!Auth::guard('web')->user()) disabled @endif>
-                <label class="form-check-label answer-label" for="gameLevel2">
-                    {{trans('home.2- I\'m eager to help!')}}
-                </label>
-            </div>
-            <div class="form-check sentence">
-                <input class="form-check-input" type="radio" name="level" id="gameLevel3" value="3"
+                <div class="level-content d-flex align-items-center">
+                    <span class="fs-1 me-3">💪</span>
+                    <div>
+                        <h5 class="mb-0">{{trans('home.2- I\'m eager to help!')}}</h5>
+                        <small class="text-muted">Intermediate level</small>
+                    </div>
+                </div>
+            </label>
+
+            <!-- Level 3 -->
+            <label class="level-card">
+                <input class="form-check-input d-none" type="radio" name="level" value="3"
                        @if(!Auth::guard('web')->user()) disabled @endif>
-                <label class="form-check-label answer-label" for="gameLevel3">
-                    {{trans('home.3- I\'m feeling enthusiastic!')}}
-                </label>
-            </div>
-            <div class="form-check sentence">
-                <input class="form-check-input" type="radio" name="level" id="gameLevel12" value="1+2"
+                <div class="level-content d-flex align-items-center">
+                    <span class="fs-1 me-3">🚀</span>
+                    <div>
+                        <h5 class="mb-0">{{trans('home.3- I\'m feeling enthusiastic!')}}</h5>
+                        <small class="text-muted">Advanced level</small>
+                    </div>
+                </div>
+            </label>
+
+            <!-- Level 1+2 -->
+            <label class="level-card">
+                <input class="form-check-input d-none" type="radio" name="level" value="1+2"
                        @if(!Auth::guard('web')->user()) disabled @endif>
-                <label class="form-check-label answer-label" for="gameLevel23">
-                    {{trans('home.1+2 - I\'m curious and eager to help!')}}
-                </label>
-            </div>
-            <div class="form-check sentence">
-                <input class="form-check-input" type="radio" name="level" id="gameLevel23" value="2+3"
+                <div class="level-content d-flex align-items-center">
+                    <span class="fs-1 me-3">🔍💪</span>
+                    <div>
+                        <h5 class="mb-0">{{trans('home.1+2 - I\'m curious and eager to help!')}}</h5>
+                        <small class="text-muted">Combined challenge</small>
+                    </div>
+                </div>
+            </label>
+
+            <!-- Level 2+3 -->
+            <label class="level-card">
+                <input class="form-check-input d-none" type="radio" name="level" value="2+3"
                        @if(!Auth::guard('web')->user()) disabled @endif>
-                <label class="form-check-label answer-label" for="gameLevel23">
-                    {{trans('home.2+3 - I\'m eager to help and feeling enthusiastic!')}}
-                </label>
-            </div>
-            <div class="form-check sentence">
-                <input class="form-check-input" type="radio" name="level" id="gameLevel123" value="1+2+3"
+                <div class="level-content d-flex align-items-center">
+                    <span class="fs-1 me-3">💪🚀</span>
+                    <div>
+                        <h5 class="mb-0">{{trans('home.2+3 - I\'m eager to help and feeling enthusiastic!')}}</h5>
+                        <small class="text-muted">Expert challenge</small>
+                    </div>
+                </div>
+            </label>
+
+            <!-- Level 1+2+3 -->
+            <label class="level-card">
+                <input class="form-check-input d-none" type="radio" name="level" value="1+2+3"
                        @if(!Auth::guard('web')->user()) checked @endif>
-                <label class="form-check-label answer-label" for="gameLevel123">
-                    {{trans('home.1+2+3 - I\'m curious, eager to help and feeling enthusiastic!')}}
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3 float-left">{{trans('home.Start Game!')}}</button>
+                <div class="level-content d-flex align-items-center">
+                    <span class="fs-1 me-3">🔍💪🚀</span>
+                    <div>
+                        <h5 class="mb-0">{{trans('home.1+2+3 - I\'m curious, eager to help and feeling enthusiastic!')}}</h5>
+                        <small class="text-muted">Ultimate challenge</small>
+                    </div>
+                </div>
+            </label>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary start-game-btn">
+                {{trans('home.Start Game!')}} ▶
+            </button>
+        </div>
+
+        <div class="mt-4">
             @include('web.shared.game-bottom-data')
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

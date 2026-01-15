@@ -20,6 +20,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{asset('custom_css/game.css?v=2')}}"/>
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @yield('css')
@@ -50,5 +52,38 @@
     </div>
 </div>
 @yield('javascript')
+<script>
+    function setLeaderboardMaxHeight() {
+        // Čekaj da se DOM učita
+        const gameIntro = document.querySelector('.col-lg-6 .glass-card');
+        const leftLeaderboard = document.getElementById('leftLeaderboardList');
+        const rightLeaderboard = document.getElementById('rightLeaderboardList');
+
+        if (gameIntro && leftLeaderboard && rightLeaderboard) {
+            // Uzmi visinu game-intro kartice
+            const gameIntroHeight = gameIntro.offsetHeight;
+
+            // Uzmi padding i header visinu
+            const leftColumn = document.getElementById('leftColumn');
+            const rightColumn = document.getElementById('rightColumn');
+
+            const leftHeader = leftColumn.querySelector('.text-center');
+            const rightHeader = rightColumn.querySelector('.text-center');
+
+            // Izračunaj max-height za liste (visina kartice - padding - header)
+            const leftMaxHeight = gameIntroHeight - leftHeader.offsetHeight - 64; // 64px = padding (32px * 2)
+            const rightMaxHeight = gameIntroHeight - rightHeader.offsetHeight - 64;
+
+            leftLeaderboard.style.maxHeight = leftMaxHeight + 'px';
+            rightLeaderboard.style.maxHeight = rightMaxHeight + 'px';
+        }
+    }
+
+    // Pozovi kada se stranica učita
+    window.addEventListener('load', setLeaderboardMaxHeight);
+
+    // Ponovo pozovi kada se prozor promeni (resize)
+    window.addEventListener('resize', setLeaderboardMaxHeight);
+</script>
 </body>
 </html>

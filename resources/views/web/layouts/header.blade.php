@@ -1,48 +1,63 @@
-<header class="mb-auto pb-3">
-    <div>
-        <h3 class="float-md-start mb-0 text-white"><a href="https://www.uc.pt/celga-iltec/crowll"
-                                                      target="_blank" style="color: white !important; text-decoration: none !important; font-size: 40px;"><img src="{{asset('images/logo_horizontal.png')}}"
-                                                                           alt="logo" width="200px"/> BETA</a></h3>
-        <nav class="nav nav-masthead justify-content-center float-md-end">
-            <li><a class="nav-link active" aria-current="page" href="{{route('index')}}">{{trans('home.Home')}}</a></li>
-            {{--            <li><a class="nav-link" href="#">Features</a></li>--}}
-            {{--            <li><a class="nav-link" href="#">Contact</a></li>--}}
+<!-- Header -->
+<header class="modern-header mb-4">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="https://www.uc.pt/celga-iltec/crowll" target="_blank">
+                <img src="{{asset('images/logo_horizontal.png')}}" alt="logo" class="logo-img"/>
+                <span class="beta-badge">BETA</span>
+            </a>
 
-            @guest
-                {{--                @if (Route::has('login'))--}}
-                {{--                    <li class="nav-item">--}}
-                {{--                        <a class="nav-link" href="{{ route('login') }}">{{trans('home.Login')}}</a>--}}
-                {{--                    </li>--}}
-                {{--                @endif--}}
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                {{--                @if (Route::has('register'))--}}
-                {{--                    <li class="nav-item">--}}
-                {{--                        <a class="nav-link" href="{{ route('register') }}">{{trans('home.Register')}}</a>--}}
-                {{--                    </li>--}}
-                {{--                @endif--}}
-            @else
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                       data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ Auth::user()->username }}
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('userProfile') }}">
-                            {{ trans('home.Your profile') }}
+            <!-- Navigation -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('index')}}">
+                            <i class="bi bi-house-door me-1"></i>
+                            {{trans('home.Home')}}
                         </a>
+                    </li>
 
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ trans('home.Logout') }}
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            @endguest
-        </nav>
-    </div>
+                    @guest
+                        <!-- Ako želiš login/register opcije, otkоmentariši ovde -->
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle user-dropdown" href="#" id="navbarDropdown"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="user-avatar">
+                                    {{ strtoupper(substr(Auth::user()->username, 0, 1)) }}
+                                </div>
+                                <span class="ms-2">{{ Auth::user()->username }}</span>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end modern-dropdown" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('userProfile') }}">
+                                        <i class="bi bi-person me-2"></i>
+                                        {{ trans('home.Your profile') }}
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="bi bi-box-arrow-right me-2"></i>
+                                        {{ trans('home.Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endguest
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
