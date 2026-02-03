@@ -68,10 +68,10 @@
                 ✓ {{trans('home.Choose')}}
             </button>
             <button type="{{$submit}}" name="noneOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn game-btn game-btn-secondary">
-                ✗ {{trans('home.None of them')}}
+                ✓✓ {{trans('home.None of them')}}
             </button>
             <button type="{{$submit}}" name="bothOfThem" value="{{$firstSentence->id}},{{$secondSentence->id}}" class="btn game-btn game-btn-secondary">
-                ✓✓ {{trans('home.Both of them')}}
+                ✗ {{trans('home.Both of them')}}
             </button>
         </div>
 

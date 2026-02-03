@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="https://www.uc.pt/celga-iltec/crowll" target="_blank">
+            <a class="navbar-brand" href="{{route('index')}}" target="_blank">
                 <img src="{{asset('images/logo_horizontal.png')}}" alt="logo" class="logo-img"/>
                 <span class="beta-badge">BETA</span>
             </a>

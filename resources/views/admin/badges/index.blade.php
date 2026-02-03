@@ -89,7 +89,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($badges as $badge)
+                            @foreach ($dbBadges as $badge)
                                 <tr>
                                     <td class="d-none d-md-table-cell">
                                         <input class="styled-checkbox" id="category-{{$badge->id}}"
@@ -121,7 +121,7 @@
                             </tbody>
                         </table>
                     </div>
-                    {{ $badges->appends(request()->except('page'))->links() }}
+                    {{ $dbBadges->appends(request()->except('page'))->links() }}
                 </div>
             </div>
         </div>

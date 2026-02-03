@@ -5,16 +5,14 @@
         <p class="text-muted">{{trans('home.You can choose between 3 levels of game. 1,2 or 3 level, or you can take 1 + 2 or 2 3 or 1 + 2 + 3. Good luck!')}}</p>
     </div>
 
-    <form action="{{route('startGame', $language->lang_code)}}" method="POST">
+    <form id="levelSelectForm" action="{{route('startGame', $language->lang_code)}}" method="POST">
         @csrf
         @method('POST')
-
-        <h4 class="mb-4 text-center">{{trans('home.Please choose your level:')}}</h4>
 
         <div class="levels-container">
             <!-- Level 1 -->
             <label class="level-card">
-                <input class="form-check-input d-none" type="radio" name="level" value="1"
+                <input class="form-check-input d-none level-radio" type="radio" name="level" value="1"
                        @if(!Auth::guard('web')->user()) disabled @else checked @endif>
                 <div class="level-content d-flex align-items-center">
                     <span class="fs-1 me-3">🔍</span>
@@ -27,7 +25,7 @@
 
             <!-- Level 2 -->
             <label class="level-card">
-                <input class="form-check-input d-none" type="radio" name="level" value="2"
+                <input class="form-check-input d-none level-radio" type="radio" name="level" value="2"
                        @if(!Auth::guard('web')->user()) disabled @endif>
                 <div class="level-content d-flex align-items-center">
                     <span class="fs-1 me-3">💪</span>
@@ -40,7 +38,7 @@
 
             <!-- Level 3 -->
             <label class="level-card">
-                <input class="form-check-input d-none" type="radio" name="level" value="3"
+                <input class="form-check-input d-none level-radio" type="radio" name="level" value="3"
                        @if(!Auth::guard('web')->user()) disabled @endif>
                 <div class="level-content d-flex align-items-center">
                     <span class="fs-1 me-3">🚀</span>
@@ -53,7 +51,7 @@
 
             <!-- Level 1+2 -->
             <label class="level-card">
-                <input class="form-check-input d-none" type="radio" name="level" value="1+2"
+                <input class="form-check-input d-none level-radio" type="radio" name="level" value="1+2"
                        @if(!Auth::guard('web')->user()) disabled @endif>
                 <div class="level-content d-flex align-items-center">
                     <span class="fs-1 me-3">🔍💪</span>
@@ -66,7 +64,7 @@
 
             <!-- Level 2+3 -->
             <label class="level-card">
-                <input class="form-check-input d-none" type="radio" name="level" value="2+3"
+                <input class="form-check-input d-none level-radio" type="radio" name="level" value="2+3"
                        @if(!Auth::guard('web')->user()) disabled @endif>
                 <div class="level-content d-flex align-items-center">
                     <span class="fs-1 me-3">💪🚀</span>
@@ -79,7 +77,7 @@
 
             <!-- Level 1+2+3 -->
             <label class="level-card">
-                <input class="form-check-input d-none" type="radio" name="level" value="1+2+3"
+                <input class="form-check-input d-none level-radio" type="radio" name="level" value="1+2+3"
                        @if(!Auth::guard('web')->user()) checked @endif>
                 <div class="level-content d-flex align-items-center">
                     <span class="fs-1 me-3">🔍💪🚀</span>
@@ -91,14 +89,28 @@
             </label>
         </div>
 
-        <div class="text-center mt-4">
-            <button type="submit" class="btn btn-primary start-game-btn">
-                {{trans('home.Start Game!')}} ▶
-            </button>
-        </div>
+        <!-- Submit button uklonjen -->
 
         <div class="mt-4">
             @include('web.shared.game-bottom-data')
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('levelSelectForm');
+        const radioButtons = document.querySelectorAll('.level-radio');
+
+        radioButtons.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (this.checked && !this.disabled) {
+                    // Mali delay za bolji UX (da vidi selekciju)
+                    setTimeout(function() {
+                        form.submit();
+                    }, 300);
+                }
+            });
+        });
+    });
+</script>

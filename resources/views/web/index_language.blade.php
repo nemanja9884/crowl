@@ -352,6 +352,13 @@
                 <h1 class="language-title">{{$language->name}}</h1>
             </div>
 
+            <!-- Language Content -->
+            @if($language->content)
+                <div class="content-section mb-4">
+                    {!! $language->content !!}
+                </div>
+            @endif
+
             <!-- Authenticated User - Start Game Button -->
             @auth
                 <div class="text-center mb-4">
@@ -387,13 +394,6 @@
                     </a>
                 </div>
             @endguest
-
-            <!-- Language Content -->
-            @if($language->content)
-                <div class="content-section">
-                    {!! $language->content !!}
-                </div>
-            @endif
         </div>
     </main>
 @endsection

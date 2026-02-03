@@ -14,7 +14,7 @@ class BadgesController extends Controller
      */
     public function index()
     {
-        return view('admin.badges.index', ['badges' => Badge::orderBy('points', 'ASC')->paginate(20)]);
+        return view('admin.badges.index', ['dbBadges' => Badge::orderBy('points', 'ASC')->paginate(20)]);
     }
 
     /**

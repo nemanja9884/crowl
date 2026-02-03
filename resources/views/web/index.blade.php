@@ -227,8 +227,8 @@
         <div class="container">
             <!-- Hero Section -->
             <div class="hero-section">
-                <h1 class="hero-title">🌍 {{trans('home.Choose Your Language')}}</h1>
-                <p class="hero-subtitle">{{trans('home.Start your language learning journey today!')}}</p>
+                <h1 class="hero-title">🌍 Choose Your Language</h1>
+                <p class="hero-subtitle">Start your language learning journey today!</p>
             </div>
 
             <!-- First Row of Languages -->
