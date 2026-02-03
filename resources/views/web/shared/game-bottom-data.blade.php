@@ -3,11 +3,13 @@
         {{$points}} {{trans('home.Points')}}
     </div>
 
-    <div class="mb-3">
-        <img src="{{ $userBadge->image }}"
-             alt="User Badge"
-             class="badge-image-small"> <!-- Dodato -small -->
-    </div>
+    @if($userBadge)
+        <div class="mb-3">
+            <img src="{{ $userBadge->image }}"
+                 alt="User Badge"
+                 class="badge-image-small"> <!-- Dodato -small -->
+        </div>
+    @endif
 
     <h5 class="fw-bold badge-name-small"> <!-- Dodato -small -->
         @if(!$userBadge)
@@ -32,7 +34,7 @@
         height: 70px;
         border-radius: 50%;
         border: 3px solid white; /* Smanjeno sa 4px */
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     .points-display {
