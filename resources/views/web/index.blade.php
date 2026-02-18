@@ -219,6 +219,95 @@
                 font-size: 1rem;
             }
         }
+
+        /* Institutional Logos Section */
+        .logos-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 2.5rem 3rem;
+            margin-top: 3rem;
+        }
+
+        .logos-section-title {
+            text-align: center;
+            color: #667eea;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .logos-section-title::before,
+        .logos-section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #667eea);
+        }
+
+        .logos-section-title::before {
+            left: 0;
+        }
+
+        .logos-section-title::after {
+            right: 0;
+            background: linear-gradient(to left, transparent, #667eea);
+        }
+
+        .logos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem 3rem;
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-item img {
+            max-height: 55px;
+            max-width: 160px;
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(100%) opacity(0.65);
+            transition: all 0.35s ease;
+        }
+
+        .logo-item img:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 768px) {
+            .logos-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .logos-grid {
+                gap: 1.5rem 2rem;
+            }
+
+            .logo-item img {
+                max-height: 42px;
+                max-width: 120px;
+            }
+
+            .logos-section-title::before,
+            .logos-section-title::after {
+                width: 20%;
+            }
+        }
     </style>
 @endsection
 
@@ -275,6 +364,40 @@
                     {!! $settings->index_content !!}
                 </div>
             @endif
+
+            <!-- Institutional Logos Section -->
+            <div class="logos-section">
+                <p class="logos-section-title">Institutional Partners</p>
+                <div class="logos-grid">
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/2022_FCT_Logo_A_horizontal_preto.png') }}" alt="FCT">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/celga.png') }}" alt="CELGA">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/CJVT_CGP_Osnovni_znak+Pripis_naziva_SLO.jpg') }}" alt="CJVT">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/Digital_PT_4C_V_FC_RP.png') }}" alt="Digital PT">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/eki-logo_eng_blue.png') }}" alt="EKI">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/FLUC_H_FundoClaro.png') }}" alt="FLUC">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/logo_ivdnt.png') }}" alt="IvdNt">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/Ruppin.png') }}" alt="Ruppin Academic Center">
+                    </div>
+                    <div class="logo-item">
+                        <img src="{{ asset('images/institutionallogos/UL-ENG.png') }}" alt="University of Ljubljana">
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 @endsection

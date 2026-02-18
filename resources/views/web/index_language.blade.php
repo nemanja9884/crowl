@@ -375,7 +375,7 @@
                     <h4 class="text-center">🔐 {{trans('home.Get Started')}}</h4>
 
                     <a href="{{route('login')}}" class="btn game-btn game-btn-primary">
-                        📧 {{trans('home.Sign-in via email')}}
+                        <span style="font-size: 2.2em; line-height: 1;">📧</span> {{trans('home.Sign-in via email')}}
                     </a>
 
                     <a href="{{route('register')}}" class="btn game-btn game-btn-success">

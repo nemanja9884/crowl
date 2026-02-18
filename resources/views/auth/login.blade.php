@@ -38,14 +38,14 @@
         }
 
         .login-icon {
-            width: 80px;
-            height: 80px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             color: white;
             margin: 0 auto 1rem;
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
@@ -258,9 +258,9 @@
             }
 
             .login-icon {
-                width: 70px;
-                height: 70px;
-                font-size: 2rem;
+                width: 90px;
+                height: 90px;
+                font-size: 3rem;
             }
 
             .login-title {

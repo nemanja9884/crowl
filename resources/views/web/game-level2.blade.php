@@ -80,25 +80,55 @@
             cursor: pointer;
             margin-left: 0.5rem;
             transition: transform 0.2s;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
         }
 
         .info-icon:hover {
             transform: scale(1.1);
         }
 
+        .info-icon:hover .tooltip-custom {
+            display: block !important;
+        }
+
         .tooltip-custom {
-            background: rgba(0, 0, 0, 0.9);
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + 10px);
+            background: rgba(30, 30, 40, 0.96);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1rem;
             border-radius: 8px;
-            font-size: 0.85rem;
-            margin-left: 0.5rem;
-            animation: fadeIn 0.3s;
+            font-size: 0.82rem;
+            white-space: normal;
+            width: max-content;
+            max-width: min(220px, 80vw);
+            text-align: left;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+            pointer-events: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .tooltip-custom::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            right: 8px;
+            border: 6px solid transparent;
+            border-top-color: rgba(30, 30, 40, 0.96);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .checkbox-card {
+            overflow: visible;
         }
 
         .action-buttons {
@@ -259,9 +289,19 @@
                 change('#fine');
                 change('#fineMobile');
 
-                $('.show-tool-tip').click(function () {
+                $('.show-tool-tip').click(function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    var tip = $(this).find('.tooltip-custom');
+                    var isVisible = tip.is(':visible');
                     $('.tooltip-custom').hide();
-                    $(this).find('.tooltip-custom').show();
+                    if (!isVisible) {
+                        tip.show();
+                    }
+                });
+
+                $(document).click(function () {
+                    $('.tooltip-custom').hide();
                 });
 
                 var answerCheckboxes = $('.answer');

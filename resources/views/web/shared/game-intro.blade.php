@@ -99,13 +99,11 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('levelSelectForm');
-        const radioButtons = document.querySelectorAll('.level-radio');
-
-        radioButtons.forEach(function(radio) {
-            radio.addEventListener('change', function() {
-                if (this.checked && !this.disabled) {
-                    // Mali delay za bolji UX (da vidi selekciju)
+        document.querySelectorAll('.level-card').forEach(function(label) {
+            label.addEventListener('click', function() {
+                var radio = this.querySelector('.level-radio');
+                if (radio && !radio.disabled) {
+                    var form = this.closest('form');
                     setTimeout(function() {
                         form.submit();
                     }, 300);
